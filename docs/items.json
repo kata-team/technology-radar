@@ -2,16 +2,19 @@
     {
         "name": "React.js",
         "status": "new",
-        "description": "In the avalanche of front-end JavaScript frameworks, React.js stands out due to its design around a reactive data flow. Allowing only one-way data binding greatly simplifies the rendering logic and avoids many of the issues that commonly plague applications written with other frameworks. We're seeing the benefits of React.js on a growing number of projects, large and small, while at the same time we continue to be concerned about the state and the future of other popular frameworks like AngularJS. This has led to React.js becoming our default choice for JavaScript frameworks."
+        "description": "In the avalanche of front-end JavaScript frameworks, React.js stands out due to its design around a reactive data flow. Allowing only one-way data binding greatly simplifies the rendering logic and avoids many of the issues that commonly plague applications written with other frameworks. We're seeing the benefits of React.js on a growing number of projects, large and small, while at the same time we continue to be concerned about the state and the future of other popular frameworks like AngularJS. This has led to React.js becoming our default choice for JavaScript frameworks.",
+        "url": "https://facebook.github.io/react/"
     },
     {
         "name": "Gulp",
         "status": "new",
-        "description": "In the last radar we called out Gulp as a strong competitor to Grunt, with a clean API and fast builds thanks to its streaming approach. While we still like it as a tool, we are moving it out from trial back to assess since Grunt has both a broader usage model and better industry adoption and tooling. We do see some teams successfully using Gulp inside Grunt, when the speed of intermediate result caching is required, but we are not recommending it as the default JavaScript build tool."
+        "description": "In the last radar we called out Gulp as a strong competitor to Grunt, with a clean API and fast builds thanks to its streaming approach. While we still like it as a tool, we are moving it out from trial back to assess since Grunt has both a broader usage model and better industry adoption and tooling. We do see some teams successfully using Gulp inside Grunt, when the speed of intermediate result caching is required, but we are not recommending it as the default JavaScript build tool.",
+        "url": "http://gulpjs.com/"
     },
     {
         "name": "Grunt.js",
         "status": "adopt",
-        "description": "Grunt is rapidly becoming the de facto JavaScript build tool with high adoption and a growing ecosystem. While slower than newer alternatives, such as Gulp, in terms of file processing, Grunt covers a broader set of build-related activities, has a proliferation of plugins and makes it easy to author and publish self-written plugins to npm."
+        "description": "Grunt is rapidly becoming the de facto JavaScript build tool with high adoption and a growing ecosystem. While slower than newer alternatives, such as Gulp, in terms of file processing, Grunt covers a broader set of build-related activities, has a proliferation of plugins and makes it easy to author and publish self-written plugins to npm.",
+        "url": "http://gruntjs.com/"
     }
 ]

@@ -5,7 +5,7 @@
     },
     "rules": {
         "indent": ["error", 4],
-        "max-len": ["error", 150],
+        "max-len": ["error", 300],
         "arrow-body-style": ["off"],
         "semi": ["error", "always", { "omitLastInOneLineBlock": true}],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

@@ -21946,7 +21946,7 @@
 	            return _react2.default.createElement(
 	                'form',
 	                { className: 'uk-form' },
-	                _react2.default.createElement('input', { type: 'search', placeholder: 'Search', onChange: function onChange(event) {
+	                _react2.default.createElement('input', { type: 'search', placeholder: 'Search', className: 'uk-width-medium-1-4', onChange: function onChange(event) {
 	                        _SearchActions2.default.changeCriteria(event.target.value);
 	                    } })
 	            );
@@ -24041,8 +24041,8 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                { className: 'uk-panel' },
+	                'a',
+	                { className: 'uk-panel uk-panel-box uk-panel-box-default', target: '_blank', rel: 'noopener noreferrer', href: this.props.item.url },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'uk-panel-badge uk-badge' },
@@ -24053,7 +24053,11 @@
 	                    { className: 'uk-panel-title' },
 	                    this.props.item.name
 	                ),
-	                this.props.item.description
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    this.props.item.description
+	                )
 	            );
 	        }
 	    }], [{
@@ -24089,6 +24093,8 @@
 	        description = _ref$description === undefined ? '' : _ref$description,
 	        _ref$status = _ref.status,
 	        status = _ref$status === undefined ? '' : _ref$status,
+	        _ref$url = _ref.url,
+	        url = _ref$url === undefined ? '' : _ref$url,
 	        _ref$tags = _ref.tags,
 	        tags = _ref$tags === undefined ? [] : _ref$tags;
 	
@@ -24098,6 +24104,7 @@
 	    this.description = description;
 	    this.status = status;
 	    this.tags = tags;
+	    this.url = url;
 	};
 	
 	exports.default = Item;
