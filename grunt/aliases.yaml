@@ -1,0 +1,35 @@
+# testing
+test:
+    - 'eslint:source'
+
+# stylesheets
+stylesheets:dev:
+    - 'sass:dist'
+
+stylesheets:
+    - 'stylesheets:dev'
+    - 'cssmin:dist'
+
+# javascripts
+javascripts:dev:
+    - 'test'
+    - 'webpack:dev'
+
+javascripts:
+    - 'javascripts:dev'
+    - 'webpack:prod'
+
+# build
+build:
+    - 'javascripts'
+    - 'stylesheets'
+
+# GithubPages
+docs:
+    - 'build'
+    - 'copy:docs'
+
+# default
+default:
+    - 'build'
+    - 'watch'

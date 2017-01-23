@@ -1,0 +1,8 @@
+{
+    "name": "react-flux-boilerplate",
+    "version": "1.0.0",
+    "dependencies": {
+        "es5-shim": "~4.5.9",
+        "uikit": "*"
+    }
+}
