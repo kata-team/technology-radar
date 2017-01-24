@@ -83,3 +83,6 @@ npm-debug.log
 bower_components
 public/javascripts
 public/stylesheets
+
+# grunt
+.grunt

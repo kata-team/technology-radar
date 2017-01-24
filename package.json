@@ -31,6 +31,8 @@
     ],
     "scripts" : {
         "test" : "grunt test",
+        "build" : "grunt test build",
+        "gh-pages" : "grunt test build gh-pages:local",
         "start": "http-server"
     },
     "engines": {
@@ -61,7 +63,7 @@
         "eslint-config-airbnb" : "^13.0.0",
         "eslint-plugin-import" : "^2.2.0",
 
-        "grunt-contrib-copy" : "^1.0.0",
+        "grunt-gh-pages" : "^2.0.0",
 
         "webpack" : "^1.14.0",
         "webpack-dev-server" : "^1.16.2",

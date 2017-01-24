@@ -14,9 +14,6 @@ module.exports = grunt => {
                 stylesheets: '<%= paths.public.root %>/stylesheets',
                 javascripts: '<%= paths.public.root %>/javascripts',
             },
-            docs: {
-                root: 'docs',
-            },
         },
         bower: grunt.file.readJSON('bower.json'),
     };

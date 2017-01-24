@@ -12,7 +12,6 @@ stylesheets:
 
 # javascripts
 javascripts:dev:
-    - 'test'
     - 'webpack:dev'
 
 javascripts:
@@ -24,12 +23,8 @@ build:
     - 'javascripts'
     - 'stylesheets'
 
-# GithubPages
-docs:
-    - 'build'
-    - 'copy:docs'
-
 # default
 default:
+    - 'test'
     - 'build'
     - 'watch'
