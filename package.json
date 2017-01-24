@@ -1,7 +1,7 @@
 {
     "name" : "react-flux-boilerplate",
     "version" : "1.0.0",
-    "description" : "A simple boilerplate to start your own react-flux project.",
+    "description" : "A simple technology radar with React",
     "main" : "app.js",
     "author" : "Kata Team",
     "contributors" : [
@@ -18,7 +18,7 @@
     "license" : "MIT",
     "repository" : {
         "type" : "git",
-        "url"  : "https://bitbucket.org/kata-team/react-flux-boilerplate"
+        "url"  : "https://github.com/kata-team/technology-radar/"
     },
     "keywords" : [
         "react",
@@ -31,7 +31,7 @@
     ],
     "scripts" : {
         "test" : "grunt test",
-        "server": "node webserver.js"
+        "start": "node webserver.js"
     },
     "dependencies" : {
         "react" : "^15.4.0",
