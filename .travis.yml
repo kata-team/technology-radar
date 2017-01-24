@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "0.10"
+  - "6"
 before_script:
   - if [[ $(node -v) =~ ^v4.* ]]; then export __node_harmony=--harmony; fi
   - npm install -g grunt-cli

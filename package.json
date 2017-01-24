@@ -51,10 +51,15 @@
 
         "grunt-eslint" : "^19.0.0",
         "babel-eslint" : "^7.1.1",
+        "eslint-plugin-jsx-a11y" : "^2.2.3",
+        "eslint-plugin-react" : "^6.6.0",
         "eslint-config-airbnb" : "^13.0.0",
         "eslint-plugin-import" : "^2.2.0",
 
         "grunt-contrib-copy" : "^1.0.0",
+
+        "webpack" : "^1.14.0",
+        "webpack-dev-server" : "^1.16.2",
 
         "grunt-webpack" : "^1.0.18",
         "babel-loader" : "^6.2.8",
