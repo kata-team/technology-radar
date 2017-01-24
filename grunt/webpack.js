@@ -28,7 +28,7 @@ module.exports = {
                 include: /\.min\.js$/,
                 minimize: true,
             }),
-        ]
+        ],
     },
     dev: {
         entry: {
