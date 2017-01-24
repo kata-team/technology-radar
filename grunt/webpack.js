@@ -1,19 +1,16 @@
 var webpack = require('webpack');
 
 module.exports = {
-    options : {
-
+    options: {
         output: {
             path: '<%= paths.public.javascripts %>',
-            filename: '[name].js'
+            filename: '[name].js',
         },
-
         // Important! Do not remove ''. If you do, imports without
         // an extension won't work anymore!
         resolve: {
             extensions: ['', '.js', '.jsx']
         },
-
         module: {
             loaders: [
                 {
@@ -26,7 +23,6 @@ module.exports = {
                 }
             ]
         },
-        
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
                 include: /\.min\.js$/,
@@ -34,16 +30,14 @@ module.exports = {
             })
         ]
     },
-
-    dev : {
+    dev: {
         entry: {
-            'app' : './<%= paths.source.javascripts %>/app'
+            'app': './<%= paths.source.javascripts %>/app'
         },
         debug: true,
-        devtool: 'source-map'
+        devtool: 'source-map',
     },
-
-    prod : {
+    prod: {
         entry: {
             'app.min' : './<%= paths.source.javascripts %>/app'
         }

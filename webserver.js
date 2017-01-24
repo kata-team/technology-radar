@@ -18,29 +18,31 @@
  * └── webserver.js
  */
 
-var server = {
-    hostname     : '127.0.0.1',
-    port         : 8000,
-    documentRoot : 'public',
+'use strict';
+
+const server = {
+    hostname: '127.0.0.1',
+    port: 8000,
+    documentRoot: 'public',
 };
 
-var http      = require('http');
-var path      = require('path');
-var url       = require('url');
-var fs        = require('fs');
-var mimeTypes = fs.existsSync('./mime-types.js') ? require('./mime-types.js') : {
-    '.html' : 'text/html',
-    '.js'   : 'application/javascript',
-    '.css'  : 'text/css',
-    '.txt'  : 'text/plain',
-    '.jpg'  : 'image/jpeg',
-    '.gif'  : 'image/gif',
-    '.png'  : 'image/png',
-    '.ico'  : 'image/x-icon',
-    '.json' : 'application/json',
+const http = require('http');
+const path = require('path');
+const url = require('url');
+const fs = require('fs');
+const mimeTypes = fs.existsSync('./mime-types.js') ? require('./mime-types.js') : {
+    '.html': 'text/html',
+    '.js': 'application/javascript',
+    '.css': 'text/css',
+    '.txt': 'text/plain',
+    '.jpg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.png': 'image/png',
+    '.ico': 'image/x-icon',
+    '.json': 'application/json',
 };
 
-console.log('Starting web server at http://' + server.hostname + ':' + server.port + '/');
+console.log(`Starting web server at http://${server.hostname}:${server.port}/`);
 
 function getFile(filename, res, mimeType)
 {
@@ -61,13 +63,10 @@ function getFile(filename, res, mimeType)
 
 http.createServer( function(req, res)
 {
-    var
-        srvUrl    = url.parse( req.url ),
-        indexHtml = 'index.html',
-        filename  = (server.documentRoot ? path.sep + server.documentRoot : '') + (srvUrl.pathname !== '/' ? srvUrl.pathname.replace(/\//g, path.sep) : path.sep  + indexHtml),
-        extension = path.extname(filename),
-        mimeType  = mimeTypes[extension]
-    ;
+    const srvUrl = url.parse( req.url );
+    let filename = (server.documentRoot ? path.sep + server.documentRoot : '') + (srvUrl.pathname !== '/' ? srvUrl.pathname.replace(/\//g, path.sep) : path.sep  + 'index.html');
+    const extension = path.extname(filename);
+    const mimeType = mimeTypes[extension];
 
     if (mimeType)
     {
@@ -76,16 +75,16 @@ http.createServer( function(req, res)
         {
             if(exists)
             {
-                console.info('[info]  serving file: ' + filename);
+                console.info(`[info]  serving file: ${filename}`);
                 getFile(filename, res, mimeType);
             } else {
-                console.error('[error] file not found: ' + filename);
+                console.error(`[error] file not found: ${filename}`);
                 res.writeHead(404);
                 res.end();
             }
         });
     } else {
-        console.log('[error] invalid file extension: ' + extension);
+        console.log(`[error] invalid file extension: ${extension}`);
         res.writeHead(404);
         res.end();
     }

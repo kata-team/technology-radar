@@ -3,6 +3,6 @@ module.exports = {
         expand: true,
         cwd: '<%= paths.public.root %>',
         src: '**',
-        dest: '<%= paths.docs.root %>/'
+        dest: '<%= paths.docs.root %>/',
     },
 };

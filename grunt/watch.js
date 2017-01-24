@@ -8,9 +8,9 @@ module.exports = {
     },
     stylesheets: {
         files: [
-            '<%= paths.source.stylesheets %>/**/*.css'  ,
-            '<%= paths.source.stylesheets %>/**/*.scss' ,
-            '<%= paths.source.stylesheets %>/**/*.sass' ,
+            '<%= paths.source.stylesheets %>/**/*.css',
+            '<%= paths.source.stylesheets %>/**/*.scss',
+            '<%= paths.source.stylesheets %>/**/*.sass',
         ],
         tasks: ['stylesheets:dev'],
         options: {
