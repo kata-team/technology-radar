@@ -26,8 +26,15 @@ npm install
 bower install
 ```
 
-[node.js]: <https://nodejs.org/>
+### Local HTTP Server
 
+In order to avoid the `cross origin request` issue, you need an HTTP Server.
+
+```sh
+npm start
+
+# http://127.0.0.1:8080
+```
 
 ### Available Grunt tasks
 
@@ -36,3 +43,5 @@ bower install
 * `javascripts` Compile javascripts.
 * `build`       Alias for "test", "javascripts", "stylesheets" tasks.
 * `docs`        Alias for "build". After build it creates "docs" folder for GitHub pages.
+
+[node.js]: <https://nodejs.org/>

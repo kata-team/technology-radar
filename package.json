@@ -1,5 +1,5 @@
 {
-    "name" : "react-flux-boilerplate",
+    "name" : "technology-radar",
     "version" : "1.0.0",
     "description" : "A simple technology radar with React",
     "main" : "app.js",
@@ -31,7 +31,7 @@
     ],
     "scripts" : {
         "test" : "grunt test",
-        "start": "node webserver.js"
+        "start": "http-server"
     },
     "dependencies" : {
         "react" : "^15.4.0",
@@ -41,6 +41,8 @@
         "rest": "^2.0.0"
     },
     "devDependencies" : {
+        "http-server" : "^0.9.0",
+
         "grunt" : "^1.0.1",
         "load-grunt-config" : "^0.19.2",
         "time-grunt" : "^1.4.0",
