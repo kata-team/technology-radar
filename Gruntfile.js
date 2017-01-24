@@ -1,7 +1,8 @@
-module.exports = function(grunt)
-{ 
-    var data = {
-        //
+const timeGrunt = require('time-grunt');
+const loadGruntConfig = require('load-grunt-config');
+
+module.exports = grunt => {
+    const data = {
         paths: {
             source: {
                 root: 'src',
@@ -15,16 +16,13 @@ module.exports = function(grunt)
             },
             docs: {
                 root: 'docs',
-            }
+            },
         },
-        //
         bower: grunt.file.readJSON('bower.json'),
-        //
     };
     // require it at the top and pass in the grunt instance
-    require('time-grunt')(grunt);
-    // 
-    require('load-grunt-config')(grunt, {
-        data
+    timeGrunt(grunt);
+    loadGruntConfig(grunt, {
+        data,
     });
 };

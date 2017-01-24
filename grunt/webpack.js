@@ -1,4 +1,4 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
     options: {
@@ -9,7 +9,7 @@ module.exports = {
         // Important! Do not remove ''. If you do, imports without
         // an extension won't work anymore!
         resolve: {
-            extensions: ['', '.js', '.jsx']
+            extensions: ['', '.js', '.jsx'],
         },
         module: {
             loaders: [
@@ -19,27 +19,27 @@ module.exports = {
                     // It uses default OS directory by default. If you need
                     // something more custom, pass a path to it.
                     // I.e., babel?cacheDirectory=<path>
-                    loaders: ['babel?cacheDirectory']
-                }
-            ]
+                    loaders: ['babel?cacheDirectory'],
+                },
+            ],
         },
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
                 include: /\.min\.js$/,
-                minimize: true
-            })
-        ]
+                minimize: true,
+            }),
+        ],
     },
     dev: {
         entry: {
-            'app': './<%= paths.source.javascripts %>/app'
+            app: './<%= paths.source.javascripts %>/app',
         },
         debug: true,
         devtool: 'source-map',
     },
     prod: {
         entry: {
-            'app.min' : './<%= paths.source.javascripts %>/app'
-        }
-    }
-}
+            'app.min': './<%= paths.source.javascripts %>/app',
+        },
+    },
+};

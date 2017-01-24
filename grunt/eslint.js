@@ -1,3 +1,3 @@
 module.exports = {
-    source: ['<%= paths.source.javascripts %>/**/*.js']
+    source: ['<%= paths.source.javascripts %>/**/*.js'],
 };
