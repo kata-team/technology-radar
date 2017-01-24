@@ -3,12 +3,14 @@ module.exports = {
         options: {
             sourceMap: true,
         },
-        files: [{
-            expand: true,
-            cwd: '<%= paths.source.stylesheets %>',
-            src: ['*.sass', '*.scss'],
-            dest: '<%= paths.public.stylesheets %>',
-            ext: '.css',
-        },]
+        files: [
+            {
+                expand: true,
+                cwd: '<%= paths.source.stylesheets %>',
+                src: ['*.sass', '*.scss'],
+                dest: '<%= paths.public.stylesheets %>',
+                ext: '.css',
+            },
+        ],
     },
 };

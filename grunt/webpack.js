@@ -1,4 +1,4 @@
-let webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
     options: {
@@ -21,7 +21,7 @@ module.exports = {
                     // I.e., babel?cacheDirectory=<path>
                     loaders: ['babel?cacheDirectory'],
                 },
-            ]
+            ],
         },
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
@@ -40,6 +40,6 @@ module.exports = {
     prod: {
         entry: {
             'app.min': './<%= paths.source.javascripts %>/app',
-        }
+        },
     },
-}
+};
