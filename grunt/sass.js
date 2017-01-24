@@ -9,6 +9,6 @@ module.exports = {
             src: ['*.sass', '*.scss'],
             dest: '<%= paths.public.stylesheets %>',
             ext: '.css',
-        }]
+        },]
     },
 };
