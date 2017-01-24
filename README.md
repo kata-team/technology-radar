@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/kata-team/technology-radar.svg?branch=master)](https://travis-ci.org/kata-team/technology-radar)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b569c34b3b5d4b7db2fe54d808a0323b)](https://www.codacy.com/app/kata-team/technology-radar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kata-team/technology-radar&amp;utm_campaign=Badge_Grade)
 
 TECHNOLOGY RADAR
