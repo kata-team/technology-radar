@@ -4,7 +4,7 @@ test:
 
 # stylesheets
 stylesheets:dev:
-    - 'sass:dist'
+    - 'less:dist'
 
 stylesheets:
     - 'stylesheets:dev'

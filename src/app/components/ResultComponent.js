@@ -24,7 +24,7 @@ export default class ResultComponent extends Component {
 
     get items() {
         return _.map(this.state.result, (item, key) => (
-            <div key={key} className="uk-width-medium-1-2 uk-grid-margin">
+            <div key={key} className="uk-grid-match uk-grid-margin">
                 <ItemComponent item={item} />
             </div>
         ));
@@ -32,7 +32,7 @@ export default class ResultComponent extends Component {
 
     render() {
         return (
-            <div className="uk-grid">
+            <div className="uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match">
                 {this.items}
             </div>
         );

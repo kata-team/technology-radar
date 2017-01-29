@@ -1,7 +1,7 @@
 module.exports = {
     dist: {
         options: {
-            sourceMap: true,
+            sourceMap: false,
         },
         files: [
             {

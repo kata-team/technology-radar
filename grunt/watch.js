@@ -9,6 +9,7 @@ module.exports = {
     stylesheets: {
         files: [
             '<%= paths.source.stylesheets %>/**/*.css',
+            '<%= paths.source.stylesheets %>/**/*.less',
             '<%= paths.source.stylesheets %>/**/*.scss',
             '<%= paths.source.stylesheets %>/**/*.sass',
         ],
