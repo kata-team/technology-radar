@@ -21556,11 +21556,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _NavbarComponent = __webpack_require__(179);
+	var _SearchComponent = __webpack_require__(179);
 	
-	var _NavbarComponent2 = _interopRequireDefault(_NavbarComponent);
+	var _SearchComponent2 = _interopRequireDefault(_SearchComponent);
 	
-	var _ResultComponent = __webpack_require__(186);
+	var _ResultComponent = __webpack_require__(185);
 	
 	var _ResultComponent2 = _interopRequireDefault(_ResultComponent);
 	
@@ -21586,12 +21586,17 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavbarComponent2.default, null),
+	                { className: 'uk-container uk-container-center' },
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'uk-container' },
-	                    _react2.default.createElement(_ResultComponent2.default, null)
+	                    { className: 'uk-grid uk-grid-margin' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'uk-width-1' },
+	                        _react2.default.createElement(_SearchComponent2.default, null),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(_ResultComponent2.default, null)
+	                    )
 	                )
 	            );
 	        }
@@ -21618,74 +21623,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SearchComponent = __webpack_require__(180);
-	
-	var _SearchComponent2 = _interopRequireDefault(_SearchComponent);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var NavbarComponent = function (_Component) {
-	    _inherits(NavbarComponent, _Component);
-	
-	    function NavbarComponent() {
-	        _classCallCheck(this, NavbarComponent);
-	
-	        return _possibleConstructorReturn(this, (NavbarComponent.__proto__ || Object.getPrototypeOf(NavbarComponent)).apply(this, arguments));
-	    }
-	
-	    _createClass(NavbarComponent, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'nav',
-	                { className: 'uk-navbar-container uk-navbar-fixed uk-navbar-brand' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'uk-container' },
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '/' },
-	                        _react2.default.createElement('img', { alt: 'Technology Radar logo', src: 'images/logo.png' }),
-	                        _react2.default.createElement(
-	                            'h1',
-	                            null,
-	                            'Technology Radar'
-	                        )
-	                    ),
-	                    _react2.default.createElement(_SearchComponent2.default, null)
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return NavbarComponent;
-	}(_react.Component);
-	
-	exports.default = NavbarComponent;
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _SearchActions = __webpack_require__(181);
+	var _SearchActions = __webpack_require__(180);
 	
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 	
@@ -21709,9 +21647,13 @@
 	    _createClass(SearchComponent, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('input', { type: 'search', placeholder: 'Search', className: 'uk-input uk-width-1-4@s', onChange: function onChange(event) {
-	                    _SearchActions2.default.changeCriteria(event.target.value);
-	                } });
+	            return _react2.default.createElement(
+	                'form',
+	                { className: 'uk-form' },
+	                _react2.default.createElement('input', { type: 'search', placeholder: 'Search', className: 'uk-width-medium-1-4', onChange: function onChange(event) {
+	                        _SearchActions2.default.changeCriteria(event.target.value);
+	                    } })
+	            );
 	        }
 	    }]);
 	
@@ -21721,7 +21663,7 @@
 	exports.default = SearchComponent;
 
 /***/ },
-/* 181 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21730,11 +21672,11 @@
 	    value: true
 	});
 	
-	var _AppDispatcher = __webpack_require__(182);
+	var _AppDispatcher = __webpack_require__(181);
 	
 	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
 	
-	var _SearchConstants = __webpack_require__(185);
+	var _SearchConstants = __webpack_require__(184);
 	
 	var _SearchConstants2 = _interopRequireDefault(_SearchConstants);
 	
@@ -21750,7 +21692,7 @@
 	};
 
 /***/ },
-/* 182 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21759,12 +21701,12 @@
 	  value: true
 	});
 	
-	var _flux = __webpack_require__(183);
+	var _flux = __webpack_require__(182);
 	
 	exports.default = new _flux.Dispatcher();
 
 /***/ },
-/* 183 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21778,10 +21720,10 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(184);
+	module.exports.Dispatcher = __webpack_require__(183);
 
 /***/ },
-/* 184 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22022,7 +21964,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 185 */
+/* 184 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22035,7 +21977,7 @@
 	};
 
 /***/ },
-/* 186 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22050,15 +21992,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _underscore = __webpack_require__(187);
+	var _underscore = __webpack_require__(186);
 	
 	var _underscore2 = _interopRequireDefault(_underscore);
 	
-	var _ItemComponent = __webpack_require__(188);
+	var _ItemComponent = __webpack_require__(187);
 	
 	var _ItemComponent2 = _interopRequireDefault(_ItemComponent);
 	
-	var _ItemsStore = __webpack_require__(190);
+	var _ItemsStore = __webpack_require__(189);
 	
 	var _ItemsStore2 = _interopRequireDefault(_ItemsStore);
 	
@@ -22102,7 +22044,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match' },
+	                { className: 'uk-grid' },
 	                this.items
 	            );
 	        }
@@ -22112,7 +22054,7 @@
 	            return _underscore2.default.map(this.state.result, function (item, key) {
 	                return _react2.default.createElement(
 	                    'div',
-	                    { key: key, className: 'uk-grid-match uk-grid-margin' },
+	                    { key: key, className: 'uk-width-medium-1-2 uk-grid-margin' },
 	                    _react2.default.createElement(_ItemComponent2.default, { item: item })
 	                );
 	            });
@@ -22125,7 +22067,7 @@
 	exports.default = ResultComponent;
 
 /***/ },
-/* 187 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -23702,7 +23644,7 @@
 	}).call(undefined);
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23717,7 +23659,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Item = __webpack_require__(189);
+	var _Item = __webpack_require__(188);
 	
 	var _Item2 = _interopRequireDefault(_Item);
 	
@@ -23742,26 +23684,22 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                null,
+	                'a',
+	                { className: 'uk-panel uk-panel-box uk-panel-box-default', target: '_blank', rel: 'noopener noreferrer', href: this.props.item.url },
 	                _react2.default.createElement(
-	                    'a',
-	                    { className: 'uk-card uk-card-default uk-card-body uk-card-hover', target: '_blank', rel: 'noopener noreferrer', href: this.props.item.url },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'uk-card-badge uk-label' },
-	                        this.props.item.status
-	                    ),
-	                    _react2.default.createElement(
-	                        'h3',
-	                        { className: 'uk-card-title' },
-	                        this.props.item.name
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        this.props.item.description
-	                    )
+	                    'div',
+	                    { className: 'uk-panel-badge uk-badge' },
+	                    this.props.item.status
+	                ),
+	                _react2.default.createElement(
+	                    'h3',
+	                    { className: 'uk-panel-title' },
+	                    this.props.item.name
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    this.props.item.description
 	                )
 	            );
 	        }
@@ -23780,7 +23718,7 @@
 	exports.default = ItemComponent;
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23815,7 +23753,7 @@
 	exports.default = Item;
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23824,31 +23762,31 @@
 	    value: true
 	});
 	
-	var _events = __webpack_require__(191);
+	var _events = __webpack_require__(190);
 	
 	var _events2 = _interopRequireDefault(_events);
 	
-	var _underscore = __webpack_require__(187);
+	var _underscore = __webpack_require__(186);
 	
 	var _underscore2 = _interopRequireDefault(_underscore);
 	
-	var _rest = __webpack_require__(192);
+	var _rest = __webpack_require__(191);
 	
 	var _rest2 = _interopRequireDefault(_rest);
 	
-	var _mime = __webpack_require__(198);
+	var _mime = __webpack_require__(197);
 	
 	var _mime2 = _interopRequireDefault(_mime);
 	
-	var _AppDispatcher = __webpack_require__(182);
+	var _AppDispatcher = __webpack_require__(181);
 	
 	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
 	
-	var _SearchConstants = __webpack_require__(185);
+	var _SearchConstants = __webpack_require__(184);
 	
 	var _SearchConstants2 = _interopRequireDefault(_SearchConstants);
 	
-	var _Item = __webpack_require__(189);
+	var _Item = __webpack_require__(188);
 	
 	var _Item2 = _interopRequireDefault(_Item);
 	
@@ -23884,7 +23822,7 @@
 	    ItemsStore.emitChangeResult();
 	};
 	
-	var load = function load(criteria) {
+	var loadJson = function loadJson(criteria) {
 	    client('items.json').then(function (response) {
 	        _underscore2.default.map(response.entity, function (item) {
 	            items.push(new _Item2.default(item));
@@ -23893,9 +23831,48 @@
 	    });
 	};
 	
+	var loadGoogleSpreadsheets = function loadGoogleSpreadsheets(criteria) {
+	    var cbname = 'spreadsheets';
+	    var script = document.createElement('script');
+	    script.id = 'spreadsheets';
+	    script.src = 'https://spreadsheets.google.com/feeds/list/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo/1/public/values?alt=json-in-script&callback=' + cbname;
+	
+	    if (document.getElementById(script.id) === null) {
+	        window[cbname] = function (jsonData) {
+	            delete window[cbname];
+	
+	            var convertEntryToItem = function convertEntryToItem(entry) {
+	                var item = {};
+	                var rx = /^gsx\$(.*)$/;
+	                _underscore2.default.map(entry, function (value, key) {
+	                    if (rx.test(key)) {
+	                        item[rx.exec(key)[1]] = value.$t;
+	                    }
+	                });
+	
+	                return new _Item2.default(item);
+	            };
+	
+	            _underscore2.default.map(jsonData.feed.entry, function (entry) {
+	                var item = convertEntryToItem(entry);
+	                items.push(item);
+	            });
+	
+	            filterResult(criteria);
+	        };
+	
+	        document.head.appendChild(script);
+	    }
+	};
+	
 	var search = function search(criteria) {
 	    if (_underscore2.default.isEmpty(items)) {
-	        load(criteria);
+	        // TODO use configuration file instead
+	        if (true) {
+	            loadGoogleSpreadsheets(criteria);
+	        } else {
+	            loadJson(criteria);
+	        }
 	    } else {
 	        filterResult(criteria);
 	    }
@@ -23915,7 +23892,7 @@
 	exports.default = ItemsStore;
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24193,7 +24170,7 @@
 	}
 
 /***/ },
-/* 192 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24205,15 +24182,15 @@
 	
 	'use strict';
 	
-	var rest = __webpack_require__(193),
-	    browser = __webpack_require__(195);
+	var rest = __webpack_require__(192),
+	    browser = __webpack_require__(194);
 	
 	rest.setPlatformDefaultClient(browser);
 	
 	module.exports = rest;
 
 /***/ },
-/* 193 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24283,7 +24260,7 @@
 	
 	var client, target, platformDefault;
 	
-	client = __webpack_require__(194);
+	client = __webpack_require__(193);
 	
 	if (typeof Promise !== 'function' && console && console.log) {
 	  console.log('An ES6 Promise implementation is required to use rest.js. See https://github.com/cujojs/when/blob/master/docs/es6-promise-shim.md for using when.js as a Promise polyfill.');
@@ -24334,7 +24311,7 @@
 	module.exports = client(defaultClient);
 
 /***/ },
-/* 194 */
+/* 193 */
 /***/ function(module, exports) {
 
 	/*
@@ -24392,7 +24369,7 @@
 	};
 
 /***/ },
-/* 195 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24406,9 +24383,9 @@
 	
 	var normalizeHeaderName, responsePromise, client, headerSplitRE;
 	
-	normalizeHeaderName = __webpack_require__(196);
-	responsePromise = __webpack_require__(197);
-	client = __webpack_require__(194);
+	normalizeHeaderName = __webpack_require__(195);
+	responsePromise = __webpack_require__(196);
+	client = __webpack_require__(193);
 	
 	// according to the spec, the line break is '\r\n', but doesn't hold true in practice
 	headerSplitRE = /[\r|\n]+/;
@@ -24561,7 +24538,7 @@
 	});
 
 /***/ },
-/* 196 */
+/* 195 */
 /***/ function(module, exports) {
 
 	/*
@@ -24594,7 +24571,7 @@
 	module.exports = normalizeHeaderName;
 
 /***/ },
-/* 197 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24608,7 +24585,7 @@
 	
 	/*jshint latedef: nofunc */
 	
-	var normalizeHeaderName = __webpack_require__(196);
+	var normalizeHeaderName = __webpack_require__(195);
 	
 	function property(promise, name) {
 	  return promise.then(function (value) {
@@ -24730,7 +24707,7 @@
 	module.exports = responsePromise;
 
 /***/ },
-/* 198 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24744,10 +24721,10 @@
 	
 	var interceptor, mime, registry, noopConverter, missingConverter, attempt;
 	
-	interceptor = __webpack_require__(199);
-	mime = __webpack_require__(201);
-	registry = __webpack_require__(202);
-	attempt = __webpack_require__(212);
+	interceptor = __webpack_require__(198);
+	mime = __webpack_require__(200);
+	registry = __webpack_require__(201);
+	attempt = __webpack_require__(211);
 	
 	noopConverter = {
 		read: function read(obj) {
@@ -24850,7 +24827,7 @@
 	});
 
 /***/ },
-/* 199 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24866,10 +24843,10 @@
 	
 	var defaultClient, mixin, responsePromise, client;
 	
-	defaultClient = __webpack_require__(193);
-	mixin = __webpack_require__(200);
-	responsePromise = __webpack_require__(197);
-	client = __webpack_require__(194);
+	defaultClient = __webpack_require__(192);
+	mixin = __webpack_require__(199);
+	responsePromise = __webpack_require__(196);
+	client = __webpack_require__(193);
 	
 	/**
 	 * Interceptors have the ability to intercept the request and/org response
@@ -24994,7 +24971,7 @@
 	module.exports = interceptor;
 
 /***/ },
-/* 200 */
+/* 199 */
 /***/ function(module, exports) {
 
 	/*
@@ -25038,7 +25015,7 @@
 	module.exports = mixin;
 
 /***/ },
-/* 201 */
+/* 200 */
 /***/ function(module, exports) {
 
 	/*
@@ -25085,7 +25062,7 @@
 	};
 
 /***/ },
-/* 202 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25099,7 +25076,7 @@
 	
 	var mime, registry;
 	
-	mime = __webpack_require__(201);
+	mime = __webpack_require__(200);
 	
 	function Registry(mimes) {
 	
@@ -25182,18 +25159,18 @@
 	registry = new Registry({});
 	
 	// include provided serializers
-	registry.register('application/hal', __webpack_require__(203));
-	registry.register('application/json', __webpack_require__(213));
-	registry.register('application/x-www-form-urlencoded', __webpack_require__(206));
-	registry.register('multipart/form-data', __webpack_require__(214));
-	registry.register('text/plain', __webpack_require__(215));
+	registry.register('application/hal', __webpack_require__(202));
+	registry.register('application/json', __webpack_require__(212));
+	registry.register('application/x-www-form-urlencoded', __webpack_require__(205));
+	registry.register('multipart/form-data', __webpack_require__(213));
+	registry.register('text/plain', __webpack_require__(214));
 	
 	registry.register('+json', registry.delegate('application/json'));
 	
 	module.exports = registry;
 
 /***/ },
-/* 203 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25207,11 +25184,11 @@
 	
 	var pathPrefix, template, find, lazyPromise, responsePromise;
 	
-	pathPrefix = __webpack_require__(204);
-	template = __webpack_require__(207);
-	find = __webpack_require__(210);
-	lazyPromise = __webpack_require__(211);
-	responsePromise = __webpack_require__(197);
+	pathPrefix = __webpack_require__(203);
+	template = __webpack_require__(206);
+	find = __webpack_require__(209);
+	lazyPromise = __webpack_require__(210);
+	responsePromise = __webpack_require__(196);
 	
 	function defineProperty(obj, name, value) {
 		Object.defineProperty(obj, name, {
@@ -25327,7 +25304,7 @@
 	};
 
 /***/ },
-/* 204 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25341,8 +25318,8 @@
 	
 	var interceptor, UrlBuilder;
 	
-	interceptor = __webpack_require__(199);
-	UrlBuilder = __webpack_require__(205);
+	interceptor = __webpack_require__(198);
+	UrlBuilder = __webpack_require__(204);
 	
 	function startsWith(str, prefix) {
 		return str.indexOf(prefix) === 0;
@@ -25381,7 +25358,7 @@
 	});
 
 /***/ },
-/* 205 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25395,8 +25372,8 @@
 	
 	var mixin, xWWWFormURLEncoder, origin, urlRE, absoluteUrlRE, fullyQualifiedUrlRE;
 	
-	mixin = __webpack_require__(200);
-	xWWWFormURLEncoder = __webpack_require__(206);
+	mixin = __webpack_require__(199);
+	xWWWFormURLEncoder = __webpack_require__(205);
 	
 	urlRE = /([a-z][a-z0-9\+\-\.]*:)\/\/([^@]+@)?(([^:\/]+)(:([0-9]+))?)?(\/[^?#]*)?(\?[^#]*)?(#\S*)?/i;
 	absoluteUrlRE = /^([a-z][a-z0-9\-\+\.]*:\/\/|\/)/i;
@@ -25600,7 +25577,7 @@
 	module.exports = UrlBuilder;
 
 /***/ },
-/* 206 */
+/* 205 */
 /***/ function(module, exports) {
 
 	/*
@@ -25683,7 +25660,7 @@
 	};
 
 /***/ },
-/* 207 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25697,9 +25674,9 @@
 	
 	var interceptor, uriTemplate, mixin;
 	
-	interceptor = __webpack_require__(199);
-	uriTemplate = __webpack_require__(208);
-	mixin = __webpack_require__(200);
+	interceptor = __webpack_require__(198);
+	uriTemplate = __webpack_require__(207);
+	mixin = __webpack_require__(199);
 	
 	/**
 	 * Applies request params to the path as a URI Template
@@ -25734,7 +25711,7 @@
 	});
 
 /***/ },
-/* 208 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25750,7 +25727,7 @@
 	
 	var uriEncoder, operations, prefixRE;
 	
-	uriEncoder = __webpack_require__(209);
+	uriEncoder = __webpack_require__(208);
 	
 	prefixRE = /^([^:]*):([0-9]+)$/;
 	operations = {
@@ -25896,7 +25873,7 @@
 	};
 
 /***/ },
-/* 209 */
+/* 208 */
 /***/ function(module, exports) {
 
 	/*
@@ -26070,7 +26047,7 @@
 	};
 
 /***/ },
-/* 210 */
+/* 209 */
 /***/ function(module, exports) {
 
 	/*
@@ -26110,7 +26087,7 @@
 	};
 
 /***/ },
-/* 211 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -26122,7 +26099,7 @@
 	
 	'use strict';
 	
-	var attempt = __webpack_require__(212);
+	var attempt = __webpack_require__(211);
 	
 	/**
 	 * Create a promise whose work is started only when a handler is registered.
@@ -26161,7 +26138,7 @@
 	module.exports = lazyPromise;
 
 /***/ },
-/* 212 */
+/* 211 */
 /***/ function(module, exports) {
 
 	/*
@@ -26193,7 +26170,7 @@
 	module.exports = attempt;
 
 /***/ },
-/* 213 */
+/* 212 */
 /***/ function(module, exports) {
 
 	/*
@@ -26236,7 +26213,7 @@
 	module.exports = createConverter();
 
 /***/ },
-/* 214 */
+/* 213 */
 /***/ function(module, exports) {
 
 	/*
@@ -26306,7 +26283,7 @@
 	};
 
 /***/ },
-/* 215 */
+/* 214 */
 /***/ function(module, exports) {
 
 	/*
