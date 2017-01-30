@@ -36,7 +36,8 @@ const filterResult = (criteria) => {
     ItemsStore.emitChangeResult();
 };
 
-const load = (criteria) => {
+
+const loadJson = (criteria) => {
     client('items.json').then((response) => {
         _.map(response.entity, (item) => {
             items.push(new Item(item));
@@ -45,9 +46,48 @@ const load = (criteria) => {
     });
 };
 
+const loadGoogleSpreadsheets = (criteria) => {
+    const cbname = 'spreadsheets';
+    const script = document.createElement('script');
+    script.id = 'spreadsheets';
+    script.src = `https://spreadsheets.google.com/feeds/list/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo/1/public/values?alt=json-in-script&callback=${cbname}`;
+
+    if (document.getElementById(script.id) === null) {
+        window[cbname] = ((jsonData) => {
+            delete window[cbname];
+
+            const convertEntryToItem = (entry) => {
+                const item = {};
+                const rx = /^gsx\$(.*)$/;
+                _.map(entry, (value, key) => {
+                    if (rx.test(key)) {
+                        item[rx.exec(key)[1]] = value.$t;
+                    }
+                });
+
+                return new Item(item);
+            };
+
+            _.map(jsonData.feed.entry, (entry) => {
+                const item = convertEntryToItem(entry);
+                items.push(item);
+            });
+
+            filterResult(criteria);
+        });
+
+        document.head.appendChild(script);
+    }
+};
+
 const search = (criteria) => {
     if (_.isEmpty(items)) {
-        load(criteria);
+        // TODO use configuration file instead
+        if (true) {
+            loadGoogleSpreadsheets(criteria);
+        } else {
+            loadJson(criteria);
+        }
     } else {
         filterResult(criteria);
     }
