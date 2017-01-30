@@ -1,9 +1,12 @@
 import EventEmitter from 'events';
 import _ from 'underscore';
+import rest from 'rest';
+import mime from 'rest/interceptor/mime';
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import SearchConstants from '../constants/SearchConstants';
 import Item from '../class/Item';
 
+const client = rest.wrap(mime);
 const EVENTS = {
     CHANGE_RESULT: 'CHANGE_RESULT',
 };
@@ -33,7 +36,17 @@ const filterResult = (criteria) => {
     ItemsStore.emitChangeResult();
 };
 
-const load = (criteria) => {
+
+const loadJson = (criteria) => {
+    client('items.json').then((response) => {
+        _.map(response.entity, (item) => {
+            items.push(new Item(item));
+        });
+        filterResult(criteria);
+    });
+};
+
+const loadGoogleSpreadsheets = (criteria) => {
     const cbname = 'spreadsheets';
     const script = document.createElement('script');
     script.id = 'spreadsheets';
@@ -69,7 +82,12 @@ const load = (criteria) => {
 
 const search = (criteria) => {
     if (_.isEmpty(items)) {
-        load(criteria);
+        // TODO use configuration file instead
+        if (true) {
+            loadGoogleSpreadsheets(criteria);
+        } else {
+            loadJson(criteria);
+        }
     } else {
         filterResult(criteria);
     }
