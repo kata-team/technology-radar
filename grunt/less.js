@@ -7,7 +7,7 @@ module.exports = {
             {
                 expand: true,
                 cwd: '<%= paths.source.stylesheets %>',
-                src: ['*.sass', '*.scss'],
+                src: ['*.less'],
                 dest: '<%= paths.public.stylesheets %>',
                 ext: '.css',
             },

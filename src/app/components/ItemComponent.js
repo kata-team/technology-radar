@@ -11,11 +11,13 @@ export default class ItemComponent extends Component {
 
     render() {
         return (
-            <a className="uk-panel uk-panel-box uk-panel-box-default" target="_blank" rel="noopener noreferrer" href={this.props.item.url}>
-                <div className="uk-panel-badge uk-badge">{this.props.item.status}</div>
-                <h3 className="uk-panel-title">{this.props.item.name}</h3>
-                <p>{this.props.item.description}</p>
-            </a>
+            <div>
+                <a className="uk-card uk-card-default uk-card-body uk-card-hover" target="_blank" rel="noopener noreferrer" href={this.props.item.url}>
+                    <div className="uk-card-badge uk-label">{this.props.item.status}</div>
+                    <h3 className="uk-card-title">{this.props.item.name}</h3>
+                    <p>{this.props.item.description}</p>
+                </a>
+            </div>
         );
     }
 

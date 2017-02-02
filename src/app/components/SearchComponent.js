@@ -5,9 +5,7 @@ export default class SearchComponent extends Component {
 
     render() {
         return (
-            <form className="uk-form">
-                <input type="search" placeholder="Search" className="uk-width-medium-1-4" onChange={(event) => { SearchActions.changeCriteria(event.target.value) }} />
-            </form>
+            <input type="search" placeholder="Search" className="uk-input uk-width-1-4@s" onChange={(event) => { SearchActions.changeCriteria(event.target.value) }} />
         );
     }
 
