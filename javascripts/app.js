@@ -22121,7 +22121,7 @@
 	            return _underscore2.default.map(this.state.result, function (items, category) {
 	                return _react2.default.createElement(
 	                    'div',
-	                    { key: category, 'data-category': category, className: 'uk-section uk-section-primary uk-preserve-color' },
+	                    { key: category, 'data-category': category, className: 'uk-section' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'uk-container' },
@@ -23746,6 +23746,8 @@
 	    value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -23781,7 +23783,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    'a',
-	                    { className: 'uk-card uk-card-default uk-card-body uk-card-hover', target: '_blank', rel: 'noopener noreferrer', href: this.props.item.url },
+	                    _extends({ className: 'uk-card uk-card-default uk-card-body uk-card-hover', target: '_blank', rel: 'noopener noreferrer' }, this.props.item.url ? { href: this.props.item.url } : {}),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'uk-card-badge uk-label' },
@@ -23893,12 +23895,17 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var client = _rest2.default.wrap(_mime2.default);
+	
 	var EVENTS = {
 	    CHANGE_RESULT: 'CHANGE_RESULT'
 	};
+	
 	var state = {
+	    endpoint: 'SPREADSHEETS',
+	    criteria: '',
 	    items: []
 	};
+	
 	var results = [];
 	
 	var ItemsStore = Object.assign({}, _events2.default.prototype, {
@@ -23918,12 +23925,15 @@
 	
 	var filterResult = function filterResult(criteria) {
 	    var rx = new RegExp(criteria, 'i');
-	    var items = _underscore2.default.filter(state.items, function (item) {
+	
+	    results = _underscore2.default.filter(state.items, function (item) {
 	        return rx.test(item.name) || rx.test(item.description) || rx.test(item.status);
 	    });
-	    results = _underscore2.default.groupBy(items, function (item) {
+	
+	    results = _underscore2.default.groupBy(results, function (item) {
 	        return item.category;
 	    });
+	
 	    ItemsStore.emitChangeResult();
 	};
 	
@@ -23972,8 +23982,7 @@
 	
 	var search = function search(criteria) {
 	    if (_underscore2.default.isEmpty(state.items)) {
-	        // TODO use configuration file instead
-	        if (true) {
+	        if (state.endpoint === 'SPREADSHEETS') {
 	            loadGoogleSpreadsheets(criteria);
 	        } else {
 	            loadJson(criteria);
@@ -23986,6 +23995,7 @@
 	_AppDispatcher2.default.register(function (action) {
 	    switch (action.actionType) {
 	        case _SearchConstants2.default.CHANGE_CRITERIA:
+	            state.criteria = action.criteria;
 	            search(action.criteria);
 	            break;
 	        default:
