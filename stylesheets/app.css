@@ -10695,6 +10695,36 @@ td.uk-text-break {
     page-break-after: avoid;
   }
 }
+[data-category="technique"] {
+  background: #7eb5c3;
+}
+[data-category="technique"] .uk-label {
+  background: #5ba1b3;
+}
+[data-category="tools"] {
+  background: #8ec37e;
+}
+[data-category="tools"] .uk-label {
+  background: #70b35b;
+}
+[data-category="platform"] {
+  background: #c3a57e;
+}
+[data-category="platform"] .uk-label {
+  background: #b38d5b;
+}
+[data-category="language & framework"] {
+  background: #c37e7e;
+}
+[data-category="language & framework"] .uk-label {
+  background: #b35b5b;
+}
+[data-category="template engine"] {
+  background: #a67ec3;
+}
+[data-category="template engine"] .uk-label {
+  background: #8e5bb3;
+}
 body {
   font-weight: 300;
   margin: 140px 0 50px;

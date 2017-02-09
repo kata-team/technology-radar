@@ -1,0 +1,34 @@
+[
+    {
+        "name":"React.js",
+        "description":"React (sometimes styled React.js or ReactJS) is an open-source JavaScript library for building user interfaces.\nIt is maintained by Facebook, Instagram and a community of individual developers and corporations. According to JavaScript analytics service Libscore, React is currently being used on the websites of Netflix, Imgur, Bleacher Report, Feedly, Airbnb, SeatGeek, HelloSign, Walmart, and others.",
+        "category":"language & framework",
+        "status":"assess",
+        "tags":"",
+        "url":"https://facebook.github.io/react/"
+    },
+    {
+        "name":"Gulp",
+        "description":"In the last radar we called out Gulp as a strong competitor to Grunt, with a clean API and fast builds thanks to its streaming approach. While we still like it as a tool, we are moving it out from trial back to assess since Grunt has both a broader usage model and better industry adoption and tooling. We do see some teams successfully using Gulp inside Grunt, when the speed of intermediate result caching is required, but we are not recommending it as the default JavaScript build tool.",
+        "category":"tools",
+        "status":"assess",
+        "tags":"",
+        "url":"http://gulpjs.com/"
+    },
+    {
+        "name":"Grunt.js",
+        "description":"Grunt is rapidly becoming the de facto JavaScript build tool with high adoption and a growing ecosystem. While slower than newer alternatives, such as Gulp, in terms of file processing, Grunt covers a broader set of build-related activities, has a proliferation of plugins and makes it easy to author and publish self-written plugins to npm.",
+        "category":"tools",
+        "status":"adopt",
+        "tags":"",
+        "url":"http://gruntjs.com/"
+    },
+    {
+        "name":"Bower",
+        "description":"Keeping track of all these packages and making sure they are up to date (or set to the specific versions you need) is tricky. Bower to the rescue!\n\nBower can manage components that contain HTML, CSS, JavaScript, fonts or even image files. Bower doesn’t concatenate or minify code or do anything else - it just installs the right versions of the packages you need and their dependencies.",
+        "category":"tools",
+        "status":"adopt",
+        "tags":"",
+        "url":"https://bower.io/"
+    }
+]

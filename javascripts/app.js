@@ -21597,11 +21597,7 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_NavbarComponent2.default, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'uk-container' },
-	                    _react2.default.createElement(_ResultComponent2.default, null)
-	                )
+	                _react2.default.createElement(_ResultComponent2.default, null)
 	            );
 	        }
 	    }]);
@@ -22107,24 +22103,54 @@
 	            this.setState({ result: _ItemsStore2.default.result() });
 	        }
 	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match' },
-	                this.items
-	            );
-	        }
-	    }, {
-	        key: 'items',
-	        get: function get() {
-	            return _underscore2.default.map(this.state.result, function (item, key) {
+	        key: 'renderItems',
+	        value: function renderItems(items) {
+	            return _underscore2.default.map(items, function (item, key) {
 	                return _react2.default.createElement(
 	                    'div',
 	                    { key: key, className: 'uk-grid-match uk-grid-margin' },
 	                    _react2.default.createElement(_ItemComponent2.default, { item: item })
 	                );
 	            });
+	        }
+	    }, {
+	        key: 'renderCategories',
+	        value: function renderCategories() {
+	            var _this2 = this;
+	
+	            return _underscore2.default.map(this.state.result, function (items, category) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { key: category, 'data-category': category, className: 'uk-section uk-section-primary uk-preserve-color' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'uk-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'uk-panel uk-light uk-margin-medium' },
+	                            _react2.default.createElement(
+	                                'h3',
+	                                null,
+	                                category
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match' },
+	                            _this2.renderItems(items)
+	                        )
+	                    )
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                this.renderCategories()
+	            );
 	        }
 	    }]);
 	
@@ -23805,6 +23831,8 @@
 	        name = _ref$name === undefined ? '' : _ref$name,
 	        _ref$description = _ref.description,
 	        description = _ref$description === undefined ? '' : _ref$description,
+	        _ref$category = _ref.category,
+	        category = _ref$category === undefined ? '' : _ref$category,
 	        _ref$status = _ref.status,
 	        status = _ref$status === undefined ? '' : _ref$status,
 	        _ref$url = _ref.url,
@@ -23816,6 +23844,7 @@
 	
 	    this.name = name;
 	    this.description = description;
+	    this.category = category;
 	    this.status = status;
 	    this.tags = tags;
 	    this.url = url;
@@ -23867,7 +23896,9 @@
 	var EVENTS = {
 	    CHANGE_RESULT: 'CHANGE_RESULT'
 	};
-	var items = [];
+	var state = {
+	    items: []
+	};
 	var results = [];
 	
 	var ItemsStore = Object.assign({}, _events2.default.prototype, {
@@ -23886,9 +23917,12 @@
 	});
 	
 	var filterResult = function filterResult(criteria) {
-	    var value = criteria.toUpperCase();
-	    results = _underscore2.default.filter(items, function (item) {
-	        return item.name.toUpperCase().includes(value) || item.description.toUpperCase().includes(value) || item.status.toUpperCase().includes(value);
+	    var rx = new RegExp(criteria, 'i');
+	    var items = _underscore2.default.filter(state.items, function (item) {
+	        return rx.test(item.name) || rx.test(item.description) || rx.test(item.status);
+	    });
+	    results = _underscore2.default.groupBy(items, function (item) {
+	        return item.category;
 	    });
 	    ItemsStore.emitChangeResult();
 	};
@@ -23896,7 +23930,7 @@
 	var loadJson = function loadJson(criteria) {
 	    client('items.json').then(function (response) {
 	        _underscore2.default.map(response.entity, function (item) {
-	            items.push(new _Item2.default(item));
+	            state.items.push(new _Item2.default(item));
 	        });
 	        filterResult(criteria);
 	    });
@@ -23926,7 +23960,7 @@
 	
 	            _underscore2.default.map(jsonData.feed.entry, function (entry) {
 	                var item = convertEntryToItem(entry);
-	                items.push(item);
+	                state.items.push(item);
 	            });
 	
 	            filterResult(criteria);
@@ -23937,7 +23971,7 @@
 	};
 	
 	var search = function search(criteria) {
-	    if (_underscore2.default.isEmpty(items)) {
+	    if (_underscore2.default.isEmpty(state.items)) {
 	        // TODO use configuration file instead
 	        if (true) {
 	            loadGoogleSpreadsheets(criteria);
