@@ -27,6 +27,9 @@ module.exports = {
             new webpack.optimize.UglifyJsPlugin({
                 include: /\.min\.js$/,
                 minimize: true,
+                compress: {
+                    warnings: false
+                },
             }),
         ],
     },
@@ -41,5 +44,13 @@ module.exports = {
         entry: {
             'app.min': './<%= paths.source.javascripts %>/app',
         },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify('production')
+                }
+            }),
+            new webpack.optimize.UglifyJsPlugin(),
+        ],
     },
 };

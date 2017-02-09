@@ -1,6 +1,9 @@
 module.exports = {
     javascripts: {
-        files: ['<%= paths.source.javascripts %>/**/*.js'],
+        files: [
+            '<%= paths.source.javascripts %>/**/*.js'  ,
+            '<%= paths.source.javascripts %>/**/*.jsx'
+        ],
         tasks: ['test', 'javascripts:dev'],
         options: {
             spawn: false,

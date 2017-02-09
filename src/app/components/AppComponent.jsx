@@ -13,9 +13,7 @@ export default class AppComponent extends Component {
         return (
             <div>
                 <NavbarComponent />
-                <div className="uk-container">
-                    <ResultComponent />
-                </div>
+                <ResultComponent />
             </div>
         );
     }

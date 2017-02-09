@@ -7,10 +7,17 @@ import SearchConstants from '../constants/SearchConstants';
 import Item from '../class/Item';
 
 const client = rest.wrap(mime);
+
 const EVENTS = {
     CHANGE_RESULT: 'CHANGE_RESULT',
 };
-const items = [];
+
+const state = {
+    endpoint: 'SPREADSHEETS',
+    criteria: '',
+    items: [],
+};
+
 let results = [];
 
 const ItemsStore = Object.assign({}, EventEmitter.prototype, {
@@ -30,9 +37,15 @@ const ItemsStore = Object.assign({}, EventEmitter.prototype, {
 
 const filterResult = (criteria) => {
     const rx = new RegExp(criteria, 'i');
-    results = _.filter(items, (item) => {
+
+    results = _.filter(state.items, (item) => {
         return rx.test(item.name) || rx.test(item.description) || rx.test(item.status);
     });
+
+    results = _.groupBy(results, (item) => {
+        return item.category;
+    });
+
     ItemsStore.emitChangeResult();
 };
 
@@ -40,7 +53,7 @@ const filterResult = (criteria) => {
 const loadJson = (criteria) => {
     client('items.json').then((response) => {
         _.map(response.entity, (item) => {
-            items.push(new Item(item));
+            state.items.push(new Item(item));
         });
         filterResult(criteria);
     });
@@ -70,7 +83,7 @@ const loadGoogleSpreadsheets = (criteria) => {
 
             _.map(jsonData.feed.entry, (entry) => {
                 const item = convertEntryToItem(entry);
-                items.push(item);
+                state.items.push(item);
             });
 
             filterResult(criteria);
@@ -81,9 +94,8 @@ const loadGoogleSpreadsheets = (criteria) => {
 };
 
 const search = (criteria) => {
-    if (_.isEmpty(items)) {
-        // TODO use configuration file instead
-        if (true) {
+    if (_.isEmpty(state.items)) {
+        if (state.endpoint === 'SPREADSHEETS') {
             loadGoogleSpreadsheets(criteria);
         } else {
             loadJson(criteria);
@@ -96,6 +108,7 @@ const search = (criteria) => {
 AppDispatcher.register((action) => {
     switch (action.actionType) {
     case SearchConstants.CHANGE_CRITERIA:
+        state.criteria = action.criteria;
         search(action.criteria);
         break;
     default:

@@ -22,18 +22,36 @@ export default class ResultComponent extends Component {
         this.setState({ result: ItemsStore.result() });
     }
 
-    get items() {
-        return _.map(this.state.result, (item, key) => (
+    renderItems(items) {
+        return _.map(items, (item, key) => (
             <div key={key} className="uk-grid-match uk-grid-margin">
                 <ItemComponent item={item} />
             </div>
         ));
     }
 
+    renderCategories() {
+        return _.map(this.state.result, (items, category) => (
+            <div key={category} data-category={category} className="uk-section">
+                <div className="uk-container">
+
+                    <div className="uk-panel uk-light uk-margin-medium">
+                        <h3>{category}</h3>
+                    </div>
+
+                    <div className="uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match">
+                        { this.renderItems(items) }
+                    </div>
+
+                </div>
+            </div>
+        ));
+    }
+
     render() {
         return (
-            <div className="uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match">
-                {this.items}
+            <div>
+                { this.renderCategories() }
             </div>
         );
     }
