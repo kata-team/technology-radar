@@ -29,9 +29,9 @@ const ItemsStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 const filterResult = (criteria) => {
-    const value = criteria.toUpperCase();
+    const rx = new RegExp(criteria, 'i');
     results = _.filter(items, (item) => {
-        return item.name.toUpperCase().includes(value) || item.description.toUpperCase().includes(value) || item.status.toUpperCase().includes(value);
+        return rx.test(item.name) || rx.test(item.description) || rx.test(item.status);
     });
     ItemsStore.emitChangeResult();
 };
