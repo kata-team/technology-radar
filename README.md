@@ -4,9 +4,35 @@
 TECHNOLOGY RADAR
 ================
 
+This project is freely based on technology-radar by [ThoughtWorks].
+
+
+Live demo
+---------
+
+Here you can find our live demo so you can explore all features.
+
+https://kata-team.github.io/technology-radar
+
+
+To-Do List
+----------
+
+- [x] Responsive Web Design
+- [ ] Search items
+    - [x] search by `title` and `description`
+    - [ ] filter by `category`
+    - [ ] filter by `status`
+- [x] Continuous Integration with Travis CI
+- [x] [Live demo with GitHub Pages](#github-pages)
+- [x] Continuous Delivery
+- [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
+
 
 Development
 -----------
+
+To get started, fork the project.
 
 ### Install Grunt and Bower
 
@@ -26,22 +52,34 @@ npm install
 bower install
 ```
 
-### Local HTTP Server
+### Google Spreadsheets integration
 
-In order to avoid the `cross origin request` issue, you need an HTTP Server.
+Technology Radar provides a Google Spreadsheets integration, so you can use spreadsheets to storage your data.
 
-```sh
-npm start
+Here you can find the example used for our [live demo](#live-demo). Feel free to duplicate the document and make your own.
 
-# http://127.0.0.1:8080
-```
+https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo
 
-### Available Grunt tasks
+### GitHub Pages
 
-* `test`        A linter tool for identifying and reporting on patterns in JavaScript.
-* `stylesheets` Compile stylesheets.
-* `javascripts` Compile javascripts.
-* `build`       Alias for "test", "javascripts", "stylesheets" tasks.
-* `docs`        Alias for "build". After build it creates "docs" folder for GitHub pages.
+The project is a set of html, css and javascript so it can be executed using [GitHub Pages].
+
+We use GitHub Pages to provide you our live demo.
+
+
+### Travis CI as Continuous Delivery
+
+
+
+### Available tasks
+
+* `npm test`          A linter tool for identifying and reporting on patterns in JavaScript.
+* `npm start`         Run HTTP Server on http://127.0.0.1:8080.
+* `npm run build`     Run "test" and compile "javascripts" and "stylesheets".
+* `npm run gh-pages`  Alias for "build". After that, will push changes of the **public** folder to **gh-pages** branch.
+* `grunt`             Alias for "build" and "watch".
+
 
 [node.js]: <https://nodejs.org/>
+[ThoughtWorks]: <https://www.thoughtworks.com/radar>
+[GitHub Pages]: <https://pages.github.com/>
