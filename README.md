@@ -23,9 +23,8 @@ To-Do List
     - [x] search by `title` and `description`
     - [ ] filter by `category`
     - [ ] filter by `status`
-- [x] Continuous Integration with Travis CI
 - [x] [Live demo with GitHub Pages](#github-pages)
-- [x] Continuous Delivery
+- [x] Continuous Delivery with Travis CI
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
 
 
@@ -65,10 +64,6 @@ https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgY
 The project is a set of html, css and javascript so it can be executed using [GitHub Pages].
 
 We use GitHub Pages to provide you our live demo.
-
-
-### Travis CI as Continuous Delivery
-
 
 
 ### Available tasks
