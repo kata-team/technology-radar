@@ -23872,14 +23872,6 @@
 	
 	var _underscore2 = _interopRequireDefault(_underscore);
 	
-	var _rest = __webpack_require__(192);
-	
-	var _rest2 = _interopRequireDefault(_rest);
-	
-	var _mime = __webpack_require__(198);
-	
-	var _mime2 = _interopRequireDefault(_mime);
-	
 	var _AppDispatcher = __webpack_require__(182);
 	
 	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
@@ -23888,22 +23880,24 @@
 	
 	var _SearchConstants2 = _interopRequireDefault(_SearchConstants);
 	
-	var _Item = __webpack_require__(189);
+	var _ItemsLoader = __webpack_require__(192);
 	
-	var _Item2 = _interopRequireDefault(_Item);
+	var _ItemsLoader2 = _interopRequireDefault(_ItemsLoader);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var client = _rest2.default.wrap(_mime2.default);
+	var itemsLoader = new _ItemsLoader2.default();
 	
 	var EVENTS = {
 	    CHANGE_RESULT: 'CHANGE_RESULT'
 	};
 	
 	var state = {
-	    endpoint: 'SPREADSHEETS',
-	    criteria: '',
-	    items: []
+	    endpoint: {
+	        type: 'SPREADSHEETS',
+	        url: 'https://spreadsheets.google.com/feeds/list/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo/1/public/values?alt=json-in-script&callback={1}'
+	    },
+	    criteria: ''
 	};
 	
 	var results = [];
@@ -23923,73 +23917,24 @@
 	    }
 	});
 	
-	var filterResult = function filterResult(criteria) {
-	    var rx = new RegExp(criteria, 'i');
-	
-	    results = _underscore2.default.filter(state.items, function (item) {
-	        return rx.test(item.name) || rx.test(item.description) || rx.test(item.status);
-	    });
-	
-	    results = _underscore2.default.groupBy(results, function (item) {
+	var groupByCategories = function groupByCategories(items) {
+	    return _underscore2.default.groupBy(items, function (item) {
 	        return item.category;
 	    });
-	
-	    ItemsStore.emitChangeResult();
-	};
-	
-	var loadJson = function loadJson(criteria) {
-	    client('items.json').then(function (response) {
-	        _underscore2.default.map(response.entity, function (item) {
-	            state.items.push(new _Item2.default(item));
-	        });
-	        filterResult(criteria);
-	    });
-	};
-	
-	var loadGoogleSpreadsheets = function loadGoogleSpreadsheets(criteria) {
-	    var cbname = 'spreadsheets';
-	    var script = document.createElement('script');
-	    script.id = 'spreadsheets';
-	    script.src = 'https://spreadsheets.google.com/feeds/list/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo/1/public/values?alt=json-in-script&callback=' + cbname;
-	
-	    if (document.getElementById(script.id) === null) {
-	        window[cbname] = function (jsonData) {
-	            delete window[cbname];
-	
-	            var convertEntryToItem = function convertEntryToItem(entry) {
-	                var item = {};
-	                var rx = /^gsx\$(.*)$/;
-	                _underscore2.default.map(entry, function (value, key) {
-	                    if (rx.test(key)) {
-	                        item[rx.exec(key)[1]] = value.$t;
-	                    }
-	                });
-	
-	                return new _Item2.default(item);
-	            };
-	
-	            _underscore2.default.map(jsonData.feed.entry, function (entry) {
-	                var item = convertEntryToItem(entry);
-	                state.items.push(item);
-	            });
-	
-	            filterResult(criteria);
-	        };
-	
-	        document.head.appendChild(script);
-	    }
 	};
 	
 	var search = function search(criteria) {
-	    if (_underscore2.default.isEmpty(state.items)) {
-	        if (state.endpoint === 'SPREADSHEETS') {
-	            loadGoogleSpreadsheets(criteria);
-	        } else {
-	            loadJson(criteria);
-	        }
-	    } else {
-	        filterResult(criteria);
-	    }
+	    itemsLoader.load(state.endpoint, function (items) {
+	        var rx = new RegExp(criteria, 'i');
+	
+	        results = _underscore2.default.filter(items, function (item) {
+	            return rx.test(item.name) || rx.test(item.description);
+	        });
+	
+	        results = groupByCategories(results);
+	
+	        ItemsStore.emitChangeResult();
+	    });
 	};
 	
 	_AppDispatcher2.default.register(function (action) {
@@ -24288,6 +24233,120 @@
 /* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _underscore = __webpack_require__(187);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
+	var _rest = __webpack_require__(193);
+	
+	var _rest2 = _interopRequireDefault(_rest);
+	
+	var _mime = __webpack_require__(199);
+	
+	var _mime2 = _interopRequireDefault(_mime);
+	
+	var _Item = __webpack_require__(189);
+	
+	var _Item2 = _interopRequireDefault(_Item);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var client = _rest2.default.wrap(_mime2.default);
+	
+	var ItemsLoader = function () {
+	    function ItemsLoader() {
+	        _classCallCheck(this, ItemsLoader);
+	
+	        this.items = [];
+	    }
+	
+	    _createClass(ItemsLoader, [{
+	        key: 'load',
+	        value: function load(endpoint, callback) {
+	            if (_underscore2.default.isEmpty(this.items)) {
+	                switch (endpoint.type) {
+	                    case 'SPREADSHEETS':
+	                        this.googleSpreadsheets(endpoint.url, callback);
+	                        break;
+	                    case 'JSON':
+	                        this.json(endpoint.url, callback);
+	                        break;
+	                    default:
+	                        break;
+	                }
+	            } else {
+	                callback(this.items);
+	            }
+	        }
+	    }, {
+	        key: 'json',
+	        value: function json(url, callback) {
+	            var _this = this;
+	
+	            client(url).then(function (response) {
+	                _underscore2.default.map(response.entity, function (item) {
+	                    _this.items.push(new _Item2.default(item));
+	                });
+	                callback(_this.items);
+	            });
+	        }
+	    }, {
+	        key: 'googleSpreadsheets',
+	        value: function googleSpreadsheets(url, callback) {
+	            var _this2 = this;
+	
+	            var script = document.createElement('script');
+	            script.id = 'spreadsheets';
+	            script.src = url.replace('{1}', script.id);
+	
+	            if (document.getElementById(script.id) === null) {
+	                window[script.id] = function (jsonData) {
+	                    delete window[script.id];
+	
+	                    var convertEntryToItem = function convertEntryToItem(entry) {
+	                        var item = {};
+	                        var rx = /^gsx\$(.*)$/;
+	                        _underscore2.default.map(entry, function (value, key) {
+	                            if (rx.test(key)) {
+	                                item[rx.exec(key)[1]] = value.$t;
+	                            }
+	                        });
+	
+	                        return new _Item2.default(item);
+	                    };
+	
+	                    _underscore2.default.map(jsonData.feed.entry, function (entry) {
+	                        var item = convertEntryToItem(entry);
+	                        _this2.items.push(item);
+	                    });
+	
+	                    callback(_this2.items);
+	                };
+	
+	                document.head.appendChild(script);
+	            }
+	        }
+	    }]);
+	
+	    return ItemsLoader;
+	}();
+	
+	exports.default = ItemsLoader;
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/*
 	 * Copyright 2014-2016 the original author or authors
 	 * @license MIT, see LICENSE.txt for details
@@ -24297,15 +24356,15 @@
 	
 	'use strict';
 	
-	var rest = __webpack_require__(193),
-	    browser = __webpack_require__(195);
+	var rest = __webpack_require__(194),
+	    browser = __webpack_require__(196);
 	
 	rest.setPlatformDefaultClient(browser);
 	
 	module.exports = rest;
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24375,7 +24434,7 @@
 	
 	var client, target, platformDefault;
 	
-	client = __webpack_require__(194);
+	client = __webpack_require__(195);
 	
 	if (typeof Promise !== 'function' && console && console.log) {
 	  console.log('An ES6 Promise implementation is required to use rest.js. See https://github.com/cujojs/when/blob/master/docs/es6-promise-shim.md for using when.js as a Promise polyfill.');
@@ -24426,7 +24485,7 @@
 	module.exports = client(defaultClient);
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports) {
 
 	/*
@@ -24484,7 +24543,7 @@
 	};
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24498,9 +24557,9 @@
 	
 	var normalizeHeaderName, responsePromise, client, headerSplitRE;
 	
-	normalizeHeaderName = __webpack_require__(196);
-	responsePromise = __webpack_require__(197);
-	client = __webpack_require__(194);
+	normalizeHeaderName = __webpack_require__(197);
+	responsePromise = __webpack_require__(198);
+	client = __webpack_require__(195);
 	
 	// according to the spec, the line break is '\r\n', but doesn't hold true in practice
 	headerSplitRE = /[\r|\n]+/;
@@ -24653,7 +24712,7 @@
 	});
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports) {
 
 	/*
@@ -24686,7 +24745,7 @@
 	module.exports = normalizeHeaderName;
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24700,7 +24759,7 @@
 	
 	/*jshint latedef: nofunc */
 	
-	var normalizeHeaderName = __webpack_require__(196);
+	var normalizeHeaderName = __webpack_require__(197);
 	
 	function property(promise, name) {
 	  return promise.then(function (value) {
@@ -24822,7 +24881,7 @@
 	module.exports = responsePromise;
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24836,10 +24895,10 @@
 	
 	var interceptor, mime, registry, noopConverter, missingConverter, attempt;
 	
-	interceptor = __webpack_require__(199);
-	mime = __webpack_require__(201);
-	registry = __webpack_require__(202);
-	attempt = __webpack_require__(212);
+	interceptor = __webpack_require__(200);
+	mime = __webpack_require__(202);
+	registry = __webpack_require__(203);
+	attempt = __webpack_require__(213);
 	
 	noopConverter = {
 		read: function read(obj) {
@@ -24942,7 +25001,7 @@
 	});
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24958,10 +25017,10 @@
 	
 	var defaultClient, mixin, responsePromise, client;
 	
-	defaultClient = __webpack_require__(193);
-	mixin = __webpack_require__(200);
-	responsePromise = __webpack_require__(197);
-	client = __webpack_require__(194);
+	defaultClient = __webpack_require__(194);
+	mixin = __webpack_require__(201);
+	responsePromise = __webpack_require__(198);
+	client = __webpack_require__(195);
 	
 	/**
 	 * Interceptors have the ability to intercept the request and/org response
@@ -25086,7 +25145,7 @@
 	module.exports = interceptor;
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports) {
 
 	/*
@@ -25130,7 +25189,7 @@
 	module.exports = mixin;
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports) {
 
 	/*
@@ -25177,7 +25236,7 @@
 	};
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25191,7 +25250,7 @@
 	
 	var mime, registry;
 	
-	mime = __webpack_require__(201);
+	mime = __webpack_require__(202);
 	
 	function Registry(mimes) {
 	
@@ -25274,18 +25333,18 @@
 	registry = new Registry({});
 	
 	// include provided serializers
-	registry.register('application/hal', __webpack_require__(203));
-	registry.register('application/json', __webpack_require__(213));
-	registry.register('application/x-www-form-urlencoded', __webpack_require__(206));
-	registry.register('multipart/form-data', __webpack_require__(214));
-	registry.register('text/plain', __webpack_require__(215));
+	registry.register('application/hal', __webpack_require__(204));
+	registry.register('application/json', __webpack_require__(214));
+	registry.register('application/x-www-form-urlencoded', __webpack_require__(207));
+	registry.register('multipart/form-data', __webpack_require__(215));
+	registry.register('text/plain', __webpack_require__(216));
 	
 	registry.register('+json', registry.delegate('application/json'));
 	
 	module.exports = registry;
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25299,11 +25358,11 @@
 	
 	var pathPrefix, template, find, lazyPromise, responsePromise;
 	
-	pathPrefix = __webpack_require__(204);
-	template = __webpack_require__(207);
-	find = __webpack_require__(210);
-	lazyPromise = __webpack_require__(211);
-	responsePromise = __webpack_require__(197);
+	pathPrefix = __webpack_require__(205);
+	template = __webpack_require__(208);
+	find = __webpack_require__(211);
+	lazyPromise = __webpack_require__(212);
+	responsePromise = __webpack_require__(198);
 	
 	function defineProperty(obj, name, value) {
 		Object.defineProperty(obj, name, {
@@ -25419,7 +25478,7 @@
 	};
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25433,8 +25492,8 @@
 	
 	var interceptor, UrlBuilder;
 	
-	interceptor = __webpack_require__(199);
-	UrlBuilder = __webpack_require__(205);
+	interceptor = __webpack_require__(200);
+	UrlBuilder = __webpack_require__(206);
 	
 	function startsWith(str, prefix) {
 		return str.indexOf(prefix) === 0;
@@ -25473,7 +25532,7 @@
 	});
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25487,8 +25546,8 @@
 	
 	var mixin, xWWWFormURLEncoder, origin, urlRE, absoluteUrlRE, fullyQualifiedUrlRE;
 	
-	mixin = __webpack_require__(200);
-	xWWWFormURLEncoder = __webpack_require__(206);
+	mixin = __webpack_require__(201);
+	xWWWFormURLEncoder = __webpack_require__(207);
 	
 	urlRE = /([a-z][a-z0-9\+\-\.]*:)\/\/([^@]+@)?(([^:\/]+)(:([0-9]+))?)?(\/[^?#]*)?(\?[^#]*)?(#\S*)?/i;
 	absoluteUrlRE = /^([a-z][a-z0-9\-\+\.]*:\/\/|\/)/i;
@@ -25692,7 +25751,7 @@
 	module.exports = UrlBuilder;
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports) {
 
 	/*
@@ -25775,7 +25834,7 @@
 	};
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25789,9 +25848,9 @@
 	
 	var interceptor, uriTemplate, mixin;
 	
-	interceptor = __webpack_require__(199);
-	uriTemplate = __webpack_require__(208);
-	mixin = __webpack_require__(200);
+	interceptor = __webpack_require__(200);
+	uriTemplate = __webpack_require__(209);
+	mixin = __webpack_require__(201);
 	
 	/**
 	 * Applies request params to the path as a URI Template
@@ -25826,7 +25885,7 @@
 	});
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25842,7 +25901,7 @@
 	
 	var uriEncoder, operations, prefixRE;
 	
-	uriEncoder = __webpack_require__(209);
+	uriEncoder = __webpack_require__(210);
 	
 	prefixRE = /^([^:]*):([0-9]+)$/;
 	operations = {
@@ -25988,7 +26047,7 @@
 	};
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports) {
 
 	/*
@@ -26162,7 +26221,7 @@
 	};
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports) {
 
 	/*
@@ -26202,7 +26261,7 @@
 	};
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -26214,7 +26273,7 @@
 	
 	'use strict';
 	
-	var attempt = __webpack_require__(212);
+	var attempt = __webpack_require__(213);
 	
 	/**
 	 * Create a promise whose work is started only when a handler is registered.
@@ -26253,7 +26312,7 @@
 	module.exports = lazyPromise;
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports) {
 
 	/*
@@ -26285,7 +26344,7 @@
 	module.exports = attempt;
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports) {
 
 	/*
@@ -26328,7 +26387,7 @@
 	module.exports = createConverter();
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports) {
 
 	/*
@@ -26398,7 +26457,7 @@
 	};
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports) {
 
 	/*
