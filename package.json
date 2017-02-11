@@ -26,14 +26,14 @@
         "grunt",
         "bower",
         "babel",
-        "sass", "scss",
+        "less",
         "eslint"
     ],
     "scripts" : {
         "test" : "grunt test",
+        "start": "http-server",
         "build" : "grunt test build",
-        "gh-pages" : "grunt test build gh-pages:local",
-        "start": "http-server"
+        "gh-pages" : "grunt test build gh-pages:local"
     },
     "engines": {
         "node": "6.9.4"

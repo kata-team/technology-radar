@@ -17,5 +17,5 @@ module.exports = {
             message: 'Deploy to GitHub Pages from Travis CI.',
         },
         src: ['**'],
-    }
+    },
 };
