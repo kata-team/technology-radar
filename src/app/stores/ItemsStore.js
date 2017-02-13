@@ -18,13 +18,20 @@ const state = {
         // url: 'items.json',
     },
     criteria: '',
+    status: '',
 };
 
-let results = [];
+const results = {
+    items: [],
+    status: [],
+};
 
 const ItemsStore = Object.assign({}, EventEmitter.prototype, {
     result() {
-        return results;
+        return results.items;
+    },
+    statusList() {
+        return results.status;
     },
     emitChangeResult() {
         this.emit(EVENTS.CHANGE_RESULT);
@@ -43,15 +50,25 @@ const groupByCategories = (items) => {
     });
 };
 
-const search = (criteria) => {
-    itemsLoader.load(state.endpoint, (items) => {
-        const rx = new RegExp(criteria, 'i');
+const updateResultStatus = (items) => {
+    const status = _.groupBy(items, (item) => {
+        return item.status;
+    });
 
-        results = _.filter(items, (item) => {
-            return rx.test(item.name) || rx.test(item.description);
+    results.status = _.keys(status);
+};
+
+const search = () => {
+    itemsLoader.load(state.endpoint, (items) => {
+        updateResultStatus(items);
+
+        const criteriaRegExp = new RegExp(state.criteria, 'i');
+
+        results.items = _.filter(items, (item) => {
+            return (criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description)) && (state.status !== '' ? item.status === state.status : true);
         });
 
-        results = groupByCategories(results);
+        results.items = groupByCategories(results.items);
 
         ItemsStore.emitChangeResult();
     });
@@ -61,7 +78,11 @@ AppDispatcher.register((action) => {
     switch (action.actionType) {
     case SearchConstants.CHANGE_CRITERIA:
         state.criteria = action.criteria;
-        search(action.criteria);
+        search();
+        break;
+    case SearchConstants.CHANGE_STATUS:
+        state.status = action.status;
+        search();
         break;
     default:
         // no op

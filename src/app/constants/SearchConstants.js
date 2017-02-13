@@ -1,3 +1,4 @@
 export default {
     CHANGE_CRITERIA: 'CHANGE_CRITERIA',
+    CHANGE_STATUS: 'CHANGE_STATUS',
 };

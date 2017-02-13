@@ -8,4 +8,10 @@ export default {
             criteria: _criteria,
         });
     },
+    changeStatus(_status) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.CHANGE_STATUS,
+            status: _status,
+        });
+    },
 };
