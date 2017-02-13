@@ -8,6 +8,7 @@ module.exports = grunt => {
                 root: 'src',
                 stylesheets: '<%= paths.source.root %>/stylesheets',
                 javascripts: '<%= paths.source.root %>/app',
+                bower_components: '<%= paths.source.root %>/bower_components',
             },
             public: {
                 root: 'public',
