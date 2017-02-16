@@ -18,7 +18,7 @@ const state = {
         // url: 'items.json',
     },
     criteria: '',
-    status: '',
+    status: [],
 };
 
 const results = {
@@ -44,6 +44,14 @@ const ItemsStore = Object.assign({}, EventEmitter.prototype, {
     },
 });
 
+const toggleArrayElement = (arr, elm, add) => {
+    if (add === undefined) {
+        return _.indexOf(arr, elm) === -1 ? _.union(arr, [elm]) : _.without(arr, elm);
+    }
+
+    return add ? _.union(arr, [elm]) : _.without(arr, elm);
+};
+
 const groupByCategories = (items) => {
     return _.groupBy(items, (item) => {
         return item.category;
@@ -65,7 +73,7 @@ const search = () => {
         const criteriaRegExp = new RegExp(state.criteria, 'i');
 
         results.items = _.filter(items, (item) => {
-            return (criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description)) && (state.status !== '' ? item.status === state.status : true);
+            return (criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description)) && (state.status.length === 0 ? true : state.status.indexOf(item.status) >= 0);
         });
 
         results.items = groupByCategories(results.items);
@@ -81,7 +89,7 @@ AppDispatcher.register((action) => {
         search();
         break;
     case SearchConstants.CHANGE_STATUS:
-        state.status = action.status;
+        state.status = toggleArrayElement(state.status, action.status.value, action.status.checked);
         search();
         break;
     default:
