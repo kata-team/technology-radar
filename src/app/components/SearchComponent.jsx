@@ -9,7 +9,8 @@ export default class SearchComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: ItemsStore.statusList(),
+            categories: ItemsStore.categories(),
+            statuses: ItemsStore.statuses(),
             offcanvas: false,
         };
 
@@ -25,7 +26,10 @@ export default class SearchComponent extends Component {
     }
 
     onChangeResultHandler() {
-        this.setState({ status: ItemsStore.statusList() });
+        this.setState({
+            categories: ItemsStore.categories(),
+            statuses: ItemsStore.statuses(),
+        });
     }
 
     onClickOffcanvasHandler() {
@@ -39,8 +43,16 @@ export default class SearchComponent extends Component {
         document.body.classList.toggle('uk-offcanvas-flip');
     }
 
-    status() {
-        return _.map(this.state.status, (status, key) => (
+    categories() {
+        return _.map(this.state.categories, (category, key) => (
+            <div key={key}>
+                <label><input className="uk-checkbox" type="checkbox" value={category} onChange={(event) => { SearchActions.changeCategory(event.target) }} /> {category}</label>
+            </div>
+        ));
+    }
+
+    statuses() {
+        return _.map(this.state.statuses, (status, key) => (
             <div key={key}>
                 <label><input className="uk-checkbox" type="checkbox" value={status} onChange={(event) => { SearchActions.changeStatus(event.target) }} /> {status}</label>
             </div>
@@ -60,8 +72,13 @@ export default class SearchComponent extends Component {
                     <h3>Filter</h3>
 
                     <div className="uk-margin uk-grid-small uk-child-width-auto">
+                        <div className="uk-margin-small"><b>Category</b></div>
+                        { this.categories() }
+                    </div>
+
+                    <div className="uk-margin uk-grid-small uk-child-width-auto">
                         <div className="uk-margin-small"><b>Status</b></div>
-                        { this.status() }
+                        { this.statuses() }
                     </div>
 
                     <button className="uk-button uk-button-default uk-offcanvas-close uk-width-1-1 uk-margin" onClick={this.onClickOffcanvasHandler} type="button">Close</button>

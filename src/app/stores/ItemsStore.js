@@ -18,20 +18,25 @@ const state = {
         // url: 'items.json',
     },
     criteria: '',
-    status: [],
+    categories: [],
+    statuses: [],
 };
 
 const results = {
     items: [],
-    status: [],
+    categories: [],
+    statuses: [],
 };
 
 const ItemsStore = Object.assign({}, EventEmitter.prototype, {
     result() {
         return results.items;
     },
-    statusList() {
-        return results.status;
+    categories() {
+        return results.categories;
+    },
+    statuses() {
+        return results.statuses;
     },
     emitChangeResult() {
         this.emit(EVENTS.CHANGE_RESULT);
@@ -58,22 +63,34 @@ const groupByCategories = (items) => {
     });
 };
 
-const updateResultStatus = (items) => {
-    const status = _.groupBy(items, (item) => {
+const updateResultCategories = (items) => {
+    const categories = _.groupBy(items, (item) => {
+        return item.category;
+    });
+
+    results.categories = _.keys(categories);
+};
+
+const updateResultStatuses = (items) => {
+    const statuses = _.groupBy(items, (item) => {
         return item.status;
     });
 
-    results.status = _.keys(status);
+    results.statuses = _.keys(statuses);
 };
 
 const search = () => {
     itemsLoader.load(state.endpoint, (items) => {
-        updateResultStatus(items);
+        updateResultCategories(items);
+        updateResultStatuses(items);
 
         const criteriaRegExp = new RegExp(state.criteria, 'i');
 
         results.items = _.filter(items, (item) => {
-            return (criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description)) && (state.status.length === 0 ? true : state.status.indexOf(item.status) >= 0);
+            let result = criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description);
+            result = result && (state.categories.length === 0 ? true : state.categories.indexOf(item.category) >= 0);
+            result = result && (state.statuses.length === 0 ? true : state.statuses.indexOf(item.status) >= 0);
+            return result;
         });
 
         results.items = groupByCategories(results.items);
@@ -88,8 +105,12 @@ AppDispatcher.register((action) => {
         state.criteria = action.criteria;
         search();
         break;
+    case SearchConstants.CHANGE_CATEGORY:
+        state.categories = toggleArrayElement(state.categories, action.target.value, action.target.checked);
+        search();
+        break;
     case SearchConstants.CHANGE_STATUS:
-        state.status = toggleArrayElement(state.status, action.status.value, action.status.checked);
+        state.statuses = toggleArrayElement(state.statues, action.target.value, action.target.checked);
         search();
         break;
     default:

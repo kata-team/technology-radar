@@ -33,7 +33,6 @@ export default class OffcanvasComponent extends Component {
     }
 
     onClick(event) {
-        console.log(event);
         this.props.onClick();
     }
 

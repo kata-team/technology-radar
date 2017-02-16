@@ -8,10 +8,16 @@ export default {
             criteria: _criteria,
         });
     },
-    changeStatus(_status) {
+    changeCategory(_target) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.CHANGE_CATEGORY,
+            target: _target,
+        });
+    },
+    changeStatus(_target) {
         AppDispatcher.dispatch({
             actionType: SearchConstants.CHANGE_STATUS,
-            status: _status,
+            target: _target,
         });
     },
 };
