@@ -24,6 +24,10 @@ build:
     - 'stylesheets'
     - 'copy'
 
+build:production:
+    - 'build'
+    - 'string-replace:production'
+
 # default
 default:
     - 'test'
