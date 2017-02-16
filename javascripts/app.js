@@ -21560,11 +21560,11 @@
 	
 	var _NavbarComponent2 = _interopRequireDefault(_NavbarComponent);
 	
-	var _ResultComponent = __webpack_require__(186);
+	var _ResultComponent = __webpack_require__(216);
 	
 	var _ResultComponent2 = _interopRequireDefault(_ResultComponent);
 	
-	var _SearchActions = __webpack_require__(181);
+	var _SearchActions = __webpack_require__(183);
 	
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 	
@@ -21690,9 +21690,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SearchActions = __webpack_require__(181);
+	var _underscore = __webpack_require__(181);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
+	var _OffcanvasComponent = __webpack_require__(182);
+	
+	var _OffcanvasComponent2 = _interopRequireDefault(_OffcanvasComponent);
+	
+	var _SearchActions = __webpack_require__(183);
 	
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
+	
+	var _ItemsStore = __webpack_require__(188);
+	
+	var _ItemsStore2 = _interopRequireDefault(_ItemsStore);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21705,389 +21717,21 @@
 	var SearchComponent = function (_Component) {
 	    _inherits(SearchComponent, _Component);
 	
-	    function SearchComponent() {
+	    function SearchComponent(props) {
 	        _classCallCheck(this, SearchComponent);
 	
-	        return _possibleConstructorReturn(this, (SearchComponent.__proto__ || Object.getPrototypeOf(SearchComponent)).apply(this, arguments));
-	    }
+	        var _this = _possibleConstructorReturn(this, (SearchComponent.__proto__ || Object.getPrototypeOf(SearchComponent)).call(this, props));
 	
-	    _createClass(SearchComponent, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('input', { type: 'search', placeholder: 'Search', className: 'uk-input uk-width-1-4@s', onChange: function onChange(event) {
-	                    _SearchActions2.default.changeCriteria(event.target.value);
-	                } });
-	        }
-	    }]);
+	        _this.state = {
+	            status: _ItemsStore2.default.statusList(),
+	            offcanvas: false
+	        };
 	
-	    return SearchComponent;
-	}(_react.Component);
-	
-	exports.default = SearchComponent;
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _AppDispatcher = __webpack_require__(182);
-	
-	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
-	
-	var _SearchConstants = __webpack_require__(185);
-	
-	var _SearchConstants2 = _interopRequireDefault(_SearchConstants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = {
-	    changeCriteria: function changeCriteria(_criteria) {
-	        _AppDispatcher2.default.dispatch({
-	            actionType: _SearchConstants2.default.CHANGE_CRITERIA,
-	            criteria: _criteria
-	        });
-	    }
-	};
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _flux = __webpack_require__(183);
-	
-	exports.default = new _flux.Dispatcher();
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	/**
-	 * Copyright (c) 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-	
-	module.exports.Dispatcher = __webpack_require__(184);
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule Dispatcher
-	 * 
-	 * @preventMunge
-	 */
-	
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError('Cannot call a class as a function');
-	  }
-	}
-	
-	var invariant = __webpack_require__(8);
-	
-	var _prefix = 'ID_';
-	
-	/**
-	 * Dispatcher is used to broadcast payloads to registered callbacks. This is
-	 * different from generic pub-sub systems in two ways:
-	 *
-	 *   1) Callbacks are not subscribed to particular events. Every payload is
-	 *      dispatched to every registered callback.
-	 *   2) Callbacks can be deferred in whole or part until other callbacks have
-	 *      been executed.
-	 *
-	 * For example, consider this hypothetical flight destination form, which
-	 * selects a default city when a country is selected:
-	 *
-	 *   var flightDispatcher = new Dispatcher();
-	 *
-	 *   // Keeps track of which country is selected
-	 *   var CountryStore = {country: null};
-	 *
-	 *   // Keeps track of which city is selected
-	 *   var CityStore = {city: null};
-	 *
-	 *   // Keeps track of the base flight price of the selected city
-	 *   var FlightPriceStore = {price: null}
-	 *
-	 * When a user changes the selected city, we dispatch the payload:
-	 *
-	 *   flightDispatcher.dispatch({
-	 *     actionType: 'city-update',
-	 *     selectedCity: 'paris'
-	 *   });
-	 *
-	 * This payload is digested by `CityStore`:
-	 *
-	 *   flightDispatcher.register(function(payload) {
-	 *     if (payload.actionType === 'city-update') {
-	 *       CityStore.city = payload.selectedCity;
-	 *     }
-	 *   });
-	 *
-	 * When the user selects a country, we dispatch the payload:
-	 *
-	 *   flightDispatcher.dispatch({
-	 *     actionType: 'country-update',
-	 *     selectedCountry: 'australia'
-	 *   });
-	 *
-	 * This payload is digested by both stores:
-	 *
-	 *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
-	 *     if (payload.actionType === 'country-update') {
-	 *       CountryStore.country = payload.selectedCountry;
-	 *     }
-	 *   });
-	 *
-	 * When the callback to update `CountryStore` is registered, we save a reference
-	 * to the returned token. Using this token with `waitFor()`, we can guarantee
-	 * that `CountryStore` is updated before the callback that updates `CityStore`
-	 * needs to query its data.
-	 *
-	 *   CityStore.dispatchToken = flightDispatcher.register(function(payload) {
-	 *     if (payload.actionType === 'country-update') {
-	 *       // `CountryStore.country` may not be updated.
-	 *       flightDispatcher.waitFor([CountryStore.dispatchToken]);
-	 *       // `CountryStore.country` is now guaranteed to be updated.
-	 *
-	 *       // Select the default city for the new country
-	 *       CityStore.city = getDefaultCityForCountry(CountryStore.country);
-	 *     }
-	 *   });
-	 *
-	 * The usage of `waitFor()` can be chained, for example:
-	 *
-	 *   FlightPriceStore.dispatchToken =
-	 *     flightDispatcher.register(function(payload) {
-	 *       switch (payload.actionType) {
-	 *         case 'country-update':
-	 *         case 'city-update':
-	 *           flightDispatcher.waitFor([CityStore.dispatchToken]);
-	 *           FlightPriceStore.price =
-	 *             getFlightPriceStore(CountryStore.country, CityStore.city);
-	 *           break;
-	 *     }
-	 *   });
-	 *
-	 * The `country-update` payload will be guaranteed to invoke the stores'
-	 * registered callbacks in order: `CountryStore`, `CityStore`, then
-	 * `FlightPriceStore`.
-	 */
-	
-	var Dispatcher = function () {
-	  function Dispatcher() {
-	    _classCallCheck(this, Dispatcher);
-	
-	    this._callbacks = {};
-	    this._isDispatching = false;
-	    this._isHandled = {};
-	    this._isPending = {};
-	    this._lastID = 1;
-	  }
-	
-	  /**
-	   * Registers a callback to be invoked with every dispatched payload. Returns
-	   * a token that can be used with `waitFor()`.
-	   */
-	
-	  Dispatcher.prototype.register = function register(callback) {
-	    var id = _prefix + this._lastID++;
-	    this._callbacks[id] = callback;
-	    return id;
-	  };
-	
-	  /**
-	   * Removes a callback based on its token.
-	   */
-	
-	  Dispatcher.prototype.unregister = function unregister(id) {
-	    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-	    delete this._callbacks[id];
-	  };
-	
-	  /**
-	   * Waits for the callbacks specified to be invoked before continuing execution
-	   * of the current callback. This method should only be used by a callback in
-	   * response to a dispatched payload.
-	   */
-	
-	  Dispatcher.prototype.waitFor = function waitFor(ids) {
-	    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
-	    for (var ii = 0; ii < ids.length; ii++) {
-	      var id = ids[ii];
-	      if (this._isPending[id]) {
-	        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
-	        continue;
-	      }
-	      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-	      this._invokeCallback(id);
-	    }
-	  };
-	
-	  /**
-	   * Dispatches a payload to all registered callbacks.
-	   */
-	
-	  Dispatcher.prototype.dispatch = function dispatch(payload) {
-	    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
-	    this._startDispatching(payload);
-	    try {
-	      for (var id in this._callbacks) {
-	        if (this._isPending[id]) {
-	          continue;
-	        }
-	        this._invokeCallback(id);
-	      }
-	    } finally {
-	      this._stopDispatching();
-	    }
-	  };
-	
-	  /**
-	   * Is this Dispatcher currently dispatching.
-	   */
-	
-	  Dispatcher.prototype.isDispatching = function isDispatching() {
-	    return this._isDispatching;
-	  };
-	
-	  /**
-	   * Call the callback stored with the given id. Also do some internal
-	   * bookkeeping.
-	   *
-	   * @internal
-	   */
-	
-	  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
-	    this._isPending[id] = true;
-	    this._callbacks[id](this._pendingPayload);
-	    this._isHandled[id] = true;
-	  };
-	
-	  /**
-	   * Set up bookkeeping needed when dispatching.
-	   *
-	   * @internal
-	   */
-	
-	  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
-	    for (var id in this._callbacks) {
-	      this._isPending[id] = false;
-	      this._isHandled[id] = false;
-	    }
-	    this._pendingPayload = payload;
-	    this._isDispatching = true;
-	  };
-	
-	  /**
-	   * Clear bookkeeping used for dispatching.
-	   *
-	   * @internal
-	   */
-	
-	  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
-	    delete this._pendingPayload;
-	    this._isDispatching = false;
-	  };
-	
-	  return Dispatcher;
-	}();
-	
-	module.exports = Dispatcher;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 185 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    CHANGE_CRITERIA: 'CHANGE_CRITERIA'
-	};
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _underscore = __webpack_require__(187);
-	
-	var _underscore2 = _interopRequireDefault(_underscore);
-	
-	var _ItemComponent = __webpack_require__(188);
-	
-	var _ItemComponent2 = _interopRequireDefault(_ItemComponent);
-	
-	var _ItemsStore = __webpack_require__(190);
-	
-	var _ItemsStore2 = _interopRequireDefault(_ItemsStore);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResultComponent = function (_Component) {
-	    _inherits(ResultComponent, _Component);
-	
-	    function ResultComponent(props) {
-	        _classCallCheck(this, ResultComponent);
-	
-	        var _this = _possibleConstructorReturn(this, (ResultComponent.__proto__ || Object.getPrototypeOf(ResultComponent)).call(this, props));
-	
-	        _this.state = { result: _ItemsStore2.default.result() };
+	        _this.onClickOffcanvasHandler = _this.onClickOffcanvasHandler.bind(_this);
 	        return _this;
 	    }
 	
-	    _createClass(ResultComponent, [{
+	    _createClass(SearchComponent, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            _ItemsStore2.default.addChangeResultListener(this.onChangeResultHandler.bind(this));
@@ -22100,45 +21744,37 @@
 	    }, {
 	        key: 'onChangeResultHandler',
 	        value: function onChangeResultHandler() {
-	            this.setState({ result: _ItemsStore2.default.result() });
+	            this.setState({ status: _ItemsStore2.default.statusList() });
 	        }
 	    }, {
-	        key: 'renderItems',
-	        value: function renderItems(items) {
-	            return _underscore2.default.map(items, function (item, key) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { key: key, className: 'uk-grid-match uk-grid-margin' },
-	                    _react2.default.createElement(_ItemComponent2.default, { item: item })
-	                );
+	        key: 'onClickOffcanvasHandler',
+	        value: function onClickOffcanvasHandler() {
+	            this.setState(function (prevState, props) {
+	                return {
+	                    offcanvas: !prevState.offcanvas
+	                };
 	            });
+	
+	            document.body.classList.toggle('uk-offcanvas-page');
+	            document.body.classList.toggle('uk-offcanvas-page-animation');
+	            document.body.classList.toggle('uk-offcanvas-page-overlay');
+	            document.body.classList.toggle('uk-offcanvas-flip');
 	        }
 	    }, {
-	        key: 'renderCategories',
-	        value: function renderCategories() {
-	            var _this2 = this;
-	
-	            return _underscore2.default.map(this.state.result, function (items, category) {
+	        key: 'status',
+	        value: function status() {
+	            return _underscore2.default.map(this.state.status, function (status, key) {
 	                return _react2.default.createElement(
 	                    'div',
-	                    { key: category, 'data-category': category, className: 'uk-section' },
+	                    { key: key },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'uk-container' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'uk-panel uk-light uk-margin-medium' },
-	                            _react2.default.createElement(
-	                                'h3',
-	                                null,
-	                                category
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match' },
-	                            _this2.renderItems(items)
-	                        )
+	                        'label',
+	                        null,
+	                        _react2.default.createElement('input', { className: 'uk-checkbox', type: 'checkbox', value: status, onChange: function onChange(event) {
+	                                _SearchActions2.default.changeStatus(event.target);
+	                            } }),
+	                        ' ',
+	                        status
 	                    )
 	                );
 	            });
@@ -22148,19 +21784,58 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                this.renderCategories()
+	                { className: 'uk-search uk-width-1-4@s' },
+	                _react2.default.createElement(
+	                    'form',
+	                    null,
+	                    _react2.default.createElement(
+	                        'a',
+	                        { className: 'uk-form-icon uk-form-icon-flip', onClick: this.onClickOffcanvasHandler },
+	                        _react2.default.createElement('i', { className: 'fa fa-filter' })
+	                    ),
+	                    _react2.default.createElement('input', { type: 'search', placeholder: 'Search', className: 'uk-input', onChange: function onChange(event) {
+	                            _SearchActions2.default.changeCriteria(event.target.value);
+	                        } })
+	                ),
+	                _react2.default.createElement(
+	                    _OffcanvasComponent2.default,
+	                    { open: this.state.offcanvas, onClick: this.onClickOffcanvasHandler },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Filter'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'uk-margin uk-grid-small uk-child-width-auto' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'uk-margin-small' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Status'
+	                            )
+	                        ),
+	                        this.status()
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'uk-button uk-button-default uk-offcanvas-close uk-width-1-1 uk-margin', onClick: this.onClickOffcanvasHandler, type: 'button' },
+	                        'Close'
+	                    )
+	                )
 	            );
 	        }
 	    }]);
 	
-	    return ResultComponent;
+	    return SearchComponent;
 	}(_react.Component);
 	
-	exports.default = ResultComponent;
+	exports.default = SearchComponent;
 
 /***/ },
-/* 187 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -23737,7 +23412,7 @@
 	}).call(undefined);
 
 /***/ },
-/* 188 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23746,17 +23421,15 @@
 	    value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Item = __webpack_require__(189);
+	var _underscore = __webpack_require__(181);
 	
-	var _Item2 = _interopRequireDefault(_Item);
+	var _underscore2 = _interopRequireDefault(_underscore);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23766,96 +23439,79 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ItemComponent = function (_Component) {
-	    _inherits(ItemComponent, _Component);
+	var OffcanvasComponent = function (_Component) {
+	    _inherits(OffcanvasComponent, _Component);
 	
-	    function ItemComponent() {
-	        _classCallCheck(this, ItemComponent);
+	    function OffcanvasComponent() {
+	        _classCallCheck(this, OffcanvasComponent);
 	
-	        return _possibleConstructorReturn(this, (ItemComponent.__proto__ || Object.getPrototypeOf(ItemComponent)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (OffcanvasComponent.__proto__ || Object.getPrototypeOf(OffcanvasComponent)).apply(this, arguments));
 	    }
 	
-	    _createClass(ItemComponent, [{
+	    _createClass(OffcanvasComponent, [{
+	        key: 'onClick',
+	        value: function onClick(event) {
+	            console.log(event);
+	            this.props.onClick();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement('div', { className: this.overlayClassName, onClick: function onClick(event) {
+	                        _this2.onClick(event);
+	                    } }),
 	                _react2.default.createElement(
-	                    'a',
-	                    _extends({ className: 'uk-card uk-card-default uk-card-body uk-card-hover', target: '_blank', rel: 'noopener noreferrer' }, this.props.item.url ? { href: this.props.item.url } : {}),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'uk-card-badge uk-label' },
-	                        this.props.item.status
-	                    ),
-	                    _react2.default.createElement(
-	                        'h3',
-	                        { className: 'uk-card-title' },
-	                        this.props.item.name
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        this.props.item.description
-	                    )
+	                    'div',
+	                    { className: this.barClassName },
+	                    this.props.children
 	                )
 	            );
 	        }
-	    }], [{
-	        key: 'propTypes',
+	    }, {
+	        key: 'overlayClassName',
 	        get: function get() {
-	            return {
-	                item: _react2.default.PropTypes.instanceOf(_Item2.default)
-	            };
+	            return (0, _underscore2.default)({
+	                'uk-offcanvas': true,
+	                'uk-offcanvas-flip': true,
+	                'uk-offcanvas-overlay': true,
+	                'uk-open': Boolean(this.props.open)
+	            }).reduce(function (trues, value, key) {
+	                if (value === true) {
+	                    trues.push(key);
+	                }
+	                return trues;
+	            }, []).join(' ');
+	        }
+	    }, {
+	        key: 'barClassName',
+	        get: function get() {
+	            return (0, _underscore2.default)({
+	                'uk-offcanvas-bar': true,
+	                'uk-offcanvas-bar-animation': true,
+	                'uk-offcanvas-push': true,
+	                'uk-offcanvas-flip': true,
+	                'uk-open': Boolean(this.props.open)
+	            }).reduce(function (trues, value, key) {
+	                if (value === true) {
+	                    trues.push(key);
+	                }
+	                return trues;
+	            }, []).join(' ');
 	        }
 	    }]);
 	
-	    return ItemComponent;
+	    return OffcanvasComponent;
 	}(_react.Component);
 	
-	exports.default = ItemComponent;
+	exports.default = OffcanvasComponent;
 
 /***/ },
-/* 189 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Item = function Item(_ref) {
-	    var _ref$name = _ref.name,
-	        name = _ref$name === undefined ? '' : _ref$name,
-	        _ref$description = _ref.description,
-	        description = _ref$description === undefined ? '' : _ref$description,
-	        _ref$category = _ref.category,
-	        category = _ref$category === undefined ? '' : _ref$category,
-	        _ref$status = _ref.status,
-	        status = _ref$status === undefined ? '' : _ref$status,
-	        _ref$url = _ref.url,
-	        url = _ref$url === undefined ? '' : _ref$url,
-	        _ref$tags = _ref.tags,
-	        tags = _ref$tags === undefined ? [] : _ref$tags;
-	
-	    _classCallCheck(this, Item);
-	
-	    this.name = name;
-	    this.description = description;
-	    this.category = category;
-	    this.status = status;
-	    this.tags = tags;
-	    this.url = url;
-	};
-	
-	exports.default = Item;
-
-/***/ },
-/* 190 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23864,23 +23520,344 @@
 	    value: true
 	});
 	
-	var _events = __webpack_require__(191);
-	
-	var _events2 = _interopRequireDefault(_events);
-	
-	var _underscore = __webpack_require__(187);
-	
-	var _underscore2 = _interopRequireDefault(_underscore);
-	
-	var _AppDispatcher = __webpack_require__(182);
+	var _AppDispatcher = __webpack_require__(184);
 	
 	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
 	
-	var _SearchConstants = __webpack_require__(185);
+	var _SearchConstants = __webpack_require__(187);
 	
 	var _SearchConstants2 = _interopRequireDefault(_SearchConstants);
 	
-	var _ItemsLoader = __webpack_require__(192);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	    changeCriteria: function changeCriteria(_criteria) {
+	        _AppDispatcher2.default.dispatch({
+	            actionType: _SearchConstants2.default.CHANGE_CRITERIA,
+	            criteria: _criteria
+	        });
+	    },
+	    changeStatus: function changeStatus(_status) {
+	        _AppDispatcher2.default.dispatch({
+	            actionType: _SearchConstants2.default.CHANGE_STATUS,
+	            status: _status
+	        });
+	    }
+	};
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _flux = __webpack_require__(185);
+	
+	exports.default = new _flux.Dispatcher();
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	/**
+	 * Copyright (c) 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	module.exports.Dispatcher = __webpack_require__(186);
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule Dispatcher
+	 * 
+	 * @preventMunge
+	 */
+	
+	'use strict';
+	
+	exports.__esModule = true;
+	
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+	
+	var invariant = __webpack_require__(8);
+	
+	var _prefix = 'ID_';
+	
+	/**
+	 * Dispatcher is used to broadcast payloads to registered callbacks. This is
+	 * different from generic pub-sub systems in two ways:
+	 *
+	 *   1) Callbacks are not subscribed to particular events. Every payload is
+	 *      dispatched to every registered callback.
+	 *   2) Callbacks can be deferred in whole or part until other callbacks have
+	 *      been executed.
+	 *
+	 * For example, consider this hypothetical flight destination form, which
+	 * selects a default city when a country is selected:
+	 *
+	 *   var flightDispatcher = new Dispatcher();
+	 *
+	 *   // Keeps track of which country is selected
+	 *   var CountryStore = {country: null};
+	 *
+	 *   // Keeps track of which city is selected
+	 *   var CityStore = {city: null};
+	 *
+	 *   // Keeps track of the base flight price of the selected city
+	 *   var FlightPriceStore = {price: null}
+	 *
+	 * When a user changes the selected city, we dispatch the payload:
+	 *
+	 *   flightDispatcher.dispatch({
+	 *     actionType: 'city-update',
+	 *     selectedCity: 'paris'
+	 *   });
+	 *
+	 * This payload is digested by `CityStore`:
+	 *
+	 *   flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'city-update') {
+	 *       CityStore.city = payload.selectedCity;
+	 *     }
+	 *   });
+	 *
+	 * When the user selects a country, we dispatch the payload:
+	 *
+	 *   flightDispatcher.dispatch({
+	 *     actionType: 'country-update',
+	 *     selectedCountry: 'australia'
+	 *   });
+	 *
+	 * This payload is digested by both stores:
+	 *
+	 *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'country-update') {
+	 *       CountryStore.country = payload.selectedCountry;
+	 *     }
+	 *   });
+	 *
+	 * When the callback to update `CountryStore` is registered, we save a reference
+	 * to the returned token. Using this token with `waitFor()`, we can guarantee
+	 * that `CountryStore` is updated before the callback that updates `CityStore`
+	 * needs to query its data.
+	 *
+	 *   CityStore.dispatchToken = flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'country-update') {
+	 *       // `CountryStore.country` may not be updated.
+	 *       flightDispatcher.waitFor([CountryStore.dispatchToken]);
+	 *       // `CountryStore.country` is now guaranteed to be updated.
+	 *
+	 *       // Select the default city for the new country
+	 *       CityStore.city = getDefaultCityForCountry(CountryStore.country);
+	 *     }
+	 *   });
+	 *
+	 * The usage of `waitFor()` can be chained, for example:
+	 *
+	 *   FlightPriceStore.dispatchToken =
+	 *     flightDispatcher.register(function(payload) {
+	 *       switch (payload.actionType) {
+	 *         case 'country-update':
+	 *         case 'city-update':
+	 *           flightDispatcher.waitFor([CityStore.dispatchToken]);
+	 *           FlightPriceStore.price =
+	 *             getFlightPriceStore(CountryStore.country, CityStore.city);
+	 *           break;
+	 *     }
+	 *   });
+	 *
+	 * The `country-update` payload will be guaranteed to invoke the stores'
+	 * registered callbacks in order: `CountryStore`, `CityStore`, then
+	 * `FlightPriceStore`.
+	 */
+	
+	var Dispatcher = function () {
+	  function Dispatcher() {
+	    _classCallCheck(this, Dispatcher);
+	
+	    this._callbacks = {};
+	    this._isDispatching = false;
+	    this._isHandled = {};
+	    this._isPending = {};
+	    this._lastID = 1;
+	  }
+	
+	  /**
+	   * Registers a callback to be invoked with every dispatched payload. Returns
+	   * a token that can be used with `waitFor()`.
+	   */
+	
+	  Dispatcher.prototype.register = function register(callback) {
+	    var id = _prefix + this._lastID++;
+	    this._callbacks[id] = callback;
+	    return id;
+	  };
+	
+	  /**
+	   * Removes a callback based on its token.
+	   */
+	
+	  Dispatcher.prototype.unregister = function unregister(id) {
+	    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+	    delete this._callbacks[id];
+	  };
+	
+	  /**
+	   * Waits for the callbacks specified to be invoked before continuing execution
+	   * of the current callback. This method should only be used by a callback in
+	   * response to a dispatched payload.
+	   */
+	
+	  Dispatcher.prototype.waitFor = function waitFor(ids) {
+	    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
+	    for (var ii = 0; ii < ids.length; ii++) {
+	      var id = ids[ii];
+	      if (this._isPending[id]) {
+	        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
+	        continue;
+	      }
+	      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+	      this._invokeCallback(id);
+	    }
+	  };
+	
+	  /**
+	   * Dispatches a payload to all registered callbacks.
+	   */
+	
+	  Dispatcher.prototype.dispatch = function dispatch(payload) {
+	    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
+	    this._startDispatching(payload);
+	    try {
+	      for (var id in this._callbacks) {
+	        if (this._isPending[id]) {
+	          continue;
+	        }
+	        this._invokeCallback(id);
+	      }
+	    } finally {
+	      this._stopDispatching();
+	    }
+	  };
+	
+	  /**
+	   * Is this Dispatcher currently dispatching.
+	   */
+	
+	  Dispatcher.prototype.isDispatching = function isDispatching() {
+	    return this._isDispatching;
+	  };
+	
+	  /**
+	   * Call the callback stored with the given id. Also do some internal
+	   * bookkeeping.
+	   *
+	   * @internal
+	   */
+	
+	  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
+	    this._isPending[id] = true;
+	    this._callbacks[id](this._pendingPayload);
+	    this._isHandled[id] = true;
+	  };
+	
+	  /**
+	   * Set up bookkeeping needed when dispatching.
+	   *
+	   * @internal
+	   */
+	
+	  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
+	    for (var id in this._callbacks) {
+	      this._isPending[id] = false;
+	      this._isHandled[id] = false;
+	    }
+	    this._pendingPayload = payload;
+	    this._isDispatching = true;
+	  };
+	
+	  /**
+	   * Clear bookkeeping used for dispatching.
+	   *
+	   * @internal
+	   */
+	
+	  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
+	    delete this._pendingPayload;
+	    this._isDispatching = false;
+	  };
+	
+	  return Dispatcher;
+	}();
+	
+	module.exports = Dispatcher;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 187 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    CHANGE_CRITERIA: 'CHANGE_CRITERIA',
+	    CHANGE_STATUS: 'CHANGE_STATUS'
+	};
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _events = __webpack_require__(189);
+	
+	var _events2 = _interopRequireDefault(_events);
+	
+	var _underscore = __webpack_require__(181);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
+	var _AppDispatcher = __webpack_require__(184);
+	
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+	
+	var _SearchConstants = __webpack_require__(187);
+	
+	var _SearchConstants2 = _interopRequireDefault(_SearchConstants);
+	
+	var _ItemsLoader = __webpack_require__(190);
 	
 	var _ItemsLoader2 = _interopRequireDefault(_ItemsLoader);
 	
@@ -23897,14 +23874,21 @@
 	        type: 'SPREADSHEETS',
 	        url: 'https://spreadsheets.google.com/feeds/list/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo/1/public/values?alt=json-in-script&callback={1}'
 	    },
-	    criteria: ''
+	    criteria: '',
+	    status: []
 	};
 	
-	var results = [];
+	var results = {
+	    items: [],
+	    status: []
+	};
 	
 	var ItemsStore = Object.assign({}, _events2.default.prototype, {
 	    result: function result() {
-	        return results;
+	        return results.items;
+	    },
+	    statusList: function statusList() {
+	        return results.status;
 	    },
 	    emitChangeResult: function emitChangeResult() {
 	        this.emit(EVENTS.CHANGE_RESULT);
@@ -23917,21 +23901,39 @@
 	    }
 	});
 	
+	var toggleArrayElement = function toggleArrayElement(arr, elm, add) {
+	    if (add === undefined) {
+	        return _underscore2.default.indexOf(arr, elm) === -1 ? _underscore2.default.union(arr, [elm]) : _underscore2.default.without(arr, elm);
+	    }
+	
+	    return add ? _underscore2.default.union(arr, [elm]) : _underscore2.default.without(arr, elm);
+	};
+	
 	var groupByCategories = function groupByCategories(items) {
 	    return _underscore2.default.groupBy(items, function (item) {
 	        return item.category;
 	    });
 	};
 	
-	var search = function search(criteria) {
-	    itemsLoader.load(state.endpoint, function (items) {
-	        var rx = new RegExp(criteria, 'i');
+	var updateResultStatus = function updateResultStatus(items) {
+	    var status = _underscore2.default.groupBy(items, function (item) {
+	        return item.status;
+	    });
 	
-	        results = _underscore2.default.filter(items, function (item) {
-	            return rx.test(item.name) || rx.test(item.description);
+	    results.status = _underscore2.default.keys(status);
+	};
+	
+	var search = function search() {
+	    itemsLoader.load(state.endpoint, function (items) {
+	        updateResultStatus(items);
+	
+	        var criteriaRegExp = new RegExp(state.criteria, 'i');
+	
+	        results.items = _underscore2.default.filter(items, function (item) {
+	            return (criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description)) && (state.status.length === 0 ? true : state.status.indexOf(item.status) >= 0);
 	        });
 	
-	        results = groupByCategories(results);
+	        results.items = groupByCategories(results.items);
 	
 	        ItemsStore.emitChangeResult();
 	    });
@@ -23941,7 +23943,11 @@
 	    switch (action.actionType) {
 	        case _SearchConstants2.default.CHANGE_CRITERIA:
 	            state.criteria = action.criteria;
-	            search(action.criteria);
+	            search();
+	            break;
+	        case _SearchConstants2.default.CHANGE_STATUS:
+	            state.status = toggleArrayElement(state.status, action.status.value, action.status.checked);
+	            search();
 	            break;
 	        default:
 	            // no op
@@ -23952,7 +23958,7 @@
 	exports.default = ItemsStore;
 
 /***/ },
-/* 191 */
+/* 189 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24230,7 +24236,7 @@
 	}
 
 /***/ },
-/* 192 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24241,19 +24247,19 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _underscore = __webpack_require__(187);
+	var _underscore = __webpack_require__(181);
 	
 	var _underscore2 = _interopRequireDefault(_underscore);
 	
-	var _rest = __webpack_require__(193);
+	var _rest = __webpack_require__(191);
 	
 	var _rest2 = _interopRequireDefault(_rest);
 	
-	var _mime = __webpack_require__(199);
+	var _mime = __webpack_require__(197);
 	
 	var _mime2 = _interopRequireDefault(_mime);
 	
-	var _Item = __webpack_require__(189);
+	var _Item = __webpack_require__(215);
 	
 	var _Item2 = _interopRequireDefault(_Item);
 	
@@ -24344,7 +24350,7 @@
 	exports.default = ItemsLoader;
 
 /***/ },
-/* 193 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24356,15 +24362,15 @@
 	
 	'use strict';
 	
-	var rest = __webpack_require__(194),
-	    browser = __webpack_require__(196);
+	var rest = __webpack_require__(192),
+	    browser = __webpack_require__(194);
 	
 	rest.setPlatformDefaultClient(browser);
 	
 	module.exports = rest;
 
 /***/ },
-/* 194 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24434,7 +24440,7 @@
 	
 	var client, target, platformDefault;
 	
-	client = __webpack_require__(195);
+	client = __webpack_require__(193);
 	
 	if (typeof Promise !== 'function' && console && console.log) {
 	  console.log('An ES6 Promise implementation is required to use rest.js. See https://github.com/cujojs/when/blob/master/docs/es6-promise-shim.md for using when.js as a Promise polyfill.');
@@ -24485,7 +24491,7 @@
 	module.exports = client(defaultClient);
 
 /***/ },
-/* 195 */
+/* 193 */
 /***/ function(module, exports) {
 
 	/*
@@ -24543,7 +24549,7 @@
 	};
 
 /***/ },
-/* 196 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24557,9 +24563,9 @@
 	
 	var normalizeHeaderName, responsePromise, client, headerSplitRE;
 	
-	normalizeHeaderName = __webpack_require__(197);
-	responsePromise = __webpack_require__(198);
-	client = __webpack_require__(195);
+	normalizeHeaderName = __webpack_require__(195);
+	responsePromise = __webpack_require__(196);
+	client = __webpack_require__(193);
 	
 	// according to the spec, the line break is '\r\n', but doesn't hold true in practice
 	headerSplitRE = /[\r|\n]+/;
@@ -24712,7 +24718,7 @@
 	});
 
 /***/ },
-/* 197 */
+/* 195 */
 /***/ function(module, exports) {
 
 	/*
@@ -24745,7 +24751,7 @@
 	module.exports = normalizeHeaderName;
 
 /***/ },
-/* 198 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24759,7 +24765,7 @@
 	
 	/*jshint latedef: nofunc */
 	
-	var normalizeHeaderName = __webpack_require__(197);
+	var normalizeHeaderName = __webpack_require__(195);
 	
 	function property(promise, name) {
 	  return promise.then(function (value) {
@@ -24881,7 +24887,7 @@
 	module.exports = responsePromise;
 
 /***/ },
-/* 199 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24895,10 +24901,10 @@
 	
 	var interceptor, mime, registry, noopConverter, missingConverter, attempt;
 	
-	interceptor = __webpack_require__(200);
-	mime = __webpack_require__(202);
-	registry = __webpack_require__(203);
-	attempt = __webpack_require__(213);
+	interceptor = __webpack_require__(198);
+	mime = __webpack_require__(200);
+	registry = __webpack_require__(201);
+	attempt = __webpack_require__(211);
 	
 	noopConverter = {
 		read: function read(obj) {
@@ -25001,7 +25007,7 @@
 	});
 
 /***/ },
-/* 200 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25017,10 +25023,10 @@
 	
 	var defaultClient, mixin, responsePromise, client;
 	
-	defaultClient = __webpack_require__(194);
-	mixin = __webpack_require__(201);
-	responsePromise = __webpack_require__(198);
-	client = __webpack_require__(195);
+	defaultClient = __webpack_require__(192);
+	mixin = __webpack_require__(199);
+	responsePromise = __webpack_require__(196);
+	client = __webpack_require__(193);
 	
 	/**
 	 * Interceptors have the ability to intercept the request and/org response
@@ -25145,7 +25151,7 @@
 	module.exports = interceptor;
 
 /***/ },
-/* 201 */
+/* 199 */
 /***/ function(module, exports) {
 
 	/*
@@ -25189,7 +25195,7 @@
 	module.exports = mixin;
 
 /***/ },
-/* 202 */
+/* 200 */
 /***/ function(module, exports) {
 
 	/*
@@ -25236,7 +25242,7 @@
 	};
 
 /***/ },
-/* 203 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25250,7 +25256,7 @@
 	
 	var mime, registry;
 	
-	mime = __webpack_require__(202);
+	mime = __webpack_require__(200);
 	
 	function Registry(mimes) {
 	
@@ -25333,18 +25339,18 @@
 	registry = new Registry({});
 	
 	// include provided serializers
-	registry.register('application/hal', __webpack_require__(204));
-	registry.register('application/json', __webpack_require__(214));
-	registry.register('application/x-www-form-urlencoded', __webpack_require__(207));
-	registry.register('multipart/form-data', __webpack_require__(215));
-	registry.register('text/plain', __webpack_require__(216));
+	registry.register('application/hal', __webpack_require__(202));
+	registry.register('application/json', __webpack_require__(212));
+	registry.register('application/x-www-form-urlencoded', __webpack_require__(205));
+	registry.register('multipart/form-data', __webpack_require__(213));
+	registry.register('text/plain', __webpack_require__(214));
 	
 	registry.register('+json', registry.delegate('application/json'));
 	
 	module.exports = registry;
 
 /***/ },
-/* 204 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25358,11 +25364,11 @@
 	
 	var pathPrefix, template, find, lazyPromise, responsePromise;
 	
-	pathPrefix = __webpack_require__(205);
-	template = __webpack_require__(208);
-	find = __webpack_require__(211);
-	lazyPromise = __webpack_require__(212);
-	responsePromise = __webpack_require__(198);
+	pathPrefix = __webpack_require__(203);
+	template = __webpack_require__(206);
+	find = __webpack_require__(209);
+	lazyPromise = __webpack_require__(210);
+	responsePromise = __webpack_require__(196);
 	
 	function defineProperty(obj, name, value) {
 		Object.defineProperty(obj, name, {
@@ -25478,7 +25484,7 @@
 	};
 
 /***/ },
-/* 205 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25492,8 +25498,8 @@
 	
 	var interceptor, UrlBuilder;
 	
-	interceptor = __webpack_require__(200);
-	UrlBuilder = __webpack_require__(206);
+	interceptor = __webpack_require__(198);
+	UrlBuilder = __webpack_require__(204);
 	
 	function startsWith(str, prefix) {
 		return str.indexOf(prefix) === 0;
@@ -25532,7 +25538,7 @@
 	});
 
 /***/ },
-/* 206 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25546,8 +25552,8 @@
 	
 	var mixin, xWWWFormURLEncoder, origin, urlRE, absoluteUrlRE, fullyQualifiedUrlRE;
 	
-	mixin = __webpack_require__(201);
-	xWWWFormURLEncoder = __webpack_require__(207);
+	mixin = __webpack_require__(199);
+	xWWWFormURLEncoder = __webpack_require__(205);
 	
 	urlRE = /([a-z][a-z0-9\+\-\.]*:)\/\/([^@]+@)?(([^:\/]+)(:([0-9]+))?)?(\/[^?#]*)?(\?[^#]*)?(#\S*)?/i;
 	absoluteUrlRE = /^([a-z][a-z0-9\-\+\.]*:\/\/|\/)/i;
@@ -25751,7 +25757,7 @@
 	module.exports = UrlBuilder;
 
 /***/ },
-/* 207 */
+/* 205 */
 /***/ function(module, exports) {
 
 	/*
@@ -25834,7 +25840,7 @@
 	};
 
 /***/ },
-/* 208 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25848,9 +25854,9 @@
 	
 	var interceptor, uriTemplate, mixin;
 	
-	interceptor = __webpack_require__(200);
-	uriTemplate = __webpack_require__(209);
-	mixin = __webpack_require__(201);
+	interceptor = __webpack_require__(198);
+	uriTemplate = __webpack_require__(207);
+	mixin = __webpack_require__(199);
 	
 	/**
 	 * Applies request params to the path as a URI Template
@@ -25885,7 +25891,7 @@
 	});
 
 /***/ },
-/* 209 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25901,7 +25907,7 @@
 	
 	var uriEncoder, operations, prefixRE;
 	
-	uriEncoder = __webpack_require__(210);
+	uriEncoder = __webpack_require__(208);
 	
 	prefixRE = /^([^:]*):([0-9]+)$/;
 	operations = {
@@ -26047,7 +26053,7 @@
 	};
 
 /***/ },
-/* 210 */
+/* 208 */
 /***/ function(module, exports) {
 
 	/*
@@ -26221,7 +26227,7 @@
 	};
 
 /***/ },
-/* 211 */
+/* 209 */
 /***/ function(module, exports) {
 
 	/*
@@ -26261,7 +26267,7 @@
 	};
 
 /***/ },
-/* 212 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -26273,7 +26279,7 @@
 	
 	'use strict';
 	
-	var attempt = __webpack_require__(213);
+	var attempt = __webpack_require__(211);
 	
 	/**
 	 * Create a promise whose work is started only when a handler is registered.
@@ -26312,7 +26318,7 @@
 	module.exports = lazyPromise;
 
 /***/ },
-/* 213 */
+/* 211 */
 /***/ function(module, exports) {
 
 	/*
@@ -26344,7 +26350,7 @@
 	module.exports = attempt;
 
 /***/ },
-/* 214 */
+/* 212 */
 /***/ function(module, exports) {
 
 	/*
@@ -26387,7 +26393,7 @@
 	module.exports = createConverter();
 
 /***/ },
-/* 215 */
+/* 213 */
 /***/ function(module, exports) {
 
 	/*
@@ -26457,7 +26463,7 @@
 	};
 
 /***/ },
-/* 216 */
+/* 214 */
 /***/ function(module, exports) {
 
 	/*
@@ -26480,6 +26486,244 @@
 		}
 	
 	};
+
+/***/ },
+/* 215 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Item = function Item(_ref) {
+	    var _ref$name = _ref.name,
+	        name = _ref$name === undefined ? '' : _ref$name,
+	        _ref$description = _ref.description,
+	        description = _ref$description === undefined ? '' : _ref$description,
+	        _ref$category = _ref.category,
+	        category = _ref$category === undefined ? '' : _ref$category,
+	        _ref$status = _ref.status,
+	        status = _ref$status === undefined ? '' : _ref$status,
+	        _ref$url = _ref.url,
+	        url = _ref$url === undefined ? '' : _ref$url,
+	        _ref$tags = _ref.tags,
+	        tags = _ref$tags === undefined ? [] : _ref$tags;
+	
+	    _classCallCheck(this, Item);
+	
+	    this.name = name;
+	    this.description = description;
+	    this.category = category;
+	    this.status = status;
+	    this.tags = tags;
+	    this.url = url;
+	};
+	
+	exports.default = Item;
+
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _underscore = __webpack_require__(181);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
+	var _ItemComponent = __webpack_require__(217);
+	
+	var _ItemComponent2 = _interopRequireDefault(_ItemComponent);
+	
+	var _ItemsStore = __webpack_require__(188);
+	
+	var _ItemsStore2 = _interopRequireDefault(_ItemsStore);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResultComponent = function (_Component) {
+	    _inherits(ResultComponent, _Component);
+	
+	    function ResultComponent(props) {
+	        _classCallCheck(this, ResultComponent);
+	
+	        var _this = _possibleConstructorReturn(this, (ResultComponent.__proto__ || Object.getPrototypeOf(ResultComponent)).call(this, props));
+	
+	        _this.state = { result: _ItemsStore2.default.result() };
+	        return _this;
+	    }
+	
+	    _createClass(ResultComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _ItemsStore2.default.addChangeResultListener(this.onChangeResultHandler.bind(this));
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _ItemsStore2.default.removeChangeResultListener(this.onChangeResultHandler.bind(this));
+	        }
+	    }, {
+	        key: 'onChangeResultHandler',
+	        value: function onChangeResultHandler() {
+	            this.setState({ result: _ItemsStore2.default.result() });
+	        }
+	    }, {
+	        key: 'renderItems',
+	        value: function renderItems(items) {
+	            return _underscore2.default.map(items, function (item, key) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { key: key, className: 'uk-grid-match uk-grid-margin' },
+	                    _react2.default.createElement(_ItemComponent2.default, { item: item })
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'renderCategories',
+	        value: function renderCategories() {
+	            var _this2 = this;
+	
+	            return _underscore2.default.map(this.state.result, function (items, category) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { key: category, 'data-category': category, className: 'uk-section' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'uk-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'uk-panel uk-light uk-margin-medium' },
+	                            _react2.default.createElement(
+	                                'h3',
+	                                null,
+	                                category
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match' },
+	                            _this2.renderItems(items)
+	                        )
+	                    )
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                this.renderCategories()
+	            );
+	        }
+	    }]);
+	
+	    return ResultComponent;
+	}(_react.Component);
+	
+	exports.default = ResultComponent;
+
+/***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Item = __webpack_require__(215);
+	
+	var _Item2 = _interopRequireDefault(_Item);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ItemComponent = function (_Component) {
+	    _inherits(ItemComponent, _Component);
+	
+	    function ItemComponent() {
+	        _classCallCheck(this, ItemComponent);
+	
+	        return _possibleConstructorReturn(this, (ItemComponent.__proto__ || Object.getPrototypeOf(ItemComponent)).apply(this, arguments));
+	    }
+	
+	    _createClass(ItemComponent, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'a',
+	                    _extends({ className: 'uk-card uk-card-default uk-card-body uk-card-hover', target: '_blank', rel: 'noopener noreferrer' }, this.props.item.url ? { href: this.props.item.url } : {}),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'uk-card-badge uk-label' },
+	                        this.props.item.status
+	                    ),
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { className: 'uk-card-title' },
+	                        this.props.item.name
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        this.props.item.description
+	                    )
+	                )
+	            );
+	        }
+	    }], [{
+	        key: 'propTypes',
+	        get: function get() {
+	            return {
+	                item: _react2.default.PropTypes.instanceOf(_Item2.default)
+	            };
+	        }
+	    }]);
+	
+	    return ItemComponent;
+	}(_react.Component);
+	
+	exports.default = ItemComponent;
 
 /***/ }
 /******/ ]);
