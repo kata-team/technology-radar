@@ -4,6 +4,9 @@
 TECHNOLOGY RADAR
 ================
 
+Technology Radar is a tool that helps organizations to monitor their own discoveries.
+Keep track of your technologies according to your previous successes and failures.
+
 This project is freely based on technology-radar by [ThoughtWorks].
 
 
@@ -19,10 +22,10 @@ To-Do List
 ----------
 
 - [x] Responsive Web Design
-- [ ] Search items
+- [x] Search items
     - [x] search by `title` and `description`
-    - [ ] filter by `category`
-    - [ ] filter by `status`
+    - [x] filter by `category`
+    - [x] filter by `status`
 - [x] [Live demo with GitHub Pages](#github-pages)
 - [x] Continuous Delivery with Travis CI
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
