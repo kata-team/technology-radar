@@ -33,8 +33,8 @@ export default class SearchComponent extends Component {
     }
 
     onClickOffcanvasHandler() {
-        this.setState((prevState, props) => ({
-            offcanvas: !prevState.offcanvas
+        this.setState((prevState) => ({
+            offcanvas: !prevState.offcanvas,
         }));
 
         document.body.classList.toggle('uk-offcanvas-page');
@@ -46,7 +46,7 @@ export default class SearchComponent extends Component {
     categories() {
         return _.map(this.state.categories, (category, key) => (
             <div key={key}>
-                <label><input className="uk-checkbox" type="checkbox" value={category} onChange={(event) => { SearchActions.changeCategory(event.target) }} /> {category}</label>
+                <label htmlFor={category}><input id={category} className="uk-checkbox" type="checkbox" value={category} onChange={(event) => { SearchActions.changeCategory(event.target) }} /> {category}</label>
             </div>
         ));
     }
@@ -54,7 +54,7 @@ export default class SearchComponent extends Component {
     statuses() {
         return _.map(this.state.statuses, (status, key) => (
             <div key={key}>
-                <label><input className="uk-checkbox" type="checkbox" value={status} onChange={(event) => { SearchActions.changeStatus(event.target) }} /> {status}</label>
+                <label htmlFor={status}><input id={status} className="uk-checkbox" type="checkbox" value={status} onChange={(event) => { SearchActions.changeStatus(event.target) }} /> {status}</label>
             </div>
         ));
     }
@@ -64,7 +64,7 @@ export default class SearchComponent extends Component {
             <div className="uk-search uk-width-1-4@s">
 
                 <form>
-                    <a className="uk-form-icon uk-form-icon-flip" onClick={this.onClickOffcanvasHandler}><i className="fa fa-filter"></i></a>
+                    <a className="uk-form-icon uk-form-icon-flip" onClick={this.onClickOffcanvasHandler}><i className="fa fa-filter" /></a>
                     <input type="search" placeholder="Search" className="uk-input" onChange={(event) => { SearchActions.changeCriteria(event.target.value) }} />
                 </form>
 

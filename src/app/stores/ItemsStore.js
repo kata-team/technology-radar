@@ -110,7 +110,7 @@ AppDispatcher.register((action) => {
         search();
         break;
     case SearchConstants.CHANGE_STATUS:
-        state.statuses = toggleArrayElement(state.statues, action.target.value, action.target.checked);
+        state.statuses = toggleArrayElement(state.statuses, action.target.value, action.target.checked);
         search();
         break;
     default:
