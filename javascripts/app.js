@@ -21753,7 +21753,7 @@
 	    }, {
 	        key: 'onClickOffcanvasHandler',
 	        value: function onClickOffcanvasHandler() {
-	            this.setState(function (prevState, props) {
+	            this.setState(function (prevState) {
 	                return {
 	                    offcanvas: !prevState.offcanvas
 	                };
@@ -21773,8 +21773,8 @@
 	                    { key: key },
 	                    _react2.default.createElement(
 	                        'label',
-	                        null,
-	                        _react2.default.createElement('input', { className: 'uk-checkbox', type: 'checkbox', value: category, onChange: function onChange(event) {
+	                        { htmlFor: category },
+	                        _react2.default.createElement('input', { id: category, className: 'uk-checkbox', type: 'checkbox', value: category, onChange: function onChange(event) {
 	                                _SearchActions2.default.changeCategory(event.target);
 	                            } }),
 	                        ' ',
@@ -21792,8 +21792,8 @@
 	                    { key: key },
 	                    _react2.default.createElement(
 	                        'label',
-	                        null,
-	                        _react2.default.createElement('input', { className: 'uk-checkbox', type: 'checkbox', value: status, onChange: function onChange(event) {
+	                        { htmlFor: status },
+	                        _react2.default.createElement('input', { id: status, className: 'uk-checkbox', type: 'checkbox', value: status, onChange: function onChange(event) {
 	                                _SearchActions2.default.changeStatus(event.target);
 	                            } }),
 	                        ' ',
@@ -23486,21 +23486,22 @@
 	    }
 	
 	    _createClass(OffcanvasComponent, [{
-	        key: 'onClick',
-	        value: function onClick(event) {
-	            this.props.onClick();
+	        key: 'toClassName',
+	        value: function toClassName(obj) {
+	            return (0, _underscore2.default)(obj).reduce(function (trues, value, key) {
+	                if (value === true) {
+	                    trues.push(key);
+	                }
+	                return trues;
+	            }, []).join(' ');
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
-	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('div', { className: this.overlayClassName, onClick: function onClick(event) {
-	                        _this2.onClick(event);
-	                    } }),
+	                _react2.default.createElement('div', { className: this.overlayClassName, onClick: this.props.onClick }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: this.barClassName },
@@ -23511,33 +23512,32 @@
 	    }, {
 	        key: 'overlayClassName',
 	        get: function get() {
-	            return (0, _underscore2.default)({
+	            return this.toClassName({
 	                'uk-offcanvas': true,
 	                'uk-offcanvas-flip': true,
 	                'uk-offcanvas-overlay': true,
 	                'uk-open': Boolean(this.props.open)
-	            }).reduce(function (trues, value, key) {
-	                if (value === true) {
-	                    trues.push(key);
-	                }
-	                return trues;
-	            }, []).join(' ');
+	            });
 	        }
 	    }, {
 	        key: 'barClassName',
 	        get: function get() {
-	            return (0, _underscore2.default)({
+	            return this.toClassName({
 	                'uk-offcanvas-bar': true,
 	                'uk-offcanvas-bar-animation': true,
 	                'uk-offcanvas-push': true,
 	                'uk-offcanvas-flip': true,
 	                'uk-open': Boolean(this.props.open)
-	            }).reduce(function (trues, value, key) {
-	                if (value === true) {
-	                    trues.push(key);
-	                }
-	                return trues;
-	            }, []).join(' ');
+	            });
+	        }
+	    }], [{
+	        key: 'propTypes',
+	        get: function get() {
+	            return {
+	                onClick: _react2.default.PropTypes.func,
+	                open: _react2.default.PropTypes.bool,
+	                children: _react2.default.PropTypes.node
+	            };
 	        }
 	    }]);
 	
@@ -24010,7 +24010,7 @@
 	            search();
 	            break;
 	        case _SearchConstants2.default.CHANGE_STATUS:
-	            state.statuses = toggleArrayElement(state.statues, action.target.value, action.target.checked);
+	            state.statuses = toggleArrayElement(state.statuses, action.target.value, action.target.checked);
 	            search();
 	            break;
 	        default:
@@ -26575,7 +26575,7 @@
 	        _ref$url = _ref.url,
 	        url = _ref$url === undefined ? '' : _ref$url,
 	        _ref$tags = _ref.tags,
-	        tags = _ref$tags === undefined ? [] : _ref$tags;
+	        tags = _ref$tags === undefined ? '' : _ref$tags;
 	
 	    _classCallCheck(this, Item);
 	
@@ -26583,7 +26583,7 @@
 	    this.description = description;
 	    this.category = category;
 	    this.status = status;
-	    this.tags = tags;
+	    this.tags = tags.split(',');
 	    this.url = url;
 	};
 	
@@ -26727,6 +26727,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _underscore = __webpack_require__(181);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
 	var _Item = __webpack_require__(215);
 	
 	var _Item2 = _interopRequireDefault(_Item);
@@ -26749,6 +26753,22 @@
 	    }
 	
 	    _createClass(ItemComponent, [{
+	        key: 'tags',
+	        value: function tags() {
+	            return _underscore2.default.map(this.props.item.tags, function (tag, key) {
+	                return _react2.default.createElement(
+	                    'span',
+	                    { key: key },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'uk-label' },
+	                        tag.trim()
+	                    ),
+	                    '\xA0'
+	                );
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -26756,21 +26776,30 @@
 	                null,
 	                _react2.default.createElement(
 	                    'a',
-	                    _extends({ className: 'uk-card uk-card-default uk-card-body uk-card-hover', target: '_blank', rel: 'noopener noreferrer' }, this.props.item.url ? { href: this.props.item.url } : {}),
+	                    _extends({ className: 'uk-card uk-card-default uk-card-hover', target: '_blank', rel: 'noopener noreferrer' }, this.props.item.url ? { href: this.props.item.url } : {}),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'uk-card-badge uk-label' },
-	                        this.props.item.status
+	                        { className: 'uk-card-body' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'uk-card-badge uk-label' },
+	                            this.props.item.status
+	                        ),
+	                        _react2.default.createElement(
+	                            'h3',
+	                            { className: 'uk-card-title' },
+	                            this.props.item.name
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            this.props.item.description
+	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        'h3',
-	                        { className: 'uk-card-title' },
-	                        this.props.item.name
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        this.props.item.description
+	                        'div',
+	                        { className: 'uk-card-footer' },
+	                        this.tags()
 	                    )
 	                )
 	            );
