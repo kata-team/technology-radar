@@ -11,7 +11,7 @@ export default class AppComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div className="app">
                 <NavbarComponent />
                 <ResultComponent />
             </div>

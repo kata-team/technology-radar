@@ -32,7 +32,7 @@ export default class ResultComponent extends Component {
 
     renderCategories() {
         return _.map(this.state.result, (items, category) => (
-            <div key={category} data-category={category} className="uk-section">
+            <section key={category} data-category={category} className="uk-section">
                 <div className="uk-container">
 
                     <div className="uk-panel uk-light uk-margin-medium">
@@ -44,13 +44,13 @@ export default class ResultComponent extends Component {
                     </div>
 
                 </div>
-            </div>
+            </section>
         ));
     }
 
     render() {
         return (
-            <div>
+            <div className="app--result">
                 { this.renderCategories() }
             </div>
         );
