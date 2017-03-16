@@ -21595,7 +21595,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'app' },
 	                _react2.default.createElement(_NavbarComponent2.default, null),
 	                _react2.default.createElement(_ResultComponent2.default, null)
 	            );
@@ -26670,7 +26670,7 @@
 	
 	            return _underscore2.default.map(this.state.result, function (items, category) {
 	                return _react2.default.createElement(
-	                    'div',
+	                    'section',
 	                    { key: category, 'data-category': category, className: 'uk-section' },
 	                    _react2.default.createElement(
 	                        'div',
@@ -26698,7 +26698,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'app--result' },
 	                this.renderCategories()
 	            );
 	        }
