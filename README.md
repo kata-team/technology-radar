@@ -7,7 +7,15 @@ TECHNOLOGY RADAR
 Technology Radar is a tool that helps organizations to monitor their own discoveries.
 Keep track of your technologies according to your previous successes and failures.
 
-This project is freely based on technology-radar by [ThoughtWorks].
+This project is freely based on technology-radar by [ThoughtWorks](https://www.thoughtworks.com/radar).
+
+In short
+--------
+
+- ES6 and [React](https://facebook.github.io/react/)
+- Hosted by [GitHub Pages](https://pages.github.com/)
+- Automatic deploy with `git push origin master`
+- Google Spreadsheets as database
 
 
 Live demo
@@ -26,19 +34,19 @@ To-Do List
     - [x] search by `title` and `description`
     - [x] filter by `category`
     - [x] filter by `status`
-- [x] [Live demo with GitHub Pages](#github-pages)
-- [x] Continuous Delivery with Travis CI
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
+- [x] [Live demo with GitHub Pages](#github-pages)
+- [x] [Continuous Delivery with Travis CI](#travis-ci)
 
 
-Development
------------
+Getting Started
+---------------
 
 To get started, fork the project.
 
 ### Install Grunt and Bower
 
-To install Grunt and Bower, you must first download and install [node.js] - which includes npm.
+To install Grunt and Bower, you must first download and install [node.js](https://nodejs.org/) - which includes npm.
 
 Then, using the command line:
 
@@ -52,24 +60,14 @@ npm install -g bower
 # navigate to the root of your project, then run
 npm install
 bower install
+
+npm run build
+npm start
+
+# http://127.0.0.1:8080
 ```
 
-### Google Spreadsheets integration
-
-Technology Radar provides a Google Spreadsheets integration, so you can use spreadsheets to storage your data.
-
-Here you can find the example used for our [live demo](#live-demo). Feel free to duplicate the document and make your own.
-
-https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo
-
-### GitHub Pages
-
-The project is a set of html, css and javascript so it can be executed using [GitHub Pages].
-
-We use GitHub Pages to provide you our live demo.
-
-
-### Available tasks
+#### Available tasks
 
 * `npm test`          A linter tool for identifying and reporting on patterns in JavaScript.
 * `npm start`         Run HTTP Server on http://127.0.0.1:8080.
@@ -78,6 +76,52 @@ We use GitHub Pages to provide you our live demo.
 * `grunt`             Alias for "build" and "watch".
 
 
-[node.js]: <https://nodejs.org/>
-[ThoughtWorks]: <https://www.thoughtworks.com/radar>
-[GitHub Pages]: <https://pages.github.com/>
+## Google Spreadsheets integration
+
+Technology Radar provides a Google Spreadsheets integration, so you can use spreadsheets to storage your data.
+
+Here you can find the example used for our [live demo](#live-demo). Feel free to duplicate the document and make your own.
+
+https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo
+
+#### Create your own
+
+1. Open the document using the provided link.
+1. Click on `File → Make a copy...` and choose a filename.
+1. Modify the document adding or removing items.
+1. Select `File → Publish to the web...` and click on `Publish`.
+1. Now you just need to copy the `worksheetId` from the url (e.g. `112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo`)
+1. Open the file `src/app/stores/ItemsStore.js` and paste to the const `WORKSHEET_ID`.
+1. Save the file e compile the project with `npm run build`.
+
+
+## GitHub Pages
+
+The project is a set of html, css and javascript so it can be executed using [GitHub Pages](https://pages.github.com/).
+
+We use GitHub Pages to provide you our live demo.
+
+#### Setup GitHub Pages
+
+##### on Code
+
+1. Open the configuration file at `grunt/gh-pages.js`.
+1. Change `user` section with your information.
+1. Change `repo` link with your repository link.
+1. After that you can deploy to gh-pages with `npm run gh-pages`.
+1. You can also deploy to gh-pages using [TravisCI](#travis-ci).
+
+##### on GitHub
+
+1. Go to your repository page and click on `settings`.
+1. Scroll down to the `GitHub Pages` section.
+1. Set the `source` to `gh-pages` branch and click on Save.
+1. That's it! Now your site is published.
+
+
+## Travis CI
+
+We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continuous Delivery.
+
+- When you push your code to remote, Travis will automatically test you code and warn you if something goes wrong.
+- If you push to `master` branch, Travis will compile and push your code to `gh-pages` branch (if all tests pass).

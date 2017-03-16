@@ -10,10 +10,12 @@ const EVENTS = {
     CHANGE_RESULT: 'CHANGE_RESULT',
 };
 
+const WORKSHEET_ID = '112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo';
+
 const state = {
     endpoint: {
         type: 'SPREADSHEETS',
-        url: 'https://spreadsheets.google.com/feeds/list/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo/1/public/values?alt=json-in-script&callback={1}',
+        url: `https://spreadsheets.google.com/feeds/list/${WORKSHEET_ID}/1/public/values?alt=json-in-script&callback={1}`,
         // type: 'JSON',
         // url: 'items.json',
     },
