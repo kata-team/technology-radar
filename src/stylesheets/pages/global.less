@@ -13,7 +13,7 @@ footer {
     line-height: 30px;
 
     .footer-links {
-        a[href] {
+        a.links {
             transition: all .2s;
             border: 0px solid transparent;
             padding-bottom: 4px;
@@ -28,11 +28,17 @@ footer {
                 padding-bottom: 2px;
             }
         }
+        a.badge {
+            &:first-child {
+                margin-left: 10px;
+            }
+        }
     }
 
     @media (min-width: 640px) {
         text-align: left;
         .footer-links {
+            text-align: right;
             .pull-right();
         }
     }
@@ -40,9 +46,9 @@ footer {
 
 .app {
     &--result {
-        min-height: ~"calc(100vh - 140px - 60px)";
+        min-height: ~"calc(100vh - 140px - 90px)";
         @media (min-width: 640px) {
-            min-height: ~"calc(100vh - 70px - 60px)";
+            min-height: ~"calc(100vh - 70px - 90px)";
         }
     }
 }
