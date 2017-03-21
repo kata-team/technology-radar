@@ -13558,34 +13558,38 @@ footer {
   padding-bottom: 15px;
   line-height: 30px;
 }
-footer .footer-links a[href] {
+footer .footer-links a.links {
   transition: all .2s;
   border: 0px solid transparent;
   padding-bottom: 4px;
   margin-left: 10px;
 }
-footer .footer-links a[href]:first-child {
+footer .footer-links a.links:first-child {
   margin-left: 0;
 }
-footer .footer-links a[href]:hover {
+footer .footer-links a.links:hover {
   text-decoration: none;
   border-bottom: 1px solid #0f6ecd;
   padding-bottom: 2px;
+}
+footer .footer-links a.badge:first-child {
+  margin-left: 10px;
 }
 @media (min-width: 640px) {
   footer {
     text-align: left;
   }
   footer .footer-links {
+    text-align: right;
     float: right;
   }
 }
 .app--result {
-  min-height: calc(100vh - 140px - 60px);
+  min-height: calc(100vh - 140px - 90px);
 }
 @media (min-width: 640px) {
   .app--result {
-    min-height: calc(100vh - 70px - 60px);
+    min-height: calc(100vh - 70px - 90px);
   }
 }
 .uk-navbar-fixed {
