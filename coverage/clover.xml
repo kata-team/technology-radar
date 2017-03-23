@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1490300665798" clover="3.2.0">
+  <project timestamp="1490300665799" name="All files">
+    <metrics statements="10" coveredstatements="10" conditionals="8" coveredconditionals="1" methods="5" coveredmethods="5" elements="23" coveredelements="16" complexity="0" loc="10" ncloc="10" packages="2" files="2" classes="2">
+      <package name="class">
+        <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <file name="Item.js" path="/Users/mmontalbano/Sites/personal/technology-radar/src/app/class/Item.js">
+          <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="components">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <file name="ItemComponent.jsx" path="/Users/mmontalbano/Sites/personal/technology-radar/src/app/components/ItemComponent.jsx">
+          <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="20" count="1" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemComponent 1`] = `
+<div>
+  <a
+    className="uk-card uk-card-default uk-card-hover"
+    href="https://facebook.github.io/react/"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    <div
+      className="uk-card-body"
+    >
+      <div
+        className="uk-card-badge uk-label"
+      >
+        assess
+      </div>
+      <h3
+        className="uk-card-title"
+      >
+        React.js
+      </h3>
+      <p>
+        React (sometimes styled React.js or ReactJS) is an open-source JavaScript library for building user interfaces.
+        It is maintained by Facebook, Instagram and a community of individual developers and corporations. According to JavaScript analytics service Libscore, React is currently being used on the websites of Netflix, Imgur, Bleacher Report, Feedly, Airbnb, SeatGeek, HelloSign, Walmart, and others.
+      </p>
+    </div>
+    <div
+      className="uk-card-footer"
+    >
+      <span>
+        <div
+          className="uk-label"
+        >
+          
+        </div>
+         
+      </span>
+    </div>
+  </a>
+</div>
+`;
