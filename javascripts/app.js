@@ -19130,7 +19130,7 @@
 	 */
 	
 	function getActiveElement(doc) /*?DOMElement*/{
-	  doc = doc || document;
+	  doc = doc || (typeof document !== 'undefined' ? document : undefined);
 	  if (typeof doc === 'undefined') {
 	    return null;
 	  }
@@ -21757,6 +21757,11 @@
 	            });
 	        }
 	    }, {
+	        key: 'onSubmitSearchHandler',
+	        value: function onSubmitSearchHandler(e) {
+	            e.preventDefault();
+	        }
+	    }, {
 	        key: 'onClickOffcanvasHandler',
 	        value: function onClickOffcanvasHandler() {
 	            this.setState(function (prevState) {
@@ -21816,7 +21821,7 @@
 	                { className: 'uk-search uk-width-1-4@s' },
 	                _react2.default.createElement(
 	                    'form',
-	                    null,
+	                    { onSubmit: this.onSubmitSearchHandler },
 	                    _react2.default.createElement(
 	                        'a',
 	                        { className: 'uk-form-icon uk-form-icon-flip', onClick: this.onClickOffcanvasHandler },
