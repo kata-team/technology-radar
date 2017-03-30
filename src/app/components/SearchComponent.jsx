@@ -32,6 +32,10 @@ export default class SearchComponent extends Component {
         });
     }
 
+    onSubmitSearchHandler(e) {
+        e.preventDefault();
+    }
+    
     onClickOffcanvasHandler() {
         this.setState((prevState) => ({
             offcanvas: !prevState.offcanvas,
@@ -63,7 +67,7 @@ export default class SearchComponent extends Component {
         return (
             <div className="uk-search uk-width-1-4@s">
 
-                <form>
+                <form onSubmit={this.onSubmitSearchHandler}>
                     <a className="uk-form-icon uk-form-icon-flip" onClick={this.onClickOffcanvasHandler}><i className="fa fa-filter" /></a>
                     <input type="search" placeholder="Search" className="uk-input" onChange={(event) => { SearchActions.changeCriteria(event.target.value) }} />
                 </form>

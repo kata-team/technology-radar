@@ -72,7 +72,7 @@ npm start
 * `npm test`          A linter tool for identifying and reporting on patterns in JavaScript.
 * `npm start`         Run HTTP Server on http://127.0.0.1:8080.
 * `npm run build`     Run "test" and compile "javascripts" and "stylesheets".
-* `npm run gh-pages`  Alias for "build". After that, will push changes of the **public** folder to **gh-pages** branch.
+* `npm run deploy`    Alias for "build". After that, will push changes of the **public** folder to **gh-pages** branch.
 * `grunt`             Alias for "build" and "watch".
 
 
@@ -108,7 +108,7 @@ We use GitHub Pages to provide you our live demo.
 1. Open the configuration file at `grunt/gh-pages.js`.
 1. Change `user` section with your information.
 1. Change `repo` link with your repository link.
-1. After that you can deploy to gh-pages with `npm run gh-pages`.
+1. After that you can deploy to gh-pages with `npm run deploy`.
 1. You can also deploy to gh-pages using [TravisCI](#travis-ci).
 
 ##### on GitHub
