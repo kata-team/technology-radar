@@ -11,6 +11,7 @@ export default class SearchComponent extends Component {
         this.state = {
             categories: ItemsStore.categories(),
             statuses: ItemsStore.statuses(),
+            tags: ItemsStore.tags(),
             offcanvas: false,
         };
 
@@ -29,6 +30,7 @@ export default class SearchComponent extends Component {
         this.setState({
             categories: ItemsStore.categories(),
             statuses: ItemsStore.statuses(),
+            tags: ItemsStore.tags(),
         });
     }
 
@@ -63,6 +65,14 @@ export default class SearchComponent extends Component {
         ));
     }
 
+    tags() {
+        return _.map(this.state.tags, (tag, key) => (
+            <div key={key}>
+                <label htmlFor={tag}><input id={tag} className="uk-checkbox" type="checkbox" value={tag} onChange={(event) => { SearchActions.changeTag(event.target) }} /> {tag}</label>
+            </div>
+        ));
+    }
+
     render() {
         return (
             <div className="uk-search uk-width-1-4@s">
@@ -83,6 +93,11 @@ export default class SearchComponent extends Component {
                     <div className="uk-margin uk-grid-small uk-child-width-auto">
                         <div className="uk-margin-small"><b>Status</b></div>
                         { this.statuses() }
+                    </div>
+
+                    <div className="uk-margin uk-grid-small uk-child-width-auto">
+                        <div className="uk-margin-small"><b>Tags</b></div>
+                        { this.tags() }
                     </div>
 
                     <button className="uk-button uk-button-default uk-offcanvas-close uk-width-1-1 uk-margin" onClick={this.onClickOffcanvasHandler} type="button">Close</button>

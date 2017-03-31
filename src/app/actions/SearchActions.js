@@ -20,4 +20,10 @@ export default {
             target: _target,
         });
     },
+    changeTag(_target) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.CHANGE_TAG,
+            target: _target,
+        });
+    },
 };

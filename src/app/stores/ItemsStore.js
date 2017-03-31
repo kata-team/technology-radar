@@ -22,12 +22,14 @@ const state = {
     criteria: '',
     categories: [],
     statuses: [],
+    tags: [],
 };
 
 const results = {
     items: [],
     categories: [],
     statuses: [],
+    tags: [],
 };
 
 const ItemsStore = Object.assign({}, EventEmitter.prototype, {
@@ -39,6 +41,9 @@ const ItemsStore = Object.assign({}, EventEmitter.prototype, {
     },
     statuses() {
         return results.statuses;
+    },
+    tags() {
+        return results.tags;
     },
     emitChangeResult() {
         this.emit(EVENTS.CHANGE_RESULT);
@@ -81,10 +86,20 @@ const updateResultStatuses = (items) => {
     results.statuses = _.keys(statuses);
 };
 
+const updateResultTags = (items) => {
+    results.tags = [];
+    _.each(items, (item) => {
+        if (!_.isEmpty(item.tags)) {
+            results.tags = _.union(results.tags, item.tags);
+        }
+    });
+};
+
 const search = () => {
     itemsLoader.load(state.endpoint, (items) => {
         updateResultCategories(items);
         updateResultStatuses(items);
+        updateResultTags(items);
 
         const criteriaRegExp = new RegExp(state.criteria, 'i');
 
@@ -92,6 +107,7 @@ const search = () => {
             let result = criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description);
             result = result && (state.categories.length === 0 ? true : state.categories.indexOf(item.category) >= 0);
             result = result && (state.statuses.length === 0 ? true : state.statuses.indexOf(item.status) >= 0);
+            result = result && (state.tags.length === 0 ? true : _.filter(state.tags, (tag) => { return item.tags.indexOf(tag) >= 0 }).length > 0);
             return result;
         });
 
@@ -113,6 +129,10 @@ AppDispatcher.register((action) => {
         break;
     case SearchConstants.CHANGE_STATUS:
         state.statuses = toggleArrayElement(state.statuses, action.target.value, action.target.checked);
+        search();
+        break;
+    case SearchConstants.CHANGE_TAG:
+        state.tags = toggleArrayElement(state.tags, action.target.value, action.target.checked);
         search();
         break;
     default:

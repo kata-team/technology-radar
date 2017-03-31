@@ -12,7 +12,7 @@ export default class ItemComponent extends Component {
 
     tags() {
         return _.map(this.props.item.tags, (tag, key) => (
-            <span key={key}><div className="uk-label">{tag.trim()}</div>&nbsp;</span>
+            <span key={key}><div className="uk-label">{tag}</div>&nbsp;</span>
         ));
     }
 
