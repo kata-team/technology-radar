@@ -21731,6 +21731,7 @@
 	        _this.state = {
 	            categories: _ItemsStore2.default.categories(),
 	            statuses: _ItemsStore2.default.statuses(),
+	            tags: _ItemsStore2.default.tags(),
 	            offcanvas: false
 	        };
 	
@@ -21753,7 +21754,8 @@
 	        value: function onChangeResultHandler() {
 	            this.setState({
 	                categories: _ItemsStore2.default.categories(),
-	                statuses: _ItemsStore2.default.statuses()
+	                statuses: _ItemsStore2.default.statuses(),
+	                tags: _ItemsStore2.default.tags()
 	            });
 	        }
 	    }, {
@@ -21814,6 +21816,25 @@
 	            });
 	        }
 	    }, {
+	        key: 'tags',
+	        value: function tags() {
+	            return _underscore2.default.map(this.state.tags, function (tag, key) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { key: key },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: tag },
+	                        _react2.default.createElement('input', { id: tag, className: 'uk-checkbox', type: 'checkbox', value: tag, onChange: function onChange(event) {
+	                                _SearchActions2.default.changeTag(event.target);
+	                            } }),
+	                        ' ',
+	                        tag
+	                    )
+	                );
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -21866,6 +21887,20 @@
 	                            )
 	                        ),
 	                        this.statuses()
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'uk-margin uk-grid-small uk-child-width-auto' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'uk-margin-small' },
+	                            _react2.default.createElement(
+	                                'b',
+	                                null,
+	                                'Tags'
+	                            )
+	                        ),
+	                        this.tags()
 	                    ),
 	                    _react2.default.createElement(
 	                        'button',
@@ -23595,6 +23630,12 @@
 	            actionType: _SearchConstants2.default.CHANGE_STATUS,
 	            target: _target
 	        });
+	    },
+	    changeTag: function changeTag(_target) {
+	        _AppDispatcher2.default.dispatch({
+	            actionType: _SearchConstants2.default.CHANGE_TAG,
+	            target: _target
+	        });
 	    }
 	};
 
@@ -23882,7 +23923,8 @@
 	exports.default = {
 	    CHANGE_CRITERIA: 'CHANGE_CRITERIA',
 	    CHANGE_CATEGORY: 'CHANGE_CATEGORY',
-	    CHANGE_STATUS: 'CHANGE_STATUS'
+	    CHANGE_STATUS: 'CHANGE_STATUS',
+	    CHANGE_TAG: 'CHANGE_TAG'
 	};
 
 /***/ },
@@ -23932,13 +23974,15 @@
 	    },
 	    criteria: '',
 	    categories: [],
-	    statuses: []
+	    statuses: [],
+	    tags: []
 	};
 	
 	var results = {
 	    items: [],
 	    categories: [],
-	    statuses: []
+	    statuses: [],
+	    tags: []
 	};
 	
 	var ItemsStore = Object.assign({}, _events2.default.prototype, {
@@ -23950,6 +23994,9 @@
 	    },
 	    statuses: function statuses() {
 	        return results.statuses;
+	    },
+	    tags: function tags() {
+	        return results.tags;
 	    },
 	    emitChangeResult: function emitChangeResult() {
 	        this.emit(EVENTS.CHANGE_RESULT);
@@ -23992,10 +24039,20 @@
 	    results.statuses = _underscore2.default.keys(statuses);
 	};
 	
+	var updateResultTags = function updateResultTags(items) {
+	    results.tags = [];
+	    _underscore2.default.each(items, function (item) {
+	        if (!_underscore2.default.isEmpty(item.tags)) {
+	            results.tags = _underscore2.default.union(results.tags, item.tags);
+	        }
+	    });
+	};
+	
 	var search = function search() {
 	    itemsLoader.load(state.endpoint, function (items) {
 	        updateResultCategories(items);
 	        updateResultStatuses(items);
+	        updateResultTags(items);
 	
 	        var criteriaRegExp = new RegExp(state.criteria, 'i');
 	
@@ -24003,6 +24060,9 @@
 	            var result = criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description);
 	            result = result && (state.categories.length === 0 ? true : state.categories.indexOf(item.category) >= 0);
 	            result = result && (state.statuses.length === 0 ? true : state.statuses.indexOf(item.status) >= 0);
+	            result = result && (state.tags.length === 0 ? true : _underscore2.default.filter(state.tags, function (tag) {
+	                return item.tags.indexOf(tag) >= 0;
+	            }).length > 0);
 	            return result;
 	        });
 	
@@ -24024,6 +24084,10 @@
 	            break;
 	        case _SearchConstants2.default.CHANGE_STATUS:
 	            state.statuses = toggleArrayElement(state.statuses, action.target.value, action.target.checked);
+	            search();
+	            break;
+	        case _SearchConstants2.default.CHANGE_TAG:
+	            state.tags = toggleArrayElement(state.tags, action.target.value, action.target.checked);
 	            search();
 	            break;
 	        default:
@@ -26566,13 +26630,19 @@
 
 /***/ },
 /* 215 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _underscore = __webpack_require__(181);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -26596,7 +26666,9 @@
 	    this.description = description;
 	    this.category = category;
 	    this.status = status;
-	    this.tags = tags.split(',');
+	    this.tags = tags.trim() !== '' ? _underscore2.default.map(tags.split(','), function (tag) {
+	        return tag.trim();
+	    }) : [];
 	    this.url = url;
 	};
 	
@@ -26775,7 +26847,7 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'uk-label' },
-	                        tag.trim()
+	                        tag
 	                    ),
 	                    '\xA0'
 	                );

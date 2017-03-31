@@ -13622,8 +13622,8 @@ footer .footer-links a.badge:first-child {
 .uk-navbar-brand .uk-form-icon i.fa {
   line-height: 40px;
 }
-.uk-card-footer {
-  display: none;
+.uk-card-footer .uk-label {
+  opacity: .6;
 }
 body {
   width: 100%;
