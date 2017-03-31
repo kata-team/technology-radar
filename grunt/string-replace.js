@@ -5,8 +5,8 @@ module.exports = {
         },
         options: {
             replacements: [{
-                pattern: /\/app/g,
-                replacement: '/app.min',
+                pattern: /\/app\.([js|css])/g,
+                replacement: '/app.min.$1',
             }],
         },
     },
