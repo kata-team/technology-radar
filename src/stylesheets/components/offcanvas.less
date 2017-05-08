@@ -1,9 +1,12 @@
 body {
     width: 100%;
-    -webkit-transition: margin-left .3s ease-in-out;
-            transition: margin-left .3s ease-in-out;
+    -webkit-transition: margin-left .3s ease-out;
+            transition: margin-left .3s ease-out;
 
     &.uk-offcanvas-flip.uk-offcanvas-page-animation {
+        margin-left: -270px;
+        overflow: hidden;
+
         @media (min-width: 1750px) {
             margin-left: 0;
             overflow: auto;
@@ -29,6 +32,8 @@ body {
     .uk-offcanvas-bar {
         position: fixed;
         z-index: 1000;
+        padding: 20px;
+        width: 270px;
         &.uk-offcanvas-flip {
             left: auto;
             right: 0;

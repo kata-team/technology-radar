@@ -100,7 +100,7 @@ export default class SearchComponent extends Component {
                         { this.tags() }
                     </div>
 
-                    <button className="uk-button uk-button-default uk-offcanvas-close uk-width-1-1 uk-margin" onClick={this.onClickOffcanvasHandler} type="button">Close</button>
+                    <button className="uk-button uk-button-default uk-width-1-1 uk-margin" onClick={this.onClickOffcanvasHandler} type="button">Close</button>
                 </OffcanvasComponent>
 
             </div>
