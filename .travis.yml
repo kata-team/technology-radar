@@ -3,11 +3,9 @@ node_js:
     - "6"
 before_script:
     - if [[ $(node -v) =~ ^v4.* ]]; then export __node_harmony=--harmony; fi
-    - npm install -g grunt-cli
-    - npm install -g bower
-    - bower install
+    - yarn global add grunt-cli
 script:
-    - npm test
+    - yarn test
 deploy:
     skip_cleanup: true
     provider: script

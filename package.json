@@ -43,7 +43,11 @@
         "react-dom" : "^15.4.0",
         "flux" : "^3.1.0",
         "underscore" : "*",
-        "rest": "^2.0.0"
+        "rest": "^2.0.0",
+
+        "es5-shim": "^4.5.9",
+        "uikit": "^3.0.0-beta",
+        "font-awesome": "^4.7.0"
     },
     "devDependencies" : {
         "http-server" : "^0.9.0",

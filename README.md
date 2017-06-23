@@ -45,9 +45,9 @@ Getting Started
 
 To get started, fork the project.
 
-### Install Grunt and Bower
+### Install Grunt
 
-To install Grunt and Bower, you must first download and install [node.js](https://nodejs.org/) - which includes npm.
+To install Grunt you must first download and install [node.js](https://nodejs.org/) - which includes npm.
 
 Then, using the command line:
 
@@ -55,15 +55,30 @@ Then, using the command line:
 # install `grunt-cli` globally
 npm install -g grunt-cli
 
-# install `bower` globally
-npm install -g bower
-
 # navigate to the root of your project, then run
 npm install
-bower install
 
 npm run build
 npm start
+
+# http://127.0.0.1:8080
+```
+
+#### Use Yarn instead
+
+[Yarn](https://yarnpkg.com/lang/en/) is a fast, reliable, and secure dependency management.
+
+This is a useful link if you want [Migrating from NPM](https://yarnpkg.com/lang/en/docs/migrating-from-npm/).
+
+```sh
+# install `grunt-cli` globally
+yarn global add grunt-cli
+
+# navigate to the root of your project, then run
+yarn install
+
+yarn run build
+yarn start
 
 # http://127.0.0.1:8080
 ```

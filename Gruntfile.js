@@ -8,7 +8,7 @@ module.exports = grunt => {
                 root: 'src',
                 stylesheets: '<%= paths.source.root %>/stylesheets',
                 javascripts: '<%= paths.source.root %>/app',
-                bower_components: '<%= paths.source.root %>/bower_components',
+                node_modules: 'node_modules',
             },
             public: {
                 root: 'public',
@@ -16,7 +16,7 @@ module.exports = grunt => {
                 javascripts: '<%= paths.public.root %>/javascripts',
             },
         },
-        bower: grunt.file.readJSON('bower.json'),
+        //bower: grunt.file.readJSON('bower.json'),
     };
     // require it at the top and pass in the grunt instance
     timeGrunt(grunt);
