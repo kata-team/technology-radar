@@ -23,7 +23,7 @@ Live demo
 
 Here you can find our live demo so you can explore all features.
 
-https://kata-team.github.io/technology-radar
+[https://kata-team.github.io/technology-radar](https://kata-team.github.io/technology-radar)
 
 
 To-Do List
@@ -98,7 +98,7 @@ Technology Radar provides a Google Spreadsheets integration, so you can use spre
 
 Here you can find the example used for our [live demo](#live-demo). Feel free to duplicate the document and make your own.
 
-https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo
+[https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo](https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo)
 
 #### Create your own
 
