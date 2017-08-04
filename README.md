@@ -1,9 +1,9 @@
+Technology Radar
+================
+
 [![Kata Team](https://img.shields.io/badge/-kata--team-lightgrey.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QcbDCklIqzcwQAAADNQTFRFAAAA%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2Ft5XiggAAABB0Uk5TABAgMEBQYHCAj5%2Bvv8%2Ff7yMagooAAAABYktHRBCVsg0sAAAAkklEQVQYGZXBQRKDIBBFwa%2BOCAiZd%2F%2FThhjL0tRs0q1%2FFRRaG12BzSFP%2BpF8qUDSwfKij7U0qBVI%2BoKutTUHeupA1QnIHNrG0Ceddr58Kww%2B67JxqJ3BF910Lq9Zd41L0UPjkvSQ%2BHCGWU8FqA1w%2FbI8qQG7Ii8gK7AwmALGMClgDIoYgyKG56yIURQzVsUqprs3668Kl2V3gwgAAAAASUVORK5CYII%3D)](https://github.com/kata-team)
 [![Build Status](https://travis-ci.org/kata-team/technology-radar.svg?branch=master)](https://travis-ci.org/kata-team/technology-radar)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b569c34b3b5d4b7db2fe54d808a0323b)](https://www.codacy.com/app/kata-team/technology-radar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kata-team/technology-radar&amp;utm_campaign=Badge_Grade)
-
-TECHNOLOGY RADAR
-================
 
 Technology Radar is a tool that helps organizations to monitor their own discoveries.
 Keep track of your technologies according to your previous successes and failures.
@@ -142,3 +142,23 @@ We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continu
 
 - When you push your code to remote, Travis will automatically test you code and warn you if something goes wrong.
 - If you push to `master` branch, Travis will compile and push your code to `gh-pages` branch (if all tests pass).
+
+#### Setup Travis CI
+
+##### Obtaining a Github token
+
+1. Log into Github and go to user `Settings` page.
+1. Click on `Personal access tokens`.
+1. Click on `Generate new token`.
+1. Add a `Token description` (e.g. `TravisCI`).
+1. Select `public_repo` under `scope` section.
+1. Click on `Generate token` button.
+1. Copy the provided token (**after a page refresh you will never be able to get that token again**)
+
+##### Add token to TravisCI
+
+1. Log into TravisCI and go to repository `Settings` page.
+1. Add new `Environment Variables`.
+   * Name: `GH_TOKEN`
+   * Value: *paste here the token value*
+1. Click on `Add` button.
