@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 import Item from '../class/Item';
 
 export default class ItemComponent extends Component {

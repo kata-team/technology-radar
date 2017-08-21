@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 
 export default class Item {
     constructor({ name = '', description = '', category = '', status = '', url = '', tags = '' }) {

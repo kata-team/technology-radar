@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 import OffcanvasComponent from '../components/OffcanvasComponent';
 import SearchActions from '../actions/SearchActions';
 import ItemsStore from '../stores/ItemsStore';

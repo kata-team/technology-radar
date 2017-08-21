@@ -1,8 +1,9 @@
 import EventEmitter from 'events';
-import _ from 'underscore';
+import _ from 'lodash';
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import SearchConstants from '../constants/SearchConstants';
 import ItemsLoader from '../class/ItemsLoader';
+import Item from '../class/Item';
 
 const itemsLoader = new ItemsLoader();
 
@@ -96,7 +97,7 @@ const updateResultTags = (items) => {
 };
 
 const search = () => {
-    itemsLoader.load(state.endpoint, (items) => {
+    itemsLoader.load(state.endpoint, Item, (items) => {
         updateResultCategories(items);
         updateResultStatuses(items);
         updateResultTags(items);
