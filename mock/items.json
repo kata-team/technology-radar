@@ -4,7 +4,7 @@
         "description":"React (sometimes styled React.js or ReactJS) is an open-source JavaScript library for building user interfaces.\nIt is maintained by Facebook, Instagram and a community of individual developers and corporations. According to JavaScript analytics service Libscore, React is currently being used on the websites of Netflix, Imgur, Bleacher Report, Feedly, Airbnb, SeatGeek, HelloSign, Walmart, and others.",
         "category":"language & framework",
         "status":"assess",
-        "tags":"",
+        "tags":"javascript",
         "url":"https://facebook.github.io/react/"
     },
     {
@@ -12,7 +12,7 @@
         "description":"In the last radar we called out Gulp as a strong competitor to Grunt, with a clean API and fast builds thanks to its streaming approach. While we still like it as a tool, we are moving it out from trial back to assess since Grunt has both a broader usage model and better industry adoption and tooling. We do see some teams successfully using Gulp inside Grunt, when the speed of intermediate result caching is required, but we are not recommending it as the default JavaScript build tool.",
         "category":"tools",
         "status":"assess",
-        "tags":"",
+        "tags":"javascript",
         "url":"http://gulpjs.com/"
     },
     {
@@ -30,5 +30,21 @@
         "status":"adopt",
         "tags":"",
         "url":"https://bower.io/"
+    },
+    {
+        "name":"Module Pattern",
+        "description":"In JavaScript, the Module pattern is used to further emulate the concept of classes in such a way that we're able to include both public/private methods and variables inside a single object, thus shielding particular parts from the global scope.",
+        "category":"technique",
+        "status":"adopt",
+        "tags":"javascript",
+        "url":"https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript"
+    },
+    {
+        "name":"EJS",
+        "description":"EJS is a client-side templating language that was originally part of JavaScriptMVC, which has now been replaced by DoneJS. EJS combines data and a template to produce HTML. ",
+        "category":"template engine",
+        "status":"assess",
+        "tags":"javascript, template",
+        "url":"http://www.embeddedjs.com/"
     }
 ]
