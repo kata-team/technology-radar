@@ -46,9 +46,17 @@ footer {
 
 .app {
     &--result {
-        min-height: ~"calc(100vh - 140px - 90px)";
+        min-height: ~"calc(100vh - 140px - 122px)";
         @media (min-width: 640px) {
-            min-height: ~"calc(100vh - 70px - 90px)";
+            min-height: ~"calc(100vh - 70px - 92px)";
+        }
+
+        // spinner
+        > .uk-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 }

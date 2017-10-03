@@ -79,7 +79,7 @@ export default class SearchComponent extends Component {
 
                 <form onSubmit={this.onSubmitSearchHandler}>
                     <a className="uk-form-icon uk-form-icon-flip" onClick={this.onClickOffcanvasHandler}><i className="fa fa-filter" /></a>
-                    <input type="search" placeholder="Search" className="uk-input" onChange={(event) => { SearchActions.changeCriteria(event.target.value) }} />
+                    <input type="search" placeholder="Search" className="uk-input" onChange={(event) => { SearchActions.changeQuery(event.target.value) }} />
                 </form>
 
                 <OffcanvasComponent open={this.state.offcanvas} onClick={this.onClickOffcanvasHandler}>

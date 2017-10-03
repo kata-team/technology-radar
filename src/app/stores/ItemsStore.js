@@ -4,8 +4,10 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import SearchConstants from '../constants/SearchConstants';
 import ItemsLoader from '../class/ItemsLoader';
 import Item from '../class/Item';
+import Category from '../class/Category';
 
 const itemsLoader = new ItemsLoader();
+const categoriesLoader = new ItemsLoader();
 
 const EVENTS = {
     CHANGE_RESULT: 'CHANGE_RESULT',
@@ -18,9 +20,9 @@ const state = {
         type: 'SPREADSHEETS',
         url: `https://spreadsheets.google.com/feeds/list/${WORKSHEET_ID}/1/public/values?alt=json-in-script&callback={1}`,
         // type: 'JSON',
-        // url: 'items.json',
+        // url: 'mock/items.json',
     },
-    criteria: '',
+    query: '',
     categories: [],
     statuses: [],
     tags: [],
@@ -57,23 +59,22 @@ const ItemsStore = Object.assign({}, EventEmitter.prototype, {
     },
 });
 
-const toggleArrayElement = (arr, elm, add) => {
-    if (add === undefined) {
-        return _.indexOf(arr, elm) === -1 ? _.union(arr, [elm]) : _.without(arr, elm);
-    }
-
-    return add ? _.union(arr, [elm]) : _.without(arr, elm);
-};
-
 const groupByCategories = (items) => {
-    return _.groupBy(items, (item) => {
-        return item.category;
+    const groupedItems = _.groupBy(items, (item) => {
+        return item.category.name;
+    });
+
+    return _.map(groupedItems, (elms) => {
+        return {
+            items: elms,
+            category: elms[0].category,
+        };
     });
 };
 
 const updateResultCategories = (items) => {
     const categories = _.groupBy(items, (item) => {
-        return item.category;
+        return item.category.name;
     });
 
     results.categories = _.keys(categories);
@@ -97,31 +98,56 @@ const updateResultTags = (items) => {
 };
 
 const search = () => {
-    itemsLoader.load(state.endpoint, Item, (items) => {
-        updateResultCategories(items);
-        updateResultStatuses(items);
-        updateResultTags(items);
+    categoriesLoader.load({
+        type: 'SPREADSHEETS',
+        url: `https://spreadsheets.google.com/feeds/list/${WORKSHEET_ID}/2/public/values?alt=json-in-script&callback={1}`,
+        // type: 'JSON',
+        // url: 'mock/categories.json',
+    }, Category, (categories) => {
+        const getCategoryByName = (name) => {
+            return _.find(categories, (o) => { return o.name === name });
+        };
 
-        const criteriaRegExp = new RegExp(state.criteria, 'i');
+        itemsLoader.load(state.endpoint, Item, (items) => {
+            updateResultCategories(items);
+            updateResultStatuses(items);
+            updateResultTags(items);
 
-        results.items = _.filter(items, (item) => {
-            let result = criteriaRegExp.test(item.name) || criteriaRegExp.test(item.description);
-            result = result && (state.categories.length === 0 ? true : state.categories.indexOf(item.category) >= 0);
-            result = result && (state.statuses.length === 0 ? true : state.statuses.indexOf(item.status) >= 0);
-            result = result && (state.tags.length === 0 ? true : _.filter(state.tags, (tag) => { return item.tags.indexOf(tag) >= 0 }).length > 0);
+            const queryRegExp = new RegExp(state.query, 'i');
+
+            results.items = _.filter(items, (item) => {
+                let result = queryRegExp.test(item.name) || queryRegExp.test(item.description);
+                result = result && (state.categories.length === 0 ? true : state.categories.indexOf(item.category.name) >= 0);
+                result = result && (state.statuses.length === 0 ? true : state.statuses.indexOf(item.status) >= 0);
+                result = result && (state.tags.length === 0 ? true : _.filter(state.tags, (tag) => { return item.tags.indexOf(tag) >= 0 }).length > 0);
+                return result;
+            });
+
+            results.items = groupByCategories(results.items);
+
+            ItemsStore.emitChangeResult();
+        }, (item) => {
+            const result = item;
+            // decorator
+            result.category = getCategoryByName(item.category);
             return result;
         });
-
-        results.items = groupByCategories(results.items);
-
-        ItemsStore.emitChangeResult();
     });
+};
+
+// toggle element from array
+const toggleArrayElement = (arr, elm, add) => {
+    if (add === undefined) {
+        return _.indexOf(arr, elm) === -1 ? _.union(arr, [elm]) : _.without(arr, elm);
+    }
+
+    return add ? _.union(arr, [elm]) : _.without(arr, elm);
 };
 
 AppDispatcher.register((action) => {
     switch (action.actionType) {
-    case SearchConstants.CHANGE_CRITERIA:
-        state.criteria = action.criteria;
+    case SearchConstants.CHANGE_QUERY:
+        state.query = action.query;
         search();
         break;
     case SearchConstants.CHANGE_CATEGORY:

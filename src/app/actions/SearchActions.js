@@ -2,10 +2,10 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import SearchConstants from '../constants/SearchConstants';
 
 export default {
-    changeCriteria(_criteria) {
+    changeQuery(_query) {
         AppDispatcher.dispatch({
-            actionType: SearchConstants.CHANGE_CRITERIA,
-            criteria: _criteria,
+            actionType: SearchConstants.CHANGE_QUERY,
+            query: _query,
         });
     },
     changeCategory(_target) {

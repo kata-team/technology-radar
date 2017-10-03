@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import Item from '../class/Item';
+import Color from 'color';
 
 export default class ItemComponent extends Component {
 
@@ -10,9 +11,15 @@ export default class ItemComponent extends Component {
         };
     }
 
+    get labelStyle() {
+        return {
+            background: Color(this.props.item.category.color).darken(0.15)
+        };
+    }
+
     tags() {
         return _.map(this.props.item.tags, (tag, key) => (
-            <span key={key}><div className="uk-label">{tag}</div>&nbsp;</span>
+            <span key={key}><div className="uk-label" style={this.labelStyle}>{tag}</div>&nbsp;</span>
         ));
     }
 
@@ -21,7 +28,7 @@ export default class ItemComponent extends Component {
             <div>
                 <a className="uk-card uk-card-default uk-card-hover" target="_blank" rel="noopener noreferrer" {...this.props.item.url ? { href: this.props.item.url } : {}}>
                     <div className="uk-card-body">
-                        <div className="uk-card-badge uk-label">{this.props.item.status}</div>
+                        <div className="uk-card-badge uk-label" style={this.labelStyle}>{this.props.item.status}</div>
                         <h3 className="uk-card-title">{this.props.item.name}</h3>
                         <p>{this.props.item.description}</p>
                     </div>

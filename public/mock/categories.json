@@ -1,0 +1,22 @@
+[
+    {
+        "name":"technique",
+        "color":"#7eb5c3"
+    },
+    {
+        "name":"tools",
+        "color":"#8ec37e"
+    },
+    {
+        "name":"platform",
+        "color":"#c3a57e"
+    },
+    {
+        "name":"language & framework",
+        "color":"#c37e7e"
+    },
+    {
+        "name":"template engine",
+        "color":"#a67ec3"
+    }
+]

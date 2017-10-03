@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import ItemComponent from './ItemComponent';
+import SpinnerComponent from './SpinnerComponent';
 import ItemsStore from '../stores/ItemsStore';
 
 export default class ResultComponent extends Component {
@@ -30,22 +31,30 @@ export default class ResultComponent extends Component {
         ));
     }
 
-    renderCategories() {
-        return _.map(this.state.result, (items, category) => (
-            <section key={category} data-category={category} className="uk-section">
+    renderCategory(obj) {
+        const categoryStyle = {
+            background: obj.category.color,
+        };
+
+        return (
+            <section key={obj.category.name} className="uk-section" style={categoryStyle}>
                 <div className="uk-container">
 
                     <div className="uk-panel uk-light uk-margin-medium">
-                        <h3>{category}</h3>
+                        <h3>{obj.category.name}</h3>
                     </div>
 
                     <div className="uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match">
-                        { this.renderItems(items) }
+                        { this.renderItems(obj.items) }
                     </div>
 
                 </div>
             </section>
-        ));
+        );
+    }
+
+    renderCategories() {
+        return this.state.result.length > 0 ? _.map(this.state.result, (obj) => this.renderCategory(obj)) : (<SpinnerComponent />);
     }
 
     render() {
