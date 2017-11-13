@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 export default class OffcanvasComponent extends Component {
 
     static get propTypes() {
         return {
-            onClick: React.PropTypes.func,
-            open: React.PropTypes.bool,
-            children: React.PropTypes.node,
+            onClick: PropTypes.func,
+            open: PropTypes.bool,
+            children: PropTypes.node,
         };
     }
 

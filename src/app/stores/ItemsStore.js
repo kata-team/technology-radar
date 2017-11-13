@@ -16,12 +16,8 @@ const EVENTS = {
 const WORKSHEET_ID = '112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo';
 
 const state = {
-    endpoint: {
-        type: 'SPREADSHEETS',
-        url: `https://spreadsheets.google.com/feeds/list/${WORKSHEET_ID}/1/public/values?alt=json-in-script&callback={1}`,
-        // type: 'JSON',
-        // url: 'mock/items.json',
-    },
+    url: `https://spreadsheets.google.com/feeds/list/${WORKSHEET_ID}/1/public/values?alt=json-in-script&callback={1}`,
+    // url: 'mock/items.json',
     query: '',
     categories: [],
     statuses: [],
@@ -98,17 +94,12 @@ const updateResultTags = (items) => {
 };
 
 const search = () => {
-    categoriesLoader.load({
-        type: 'SPREADSHEETS',
-        url: `https://spreadsheets.google.com/feeds/list/${WORKSHEET_ID}/2/public/values?alt=json-in-script&callback={1}`,
-        // type: 'JSON',
-        // url: 'mock/categories.json',
-    }, Category, (categories) => {
+    categoriesLoader.load(`https://spreadsheets.google.com/feeds/list/${WORKSHEET_ID}/2/public/values?alt=json-in-script&callback={1}`, Category, (categories) => {
         const getCategoryByName = (name) => {
             return _.find(categories, (o) => { return o.name === name });
         };
 
-        itemsLoader.load(state.endpoint, Item, (items) => {
+        itemsLoader.load(state.url, Item, (items) => {
             updateResultCategories(items);
             updateResultStatuses(items);
             updateResultTags(items);

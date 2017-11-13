@@ -10,16 +10,14 @@ export default class ItemsLoader {
         this.items = [];
     }
 
-    load(endpoint, Obj, callback, decorator) {
+    load(url, Obj, callback, decorator) {
         if (_.isEmpty(this.items)) {
-            switch (endpoint.type) {
-            case 'SPREADSHEETS':
-                this.googleSpreadsheets(endpoint.url, Obj, callback, decorator);
-                break;
-            case 'JSON':
-                this.json(endpoint.url, Obj, callback, decorator);
+            switch (true) {
+            case (url.indexOf('https://spreadsheets.google.com/feeds/list/') === 0):
+                this.googleSpreadsheets(url, Obj, callback, decorator);
                 break;
             default:
+                this.json(url, Obj, callback, decorator);
                 break;
             }
         } else {

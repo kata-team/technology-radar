@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Item from '../class/Item';
 import Color from 'color';
@@ -7,7 +8,7 @@ export default class ItemComponent extends Component {
 
     static get propTypes() {
         return {
-            item: React.PropTypes.instanceOf(Item),
+            item: PropTypes.instanceOf(Item),
         };
     }
 

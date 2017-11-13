@@ -3,13 +3,11 @@ const webpack = require('webpack');
 module.exports = {
     options: {
         output: {
-            path: '<%= paths.public.javascripts %>',
+            path: __dirname + '/../<%= paths.public.javascripts %>',
             filename: '[name].js',
         },
-        // Important! Do not remove ''. If you do, imports without
-        // an extension won't work anymore!
         resolve: {
-            extensions: ['', '.js', '.jsx'],
+            extensions: ['.js', '.jsx'],
         },
         module: {
             loaders: [
@@ -18,18 +16,24 @@ module.exports = {
                     // Enable caching for improved performance during development
                     // It uses default OS directory by default. If you need
                     // something more custom, pass a path to it.
-                    // I.e., babel?cacheDirectory=<path>
-                    loaders: ['babel?cacheDirectory'],
+                    // I.e., babel-loader?cacheDirectory=<path>
+                    loaders: ['babel-loader?cacheDirectory'],
                 },
             ],
         },
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
+                ie8: false,
                 include: /\.min\.js$/,
                 minimize: true,
+                output: {
+                    comments: false,
+                    beautify: false,
+                },
                 compress: {
                     warnings: false,
                 },
+                warnings: false,
             }),
         ],
     },
@@ -37,7 +41,6 @@ module.exports = {
         entry: {
             app: './<%= paths.source.javascripts %>/app',
         },
-        debug: true,
         devtool: 'source-map',
     },
     prod: {
