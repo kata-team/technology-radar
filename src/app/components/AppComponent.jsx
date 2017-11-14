@@ -6,7 +6,7 @@ import SearchActions from '../actions/SearchActions';
 export default class AppComponent extends Component {
 
     componentDidMount() {
-        SearchActions.changeQuery('');
+        SearchActions.load();
     }
 
     render() {

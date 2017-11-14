@@ -9,9 +9,7 @@ export default class SearchComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categories: ItemsStore.categories(),
-            statuses: ItemsStore.statuses(),
-            tags: ItemsStore.tags(),
+            itemsStore: ItemsStore.getState(),
             offcanvas: false,
         };
 
@@ -19,18 +17,16 @@ export default class SearchComponent extends Component {
     }
 
     componentDidMount() {
-        ItemsStore.addChangeResultListener(this.onChangeResultHandler.bind(this));
+        this.listener = ItemsStore.addListener(this.onChangeResultHandler.bind(this));
     }
 
     componentWillUnmount() {
-        ItemsStore.removeChangeResultListener(this.onChangeResultHandler.bind(this));
+        this.listener.remove();
     }
 
     onChangeResultHandler() {
         this.setState({
-            categories: ItemsStore.categories(),
-            statuses: ItemsStore.statuses(),
-            tags: ItemsStore.tags(),
+            itemsStore: ItemsStore.getState(),
         });
     }
 
@@ -50,7 +46,7 @@ export default class SearchComponent extends Component {
     }
 
     categories() {
-        return _.map(this.state.categories, (category, key) => (
+        return _.map(this.state.itemsStore.categories, (category, key) => (
             <div key={key}>
                 <label htmlFor={category}><input id={category} className="uk-checkbox" type="checkbox" value={category} onChange={(event) => { SearchActions.changeCategory(event.target) }} /> {category}</label>
             </div>
@@ -58,7 +54,7 @@ export default class SearchComponent extends Component {
     }
 
     statuses() {
-        return _.map(this.state.statuses, (status, key) => (
+        return _.map(this.state.itemsStore.statuses, (status, key) => (
             <div key={key}>
                 <label htmlFor={status}><input id={status} className="uk-checkbox" type="checkbox" value={status} onChange={(event) => { SearchActions.changeStatus(event.target) }} /> {status}</label>
             </div>
@@ -66,7 +62,7 @@ export default class SearchComponent extends Component {
     }
 
     tags() {
-        return _.map(this.state.tags, (tag, key) => (
+        return _.map(this.state.itemsStore.tags, (tag, key) => (
             <div key={key}>
                 <label htmlFor={tag}><input id={tag} className="uk-checkbox" type="checkbox" value={tag} onChange={(event) => { SearchActions.changeTag(event.target) }} /> {tag}</label>
             </div>

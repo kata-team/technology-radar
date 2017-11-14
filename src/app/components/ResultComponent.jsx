@@ -8,19 +8,23 @@ export default class ResultComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { result: ItemsStore.result() };
+        this.state = {
+            itemsStore: ItemsStore.getState(),
+        };
     }
 
     componentDidMount() {
-        ItemsStore.addChangeResultListener(this.onChangeResultHandler.bind(this));
+        this.listener = ItemsStore.addListener(this.onChangeResultHandler.bind(this));
     }
 
     componentWillUnmount() {
-        ItemsStore.removeChangeResultListener(this.onChangeResultHandler.bind(this));
+        this.listener.remove();
     }
 
     onChangeResultHandler() {
-        this.setState({ result: ItemsStore.result() });
+        this.setState({
+            itemsStore: ItemsStore.getState(),
+        });
     }
 
     renderItems(items) {
@@ -54,7 +58,7 @@ export default class ResultComponent extends Component {
     }
 
     renderCategories() {
-        return this.state.result.length > 0 ? _.map(this.state.result, (obj) => this.renderCategory(obj)) : (<SpinnerComponent />);
+        return this.state.itemsStore.items.length > 0 ? _.map(this.state.itemsStore.items, (obj) => this.renderCategory(obj)) : (<SpinnerComponent />);
     }
 
     render() {
