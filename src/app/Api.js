@@ -6,7 +6,6 @@ import Item from './class/Item';
 import Category from './class/Category';
 
 class Api {
-
     constructor() {
         this.spreadsheetId = '112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo';
         this.urls = {

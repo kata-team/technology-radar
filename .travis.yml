@@ -1,14 +1,22 @@
 language: node_js
+
 node_js:
-    - "6"
-before_script:
-    - if [[ $(node -v) =~ ^v4.* ]]; then export __node_harmony=--harmony; fi
-    - yarn global add grunt-cli
+  - "6"
+  - "7"
+  - "8"
+
 script:
-    - yarn test
-deploy:
-    skip_cleanup: true
-    provider: script
-    script: grunt build:production gh-pages:travis
-    on:
-        branch: master
+  - npm test
+  - npm run build
+
+stages:
+  - test
+  - name: deploy
+    if: branch = master
+
+jobs:
+  include:
+    - stage: deploy
+      node_js: "8"
+      script:
+        - npm run deploy

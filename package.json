@@ -1,9 +1,9 @@
 {
     "name": "technology-radar",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Technology Radar is a tool that helps organizations to monitor their own discoveries. Keep track of your technologies according to your previous successes and failures.",
-    "main": "app.js",
-    "homepage": "https://kata-team.github.io/technology-radar",
+    "main": "index.js",
+    "homepage": "https://kata-team.github.io/technology-radar/",
     "author": "Kata Team",
     "contributors": [
         {
@@ -14,65 +14,54 @@
         {
             "name": "Stefano Sala",
             "email": "salaste83@gmail.com"
+        },
+        {
+            "name": "Matteo Colombo Speroni",
+            "email": "matteocolombo.work@gmail.com"
         }
     ],
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/kata-team/technology-radar/"
+        "url": "https://github.com/kata-team/technology-radar"
     },
     "keywords": [
         "react",
         "flux",
-        "grunt",
-        "bower",
-        "babel",
-        "less",
-        "eslint"
+        "gh-pages",
+        "travis",
+        "google-spreadsheet"
     ],
     "scripts": {
-        "test": "grunt test",
-        "start": "http-server",
-        "build": "grunt test build",
-        "deploy": "grunt test build gh-pages:local"
+        "test": "react-scripts test",
+        "build-css": "lessc --source-map --clean-css='--advanced --compatibility=ie8' src/stylesheets/app.less public/stylesheets/app.min.css",
+        "build-js": "react-scripts build",
+        "build": "npm-run-all build-css build-js",
+        "start-css": "watch-run -p 'src/stylesheets/**/*.less' npm run build-css",
+        "start-js": "react-scripts start",
+        "start": "npm-run-all -p start-css start-js",
+        "gh-pages": "node ./scripts/gh-pages.js",
+        "deploy": "npm-run-all build gh-pages"
     },
     "engines": {
         "node": "6.x || 7.x || 8.x"
     },
     "dependencies": {
         "color": "^2.0.1",
-        "es5-shim": "^4.5.9",
         "flux": "^3.1.3",
-        "font-awesome": "^4.7.0",
         "lodash": "^4.17.4",
         "prop-types": "^15.6.0",
-        "react": "^16.1.1",
-        "react-dom": "^16.1.1",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
         "rest": "^2.0.0",
-        "uikit": "^3.0.0-beta.34"
+        "uikit": "^3.0.0-beta.38"
     },
     "devDependencies": {
-        "babel-core": "^6.26.0",
-        "babel-eslint": "^8.0.2",
-        "babel-loader": "^7.1.2",
-        "babel-preset-es2015": "^6.24.1",
-        "babel-preset-react": "^6.24.1",
-        "eslint-config-airbnb": "^13.0.0",
-        "eslint-plugin-import": "^2.8.0",
-        "eslint-plugin-jsx-a11y": "^2.2.3",
-        "eslint-plugin-react": "^6.6.0",
-        "grunt": "^1.0.1",
-        "grunt-contrib-copy": "^1.0.0",
-        "grunt-contrib-cssmin": "^1.0.2",
-        "grunt-contrib-less": "^1.4.0",
-        "grunt-contrib-watch": "^1.0.0",
-        "grunt-eslint": "^19.0.0",
-        "grunt-gh-pages": "^2.0.0",
-        "grunt-string-replace": "^1.3.1",
-        "grunt-webpack": "^3.0.2",
-        "http-server": "^0.10.0",
-        "load-grunt-config": "^0.19.2",
-        "time-grunt": "^1.4.0",
-        "webpack": "^3.8.1"
+        "gh-pages": "^1.1.0",
+        "less": "^2.7.3",
+        "less-plugin-clean-css": "^1.5.1",
+        "npm-run-all": "^4.1.2",
+        "react-scripts": "^1.1.0",
+        "watch-run": "^1.2.5"
     }
 }

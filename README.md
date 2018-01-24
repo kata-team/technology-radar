@@ -2,8 +2,10 @@ Technology Radar
 ================
 
 [![Kata Team](https://img.shields.io/badge/-kata--team-lightgrey.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QcbDCklIqzcwQAAADNQTFRFAAAA%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2Ft5XiggAAABB0Uk5TABAgMEBQYHCAj5%2Bvv8%2Ff7yMagooAAAABYktHRBCVsg0sAAAAkklEQVQYGZXBQRKDIBBFwa%2BOCAiZd%2F%2FThhjL0tRs0q1%2FFRRaG12BzSFP%2BpF8qUDSwfKij7U0qBVI%2BoKutTUHeupA1QnIHNrG0Ceddr58Kww%2B67JxqJ3BF910Lq9Zd41L0UPjkvSQ%2BHCGWU8FqA1w%2FbI8qQG7Ii8gK7AwmALGMClgDIoYgyKG56yIURQzVsUqprs3668Kl2V3gwgAAAAASUVORK5CYII%3D)](https://kata-team.github.io)
+[![GitHub package version](https://img.shields.io/github/package-json/v/kata-team/technology-radar.svg)](https://github.com/kata-team/technology-radar)
 [![Build Status](https://travis-ci.org/kata-team/technology-radar.svg?branch=master)](https://travis-ci.org/kata-team/technology-radar)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b569c34b3b5d4b7db2fe54d808a0323b)](https://www.codacy.com/app/kata-team/technology-radar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kata-team/technology-radar&amp;utm_campaign=Badge_Grade)
+
 
 Technology Radar is a tool that helps organizations to monitor their own discoveries.
 Keep track of your technologies according to your previous successes and failures.
@@ -44,53 +46,26 @@ To-Do List
 Getting Started
 ---------------
 
-To get started, fork the project.
+To get started, fork the project and clone your new repository.
 
-### Install Grunt
-
-To install Grunt you must first download and install [node.js](https://nodejs.org/) - which includes npm.
-
-Then, using the command line:
+[![GitHub forks](https://img.shields.io/github/forks/kata-team/technology-radar.svg?style=social&label=Fork)](https://github.com/kata-team/technology-radar/fork)
 
 ```sh
-# install `grunt-cli` globally
-npm install -g grunt-cli
+cd technology-radar/
 
-# navigate to the root of your project, then run
 npm install
-
-npm run build
 npm start
 
-# http://127.0.0.1:8080
+# http://localhost:3000/
 ```
 
-#### Use Yarn instead
-
-[Yarn](https://yarnpkg.com/lang/en/) is a fast, reliable, and secure dependency management.
-
-This is a useful link if you want [Migrating from NPM](https://yarnpkg.com/lang/en/docs/migrating-from-npm/).
-
-```sh
-# install `grunt-cli` globally
-yarn global add grunt-cli
-
-# navigate to the root of your project, then run
-yarn install
-
-yarn run build
-yarn start
-
-# http://127.0.0.1:8080
-```
 
 #### Available tasks
 
 * `npm test`          A linter tool for identifying and reporting on patterns in JavaScript.
-* `npm start`         Run HTTP Server on http://127.0.0.1:8080.
-* `npm run build`     Run "test" and compile "javascripts" and "stylesheets".
-* `npm run deploy`    Alias for "build". After that, will push changes of the **public** folder to **gh-pages** branch.
-* `grunt`             Alias for "build" and "watch".
+* `npm start`         Run HTTP Server on http://127.0.0.1:3000/ and watch for changes.
+* `npm run build`     Compile "javascripts" and "stylesheets".
+* `npm run deploy`    Alias for "build". After that, will push changes of the **build** folder to **gh-pages** branch.
 
 
 ## Google Spreadsheets integration
@@ -122,9 +97,8 @@ We use GitHub Pages to provide you our live demo.
 
 ##### on Code
 
-1. Open the configuration file at `grunt/gh-pages.js`.
-1. Change `user` section with your information.
-1. Change `repo` link with your repository link.
+1. Open the configuration file at `package.json`.
+1. Change `repository.url` link with your repository link.
 1. After that you can deploy to gh-pages with `npm run deploy`.
 1. You can also deploy to gh-pages using [TravisCI](#travis-ci).
 

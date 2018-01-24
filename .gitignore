@@ -5,6 +5,7 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+.vscode
 
 # Icon must end with two \r
 Icon
@@ -76,13 +77,10 @@ fabric.properties
 
 # node libs
 
-node_modules
+/node_modules
 npm-debug.log
 
 # public folder
-bower_components
-public/javascripts
-public/stylesheets
-
-# grunt
-.grunt
+/build
+/public/javascripts
+/public/stylesheets
