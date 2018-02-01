@@ -129,7 +129,7 @@ class ItemsStore extends ReduceStore {
             return state;
         }
 
-        return filterItems(state);
+        return Object.assign({}, filterItems(state));
     }
 }
 

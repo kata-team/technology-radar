@@ -71,7 +71,7 @@ export default class SearchComponent extends Component {
 
     render() {
         return (
-            <div className="uk-search uk-width-1-4@s">
+            <div>
 
                 <form onSubmit={this.onSubmitSearchHandler}>
                     <a className="uk-form-icon uk-form-icon-flip" onClick={this.onClickOffcanvasHandler}><i className="fa fa-filter" /></a>

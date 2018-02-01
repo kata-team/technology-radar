@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavbarComponent from './NavbarComponent';
-import ResultComponent from './ResultComponent';
+import ResultContainer from './ResultContainer';
 import SearchActions from '../actions/SearchActions';
 
 export default class AppComponent extends Component {
@@ -13,7 +13,7 @@ export default class AppComponent extends Component {
         return (
             <div className="app">
                 <NavbarComponent />
-                <ResultComponent />
+                <ResultContainer />
             </div>
         );
     }

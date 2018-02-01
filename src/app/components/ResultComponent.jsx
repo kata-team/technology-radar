@@ -1,30 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
+import classnames from 'classnames';
 import ItemComponent from './ItemComponent';
 import SpinnerComponent from './SpinnerComponent';
-import ItemsStore from '../stores/ItemsStore';
+import ViewConstants from '../constants/ViewConstants';
 
 export default class ResultComponent extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            itemsStore: ItemsStore.getState(),
+    static get propTypes() {
+        return {
+            itemsStore: PropTypes.object.isRequired,
+            viewStore: PropTypes.object.isRequired,
         };
-    }
-
-    componentDidMount() {
-        this.listener = ItemsStore.addListener(this.onChangeResultHandler.bind(this));
-    }
-
-    componentWillUnmount() {
-        this.listener.remove();
-    }
-
-    onChangeResultHandler() {
-        this.setState({
-            itemsStore: ItemsStore.getState(),
-        });
     }
 
     renderItems(items) {
@@ -39,6 +27,11 @@ export default class ResultComponent extends Component {
         const categoryStyle = {
             background: obj.category.color,
         };
+        const itemsContainer = classnames({
+            'uk-child-width-1-2@m uk-child-width-1-3@l': this.props.viewStore.view === ViewConstants.VIEW_GRID,
+            'uk-child-width-1-1': this.props.viewStore.view === ViewConstants.VIEW_LIST,
+            'uk-grid uk-grid-match': true,
+        });
 
         return (
             <section key={obj.category.name} className="uk-section" style={categoryStyle}>
@@ -48,7 +41,7 @@ export default class ResultComponent extends Component {
                         <h3>{obj.category.name}</h3>
                     </div>
 
-                    <div className="uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-match">
+                    <div className={itemsContainer}>
                         { this.renderItems(obj.items) }
                     </div>
 
@@ -58,12 +51,12 @@ export default class ResultComponent extends Component {
     }
 
     renderCategories() {
-        return this.state.itemsStore.items.length > 0 ? _.map(this.state.itemsStore.items, (obj) => this.renderCategory(obj)) : (<SpinnerComponent />);
+        return this.props.itemsStore.items.length > 0 ? _.map(this.props.itemsStore.items, (obj) => this.renderCategory(obj)) : (<SpinnerComponent />);
     }
 
     render() {
         return (
-            <div className="app--result">
+            <div className={`app--result ${this.props.viewStore.view}`}>
                 { this.renderCategories() }
             </div>
         );
