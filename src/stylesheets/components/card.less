@@ -14,3 +14,55 @@
         opacity: .6;
     }
 }
+
+.app--result {
+    > .uk-section,
+    .uk-card .uk-card-body,
+    .uk-card .uk-card-footer,
+    .uk-card .uk-card-badge,
+    .uk-card .uk-label,
+    .uk-card .uk-card-title,
+    .uk-card .uk-card-description,
+    .uk-card .uk-card-footer {
+        transition: .2s all;
+    }
+}
+
+.view--list {
+    @spaces: 15px;
+    > .uk-section {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .uk-grid-match .uk-grid-margin {
+        margin-top: @spaces;
+        margin-top: 1px;
+        //width: 100%;
+    }
+    .uk-card {
+         .uk-card-body, .uk-card-footer {
+            padding: @spaces;
+        }
+        .uk-card-badge {
+            top: @spaces;
+            right: @spaces;
+        }
+        .uk-label {
+            font-size: .7rem;
+            padding: 3px 10px;
+        }
+        .uk-card-title {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+        .uk-card-description {
+            margin-top: 15px;
+            display: none;
+        }
+        .uk-card-footer {
+            padding-top: 0;
+            border: none;
+            display: none;
+        }
+    }
+}

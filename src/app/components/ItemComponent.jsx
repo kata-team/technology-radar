@@ -31,7 +31,7 @@ export default class ItemComponent extends Component {
                     <div className="uk-card-body">
                         <div className="uk-card-badge uk-label" style={this.labelStyle}>{this.props.item.status}</div>
                         <h3 className="uk-card-title">{this.props.item.name}</h3>
-                        <p>{this.props.item.description}</p>
+                        <p className="uk-card-description">{this.props.item.description}</p>
                     </div>
                     <div className="uk-card-footer">
                         { this.tags() }

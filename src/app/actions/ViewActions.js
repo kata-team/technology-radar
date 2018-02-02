@@ -7,7 +7,7 @@ export default {
             type: ViewConstants.VIEW_GRID,
         });
     },
-    selectLine() {
+    selectList() {
         AppDispatcher.dispatch({
             type: ViewConstants.VIEW_LIST,
         });

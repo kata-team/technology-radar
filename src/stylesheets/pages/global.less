@@ -13,24 +13,38 @@ footer {
     line-height: 30px;
 
     .footer-links {
-        a.links {
-            transition: all .2s;
-            border: 0px solid transparent;
-            padding-bottom: 4px;
+        .links a {
             margin-left: 10px;
-            &:first-child {
-                margin-left: 0;
-            }
+        }
 
-            &:hover {
-                text-decoration: none;
-                border-bottom: 1px solid @global-link-hover-color;
-                padding-bottom: 2px;
+        .badges {
+            display: inline-block;
+            margin-top: 8px;
+
+            a {
+                margin-left: 5px;
+                &, img {
+                    float: left;
+                }
             }
         }
-        a.badge {
-            &:first-child {
-                margin-left: 10px;
+
+        .links, .badges {
+            a:first-child {
+                margin-left: 0px;
+            }
+        }
+
+        .links {
+            a {
+                transition: all .2s;
+                border: 0px solid transparent;
+
+                &:hover {
+                    text-decoration: none;
+                    border-bottom: 1px solid @global-link-hover-color;
+                    padding-bottom: 2px;
+                }
             }
         }
     }
@@ -48,7 +62,7 @@ footer {
     &--result {
         min-height: ~"calc(100vh - 140px - 122px)";
         @media (min-width: 640px) {
-            min-height: ~"calc(100vh - 70px - 92px)";
+            min-height: ~"calc(100vh - 70px - 97px)";
         }
 
         // spinner
