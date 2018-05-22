@@ -84,3 +84,6 @@ npm-debug.log
 /build
 /public/javascripts
 /public/stylesheets
+
+# Heroku
+/public/mkmf.log

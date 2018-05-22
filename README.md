@@ -41,6 +41,7 @@ To-Do List
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
 - [x] [Live demo with GitHub Pages](#github-pages)
 - [x] [Continuous Delivery with Travis CI](#travis-ci)
+- [ ] Deploy private website with Heroku
 
 
 Getting Started
@@ -83,7 +84,7 @@ Here you can find the example used for our [live demo](#live-demo). Feel free to
 1. Modify the document adding or removing items.
 1. Select `File → Publish to the web...` and click on `Publish`.
 1. Now you just need to copy the `worksheetId` from the url (e.g. `112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo`)
-1. Open the file `src/app/stores/ItemsStore.js` and paste to the const `WORKSHEET_ID`.
+1. Open the file `src/app/Api.js` and paste to `this.spreadsheetId`.
 1. Save the file e compile the project with `npm run build`.
 
 

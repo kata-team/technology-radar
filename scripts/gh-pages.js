@@ -6,7 +6,7 @@ ghpages.publish('build', {
     dotfiles: false,
     branch: 'gh-pages',
     repo: config.repository.url.replace('github.com', domain),
-    message: 'Deploy to GitHub Pages.',
+    message: 'Publish website',
     silent: true
 }, function (err) {
     if (err) {
