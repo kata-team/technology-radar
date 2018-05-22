@@ -5,6 +5,12 @@ import ViewConstants from '../constants/ViewConstants';
 
 export default class ViewComponent extends Component {
 
+    componentDidMount() {
+        if (window.innerWidth < 960) {
+            ViewActions.selectList();
+        }
+    }
+
     static get propTypes() {
         return {
             viewStore: PropTypes.object.isRequired,

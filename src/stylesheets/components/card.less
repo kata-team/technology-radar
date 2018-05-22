@@ -9,9 +9,34 @@
     }
 }
 
-.uk-card-footer {
+.uk-card-body {
+    padding-bottom: 0;
+}
+
+.uk-card-footer, .uk-modal-footer {
     .uk-label {
         opacity: .6;
+    }
+}
+
+.uk-card-title {
+    margin-right: 64px;
+}
+
+.uk-card-description {
+    position: relative;
+    //height: 66px;
+    height: 66px - 7px;
+    overflow: hidden;
+    &:after {
+        content: " ";
+        width: 100%;
+        position: absolute;
+        height: 0;
+        left: 0;
+        bottom: 0;
+        //box-shadow: 0 0 12px 12px #FFF;
+        box-shadow: 0 0 7px 3px #FFF;
     }
 }
 
@@ -25,6 +50,10 @@
     .uk-card .uk-card-description,
     .uk-card .uk-card-footer {
         transition: .2s all;
+    }
+
+    .uk-card {
+        cursor: pointer;
     }
 }
 
