@@ -41,7 +41,7 @@ To-Do List
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
 - [x] [Live demo with GitHub Pages](#github-pages)
 - [x] [Continuous Delivery with Travis CI](#travis-ci)
-- [ ] Deploy private website with Heroku
+- [x] [Deploy private website with Heroku](#heroku---bonus-track)
 
 
 Getting Started
@@ -137,3 +137,65 @@ We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continu
    * Name: `GH_TOKEN`
    * Value: *paste here the token value*
 1. Click on `Add` button.
+
+
+## Heroku - bonus track
+
+Even if the repository is private, the published site with **GitHub Pages is always public**.
+
+
+### Step 1 - Add `Jekyll Auth` to your site
+
+> this caption is just a memo; we did this already for this project.
+
+> [Jekyll Auth](https://github.com/benbalter/jekyll-auth) is a simple way to use GitHub OAuth to serve a protected Jekyll site to your GitHub organization.
+
+1. Create a file called `Gemfile` inside the `public` folder with the following content:
+
+    ```rb
+    source "https://rubygems.org"
+
+    gem 'jekyll-auth'
+    ```
+
+2. `cd` into your `public` directory and run `bundle install`.
+
+3. Run `bundle exec jekyll-auth new` which will copy the necessary files to set up the server.
+
+
+### Step 2 - Create a GitHub Application
+
+1. Navigate to the [GitHub app registration page](https://github.com/settings/applications/new).
+1. Give your app a name.
+1. Tell GitHub the URL you want the app to eventually live at. If using a free Heroku account, this will be something like: https://technology-radar.herokuapp.com
+1. Specify the callback URL; should be like this: https://technology-radar.herokuapp.com/auth/github/callback; note that this is https, not http.
+
+
+### Step 3 - Setting up hosting with Heroku
+
+1. Login to [Heroku](https://dashboard.heroku.com/apps).
+1. Click on `create new app` from dashboard.
+    * Select an `App name` ( e.g. technology-radar ).
+    * Select a `Region`.
+1. Click on `Settings` tab.
+    * Add new buildpack, selecting `heroku/ruby`.
+    * Click on `Reveal Config Vars`.
+        ![Config Vars](images/heroku-05--config-vars.png)
+1. Click on `Deploy` tab and configure Heroku with your GitHub repository. Choose an organization, select a repository and click on `Connect`.
+
+![Deploy tab](images/heroku-06--deploy.png)
+
+
+### That's it!
+
+Just run `npm run deploy-heroku` from you local.
+
+This task will build the project and will push the generated site to the `heroku` branch.
+
+Now you can go back to your Heroku App and configure it to `enable automatic deploys from GitHub` from `Deploy` tab.
+
+![Enable automatic deploys from GitHub](images/heroku-08--automatic-deploy.png)
+
+or just run a deploy :smile:
+
+![Trigger](images/heroku-09--trigger-deploy.png)

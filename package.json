@@ -1,6 +1,6 @@
 {
     "name": "technology-radar",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "description": "Technology Radar is a tool that helps organizations to monitor their own discoveries. Keep track of your technologies according to your previous successes and failures.",
     "main": "index.js",
     "homepage": "https://kata-team.github.io/technology-radar/",
@@ -40,7 +40,6 @@
         "start-css": "watch-run -p 'src/stylesheets/**/*.less' npm run build-css",
         "start-js": "react-scripts start",
         "start": "npm-run-all -p start-css start-js",
-
         "publish--gh-pages": "node ./scripts/publish.js gh-pages",
         "deploy-ghpages": "npm-run-all build publish--gh-pages",
         "publish--heroku": "node ./scripts/publish.js heroku",
@@ -54,19 +53,19 @@
         "classnames": "^2.2.5",
         "color": "^3.0.0",
         "flux": "^3.1.3",
-        "lodash": "^4.17.5",
+        "lodash": "^4.17.10",
         "prop-types": "^15.6.1",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
+        "react": "^16.3.2",
+        "react-dom": "^16.3.2",
         "rest": "^2.0.0",
-        "uikit": "^3.0.0-beta.40"
+        "uikit": "^3.0.0-rc.2"
     },
     "devDependencies": {
         "gh-pages": "^1.1.0",
-        "less": "^3.0.1",
+        "less": "^3.0.4",
         "less-plugin-clean-css": "^1.5.1",
-        "npm-run-all": "^4.1.2",
-        "react-scripts": "^1.1.1",
+        "npm-run-all": "^4.1.3",
+        "react-scripts": "^1.1.4",
         "watch-run": "^1.2.5"
     }
 }
