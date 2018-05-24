@@ -3,7 +3,7 @@ Technology Radar
 
 [![Kata Team](https://img.shields.io/badge/-kata--team-lightgrey.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QcbDCklIqzcwQAAADNQTFRFAAAA%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2Ft5XiggAAABB0Uk5TABAgMEBQYHCAj5%2Bvv8%2Ff7yMagooAAAABYktHRBCVsg0sAAAAkklEQVQYGZXBQRKDIBBFwa%2BOCAiZd%2F%2FThhjL0tRs0q1%2FFRRaG12BzSFP%2BpF8qUDSwfKij7U0qBVI%2BoKutTUHeupA1QnIHNrG0Ceddr58Kww%2B67JxqJ3BF910Lq9Zd41L0UPjkvSQ%2BHCGWU8FqA1w%2FbI8qQG7Ii8gK7AwmALGMClgDIoYgyKG56yIURQzVsUqprs3668Kl2V3gwgAAAAASUVORK5CYII%3D)](https://kata-team.github.io)
 [![GitHub package version](https://img.shields.io/github/package-json/v/kata-team/technology-radar.svg)](https://github.com/kata-team/technology-radar)
-[![Build Status](https://travis-ci.org/kata-team/technology-radar.svg?branch=master)](https://travis-ci.org/kata-team/technology-radar)
+[![Build Status](https://travis-ci.org/kata-team/technology-radar.svg?branch=production)](https://travis-ci.org/kata-team/technology-radar)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b569c34b3b5d4b7db2fe54d808a0323b)](https://www.codacy.com/app/kata-team/technology-radar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kata-team/technology-radar&amp;utm_campaign=Badge_Grade)
 
 
@@ -16,8 +16,9 @@ In short
 --------
 
 - ES6 and [React](https://facebook.github.io/react/)
-- Hosted by [GitHub Pages](https://pages.github.com/)
-- Automatic deploy with `git push origin master`
+- Hosted publicly by [GitHub Pages](https://pages.github.com/)
+- Hosted privately by [Heroku](https://www.heroku.com/)
+- Automatic deploy with `git push origin production`
 - Google Spreadsheets as database
 
 
@@ -41,7 +42,7 @@ To-Do List
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
 - [x] [Live demo with GitHub Pages](#github-pages)
 - [x] [Continuous Delivery with Travis CI](#travis-ci)
-- [x] [Deploy private website with Heroku](#heroku---bonus-track)
+- [x] [Deploy your private site with Heroku](#heroku---bonus-track)
 
 
 Getting Started
@@ -66,10 +67,11 @@ npm start
 * `npm test`          A linter tool for identifying and reporting on patterns in JavaScript.
 * `npm start`         Run HTTP Server on http://127.0.0.1:3000/ and watch for changes.
 * `npm run build`     Compile "javascripts" and "stylesheets".
-* `npm run deploy`    Alias for "build". After that, will push changes of the **build** folder to **gh-pages** branch.
+* `npm run deploy`    Alias for "build". After that, will push changes of the **build** folder to **master** branch.
 
 
-## Google Spreadsheets integration
+Google Spreadsheets integration
+-------------------------------
 
 Technology Radar provides a Google Spreadsheets integration, so you can use spreadsheets to storage your data.
 
@@ -88,11 +90,29 @@ Here you can find the example used for our [live demo](#live-demo). Feel free to
 1. Save the file e compile the project with `npm run build`.
 
 
-## GitHub Pages
+GitHub Pages
+------------
 
 The project is a set of html, css and javascript so it can be executed using [GitHub Pages](https://pages.github.com/).
 
 We use GitHub Pages to provide you our live demo.
+
+> You can configure GitHub Pages to publish your site's source files from `master`, `gh-pages`, or a `/docs` folder on your `master` branch for Project Pages and other Pages sites that meet certain criteria.
+
+> If your site is a User or Organization Page that has a repository named `<username>.github.io` or `<orgname>.github.io` , you cannot publish your site's source files from different locations. User and Organization Pages that have this type of repository name are only published from the `master` branch.
+
+> https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/
+
+For this project we preferred to use `master` branch to publish our site instead of `gh-pages` branch:
+
+1. As written in GitHub documentation, if you use `<username>.github.io` or `<orgname>.github.io`, the site is only published from the `master` branch.
+
+1. If you have a `gh-pages` branch inside your repository, you cannot switch off the GitHub Pages functionality.
+
+    ![gh-pages branch](images/gh-pages--single-branch.png)
+
+1. If you have a private repository and want to publish a private site, you cannot use `gh-pages` branch (read point before).
+
 
 #### Setup GitHub Pages
 
@@ -100,23 +120,24 @@ We use GitHub Pages to provide you our live demo.
 
 1. Open the configuration file at `package.json`.
 1. Change `repository.url` link with your repository link.
-1. After that you can deploy to gh-pages with `npm run deploy`.
-1. You can also deploy to gh-pages using [TravisCI](#travis-ci).
+1. After that you can deploy to `master` with `npm run deploy`.
+1. You can also deploy to `master` using [TravisCI](#travis-ci).
 
 ##### on GitHub
 
 1. Go to your repository page and click on `settings`.
 1. Scroll down to the `GitHub Pages` section.
-1. Set the `source` to `gh-pages` branch and click on Save.
+1. Set the `source` to `master` branch and click on Save.
 1. That's it! Now your site is published.
 
 
-## Travis CI
+Travis CI
+---------
 
 We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continuous Delivery.
 
 - When you push your code to remote, Travis will automatically test you code and warn you if something goes wrong.
-- If you push to `master` branch, Travis will compile and push your code to `gh-pages` branch (if all tests pass).
+- If you push to `production` branch, Travis will compile and push your code to `master` branch (if all tests pass).
 
 #### Setup Travis CI
 
@@ -139,7 +160,8 @@ We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continu
 1. Click on `Add` button.
 
 
-## Heroku - bonus track
+Heroku - bonus track
+--------------------
 
 Even if the repository is private, the published site with **GitHub Pages is always public**.
 

@@ -12,11 +12,11 @@ script:
 stages:
   - test
   - name: deploy
-    if: branch = master
+    if: branch = production
 
 jobs:
   include:
     - stage: deploy
       node_js: "8"
       script:
-        - npm run deploy-ghpages
+        - npm run deploy

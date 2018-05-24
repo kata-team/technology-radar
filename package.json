@@ -40,11 +40,8 @@
         "start-css": "watch-run -p 'src/stylesheets/**/*.less' npm run build-css",
         "start-js": "react-scripts start",
         "start": "npm-run-all -p start-css start-js",
-        "publish--gh-pages": "node ./scripts/publish.js gh-pages",
-        "deploy-ghpages": "npm-run-all build publish--gh-pages",
-        "publish--heroku": "node ./scripts/publish.js heroku",
-        "deploy-heroku": "npm-run-all build publish--heroku",
-        "deploy": "exit"
+        "predeploy": "npm run build",
+        "deploy": "node ./scripts/publish.js master"
     },
     "engines": {
         "node": "6.x || 7.x || 8.x"
