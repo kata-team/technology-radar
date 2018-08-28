@@ -7,7 +7,7 @@ import Category from './class/Category';
 
 class Api {
     constructor() {
-        this.spreadsheetId = '112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo';
+        this.spreadsheetId = process.env.REACT_APP_SPREADSHEET_ID;
         this.urls = {
             // items: 'mock/items.json',
             // categories: 'mock/categories.json',
@@ -17,6 +17,13 @@ class Api {
     }
 
     load() {
+        SearchActions.startSearching();
+
+        if (this.spreadsheetId === undefined) {
+            SearchActions.changeItems([]);
+            return;
+        }
+
         (new ItemsLoader()).load(this.urls.categories, Category, (categories) => {
             const getCategoryByName = (name) => {
                 return _.find(categories, (o) => { return o.name === name });

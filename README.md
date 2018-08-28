@@ -55,6 +55,8 @@ To get started, fork the project and clone your new repository.
 ```sh
 cd technology-radar/
 
+cp .env.example .env
+
 npm install
 npm start
 
@@ -65,7 +67,7 @@ npm start
 #### Available tasks
 
 * `npm test`          A linter tool for identifying and reporting on patterns in JavaScript.
-* `npm start`         Run HTTP Server on http://127.0.0.1:3000/ and watch for changes.
+* `npm start`         Run HTTP Server on http://localhost:3000/ and watch for changes.
 * `npm run build`     Compile "javascripts" and "stylesheets".
 * `npm run deploy`    Alias for "build". After that, will push changes of the **build** folder to **master** branch.
 
@@ -86,7 +88,7 @@ Here you can find the example used for our [live demo](#live-demo). Feel free to
 1. Modify the document adding or removing items.
 1. Select `File → Publish to the web...` and click on `Publish`.
 1. Now you just need to copy the `worksheetId` from the url (e.g. `112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo`)
-1. Open the file `src/app/Api.js` and paste to `this.spreadsheetId`.
+1. Open the file `.env` and paste to `REACT_APP_SPREADSHEET_ID`.
 1. Save the file e compile the project with `npm run build`.
 
 
@@ -151,12 +153,16 @@ We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continu
 1. Click on `Generate token` button.
 1. Copy the provided token (**after a page refresh you will never be able to get that token again**)
 
-##### Add token to TravisCI
+##### Add token and worksheetId to TravisCI
 
 1. Log into TravisCI and go to repository `Settings` page.
 1. Add new `Environment Variables`.
    * Name: `GH_TOKEN`
    * Value: *paste here the token value*
+1. Click on `Add` button.
+1. Add new `Environment Variables`.
+   * Name: `REACT_APP_SPREADSHEET_ID`
+   * Value: *paste here the `worksheetId` value*
 1. Click on `Add` button.
 
 

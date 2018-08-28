@@ -6,6 +6,12 @@ export default {
     load() {
         Api.load();
     },
+    startSearching() {
+        AppDispatcher.dispatch({
+            type: SearchConstants.START_SEARCHING,
+            value: undefined,
+        });
+    },
     changeItems(items) {
         AppDispatcher.dispatch({
             type: SearchConstants.CHANGE_ITEMS,

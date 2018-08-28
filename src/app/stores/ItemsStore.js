@@ -77,6 +77,7 @@ const toggleArrayElement = (arr, elm, add) => {
 const changeItems = (items) => {
     memo.items = items;
     return {
+        isSearching: false,
         categories: updateResultCategories(),
         statuses: updateResultStatuses(),
         tags: updateResultTags(),
@@ -98,6 +99,7 @@ class ItemsStore extends ReduceStore {
 
     getInitialState() {
         return {
+            isSearching: false,
             categories: [],
             statuses: [],
             tags: [],
@@ -111,6 +113,9 @@ class ItemsStore extends ReduceStore {
 
     reduce(state, action) {
         switch (action.type) {
+        case SearchConstants.START_SEARCHING:
+            state.isSearching = true;
+            break;
         case SearchConstants.CHANGE_ITEMS:
             return changeItems(action.value);
         case SearchConstants.CHANGE_QUERY:

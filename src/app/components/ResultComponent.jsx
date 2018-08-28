@@ -50,8 +50,26 @@ export default class ResultComponent extends Component {
         );
     }
 
+    renderNoResults() {
+        return (
+            <div className="no-results">
+                <i className="fa fa-meh-o" aria-hidden="true"></i><br />
+                There are no results!<br />
+                <small>remember to set the environment variable: <b>REACT_APP_SPREADSHEET_ID</b></small>
+            </div>
+        );
+    }
+
     renderCategories() {
-        return this.props.itemsStore.items.length > 0 ? _.map(this.props.itemsStore.items, (obj) => this.renderCategory(obj)) : (<SpinnerComponent />);
+        if (this.props.itemsStore.isSearching) {
+            return (<SpinnerComponent />);
+        }
+
+        if (this.props.itemsStore.items.length === 0) {
+            return this.renderNoResults();
+        }
+
+        return _.map(this.props.itemsStore.items, (obj) => this.renderCategory(obj));
     }
 
     render() {

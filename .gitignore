@@ -76,9 +76,10 @@ crashlytics-build.properties
 fabric.properties
 
 # node libs
-
 /node_modules
 npm-debug.log
+yarn-error.log
+.env
 
 # public folder
 /build
