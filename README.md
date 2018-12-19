@@ -216,9 +216,9 @@ Even if the repository is private, the published site with **GitHub Pages is alw
 
 ### That's it!
 
-Just run `npm run deploy-heroku` from you local.
+Just run `npm run deploy` from you local.
 
-This task will build the project and will push the generated site to the `heroku` branch.
+This task will build the project and will push the generated site to the `master` branch.
 
 Now you can go back to your Heroku App and configure it to `enable automatic deploys from GitHub` from `Deploy` tab.
 
