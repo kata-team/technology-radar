@@ -45,7 +45,7 @@ export default class ItemComponent extends Component {
 
     renderCard() {
         return (
-            <a className="uk-card uk-card-default uk-card-hover" onClick={this.onClickModal}>
+            <div className="uk-card uk-card-default uk-card-hover" onClick={this.onClickModal}>
                 <div className="uk-card-body">
                     <div className="uk-card-badge uk-label" style={this.labelStyle}>{this.props.item.status}</div>
                     <h3 className="uk-card-title">{this.props.item.name}</h3>
@@ -54,7 +54,7 @@ export default class ItemComponent extends Component {
                 <div className="uk-card-footer">
                     {this.tags()}
                 </div>
-            </a>
+            </div>
         );
     }
 
@@ -62,9 +62,9 @@ export default class ItemComponent extends Component {
         return (
             <div className={`uk-modal ${this.state.modalOpen ? 'uk-open' : ''}`} onClick={this.onClickModal}>
                 <div className="uk-modal-dialog">
-                    <a className="uk-close uk-modal-close-default" onClick={this.onClickModal}>
+                    <button className="uk-close uk-modal-close-default" onClick={this.onClickModal}>
                         <i className="fa fa-close" aria-hidden="true"></i>
-                    </a>
+                    </button>
                     <div className="uk-modal-header">
                         <h3 className="uk-modal-title">{this.props.item.name}</h3>
                     </div>

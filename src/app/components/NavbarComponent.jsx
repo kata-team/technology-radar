@@ -8,7 +8,7 @@ export default class NavbarComponent extends Component {
         return (
             <nav className="uk-navbar-container uk-navbar-fixed uk-navbar-brand">
                 <div className="uk-container">
-                    <a href="">
+                    <a href="/">
                         <img alt="Technology Radar logo" src="images/logo.png" />
                         <h1>Technology Radar</h1>
                     </a>

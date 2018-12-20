@@ -28,8 +28,8 @@ export default class ViewComponent extends Component {
     render() {
         return (
             <div className="view-component">
-                <a className={this.props.viewStore.view === ViewConstants.VIEW_GRID ? 'active' : ''} onClick={this.onClickViewGrid}><i className="fa fa-th-large" /></a>
-                <a className={this.props.viewStore.view === ViewConstants.VIEW_LIST ? 'active' : ''} onClick={this.onClickViewList}><i className="fa fa-bars" /></a>
+                <button className={this.props.viewStore.view === ViewConstants.VIEW_GRID ? 'active' : ''} onClick={this.onClickViewGrid}><i className="fa fa-th-large" /></button>
+                <button className={this.props.viewStore.view === ViewConstants.VIEW_LIST ? 'active' : ''} onClick={this.onClickViewList}><i className="fa fa-bars" /></button>
             </div>
         );
     }
