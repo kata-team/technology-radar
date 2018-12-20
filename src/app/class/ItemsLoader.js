@@ -4,38 +4,35 @@ import mime from 'rest/interceptor/mime';
 
 const client = rest.wrap(mime);
 
-export default class ItemsLoader {
-    constructor() {
-        this.items = [];
-    }
-
-    load(url, Obj, callback, decorator) {
-        if (_.isEmpty(this.items)) {
-            switch (true) {
+export default {
+    load: (url, Obj, decorator) => {
+        switch (true) {
             case (url.indexOf('https://spreadsheets.google.com/feeds/list/') === 0):
-                this.googleSpreadsheets(url, Obj, callback, decorator);
-                break;
+                return googleSpreadsheets(url, Obj, decorator);
             default:
-                this.json(url, Obj, callback, decorator);
-                break;
-            }
-        } else {
-            callback(this.items);
+                return json(url, Obj, decorator);
         }
     }
+}
 
-    json(url, Obj, callback, decorator) {
+
+function json(url, Obj, decorator) {
+    return new Promise((resolve, reject) => {
+        let items = [];
         const decorate = decorator || ((item) => { return item });
         client(url).then((response) => {
             _.map(response.entity, (elm) => {
                 const item = decorate(elm);
-                this.items.push(new Obj(item));
+                items.push(new Obj(item));
             });
-            callback(this.items);
+            resolve(items);
         });
-    }
+    });
+}
 
-    googleSpreadsheets(url, Obj, callback, decorator) {
+function googleSpreadsheets(url, Obj, decorator) {
+    return new Promise((resolve, reject) => {
+        let items = [];
         const decorate = decorator || ((item) => { return item });
         const random = () => {
             return Math.round(Math.random() * 100);
@@ -64,13 +61,13 @@ export default class ItemsLoader {
 
                 _.map(jsonData.feed.entry, (entry) => {
                     const item = convertEntryToItem(entry);
-                    this.items.push(item);
+                    items.push(item);
                 });
 
-                callback(this.items);
+                resolve(items);
             });
 
             document.head.appendChild(script);
         }
-    }
+    });
 }

@@ -37,10 +37,42 @@ export default class ItemComponent extends Component {
         };
     }
 
-    tags() {
-        return _.map(this.props.item.tags, (tag, key) => (
-            <span key={key}><div className="uk-label" style={this.labelStyle}>{tag}</div>&nbsp;</span>
+    renderLabel(text) {
+        return <div className="uk-label" style={this.labelStyle}>{text}</div>
+    }
+
+    renderTags(showContainer) {
+        const tags = _.map(this.props.item.tags, (tag, key) => (
+            <span key={key}>{this.renderLabel(tag)}&nbsp;</span>
         ));
+
+        return _.isEmpty(tags) === false && showContainer ? (
+            <div className="uk-modal-footer">{tags}</div>
+        ) : tags;
+    }
+
+    renderComments() {
+        const comments = _.map(this.props.item.comments, (comment, key) => {
+            const changedStatus = _.isEmpty(comment.prevstatus) && _.isEmpty(comment.nextstatus) ? '' : (<div>{this.renderLabel(comment.prevstatus)} <i className="fa fa-arrow-right" aria-hidden="true"></i> {this.renderLabel(comment.nextstatus)}</div>);
+            return (
+                <li key={key}>
+                    <article className="uk-comment">
+                        <div className="uk-comment-body">
+                            <div><small>{comment.date}</small></div>
+                            <div className="uk-text-bold uk-text-primary">{comment.author}</div>
+                            {changedStatus}
+                            <div className="uk-margin-small-top">{comment.message}</div>
+                        </div>
+                    </article>
+                </li>
+            )
+        });
+
+        return _.isEmpty(comments) === false ? (
+            <div className="uk-modal-footer uk-padding-small">
+                <ul className="uk-comment-list">{comments}</ul>
+            </div>
+        ) : comments;
     }
 
     renderCard() {
@@ -52,7 +84,7 @@ export default class ItemComponent extends Component {
                     <p className="uk-card-description">{this.props.item.description}</p>
                 </div>
                 <div className="uk-card-footer">
-                    {this.tags()}
+                    {this.renderTags(false)}
                 </div>
             </div>
         );
@@ -73,9 +105,8 @@ export default class ItemComponent extends Component {
                         <p className="uk-modal-description">{this.props.item.description}</p>
                         <a target="_blank" rel="noopener noreferrer" {...this.props.item.url ? { href: this.props.item.url } : {}}><i className="fa fa-globe"></i>website</a>
                     </div>
-                    <div className="uk-modal-footer">
-                        {this.tags()}
-                    </div>
+                    {this.renderTags(true)}
+                    {this.renderComments()}
                 </div>
             </div>
         );

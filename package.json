@@ -1,6 +1,6 @@
 {
   "name": "technology-radar",
-  "version": "3.1.2",
+  "version": "4.0.0",
   "description": "Technology Radar is a tool that helps organizations to monitor their own discoveries. Keep track of your technologies according to your previous successes and failures.",
   "main": "index.js",
   "homepage": ".",

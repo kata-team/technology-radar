@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 export default class Item {
-    constructor({ name = '', description = '', category = '', status = '', url = '', tags = '' }) {
+    constructor({ name = '', description = '', category = '', status = '', url = '', tags = '', comments = '' }) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -10,5 +10,6 @@ export default class Item {
             return tag.trim();
         }) : [];
         this.url = url;
+        this.comments = comments || [];
     }
 }

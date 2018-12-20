@@ -55,7 +55,7 @@ const updateResultItems = () => {
     const queryRegExp = new RegExp(memo.query, 'i');
 
     const items = _.filter(memo.items, (item) => {
-        let result = queryRegExp.test(item.name) || queryRegExp.test(item.description);
+        let result = queryRegExp.test(item.name) || queryRegExp.test(item.description) || item.comments.filter(c => queryRegExp.test(c.message)).length > 0;
         result = result && (memo.categories.length === 0 ? true : memo.categories.indexOf(item.category.name) >= 0);
         result = result && (memo.statuses.length === 0 ? true : memo.statuses.indexOf(item.status) >= 0);
         result = result && (memo.tags.length === 0 ? true : _.filter(memo.tags, (tag) => { return item.tags.indexOf(tag) >= 0 }).length > 0);
