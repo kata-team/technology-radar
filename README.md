@@ -1,5 +1,4 @@
-Technology Radar
-================
+# Technology Radar
 
 [![Kata Team](https://img.shields.io/badge/-kata--team-lightgrey.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QcbDCklIqzcwQAAADNQTFRFAAAA%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2Ft5XiggAAABB0Uk5TABAgMEBQYHCAj5%2Bvv8%2Ff7yMagooAAAABYktHRBCVsg0sAAAAkklEQVQYGZXBQRKDIBBFwa%2BOCAiZd%2F%2FThhjL0tRs0q1%2FFRRaG12BzSFP%2BpF8qUDSwfKij7U0qBVI%2BoKutTUHeupA1QnIHNrG0Ceddr58Kww%2B67JxqJ3BF910Lq9Zd41L0UPjkvSQ%2BHCGWU8FqA1w%2FbI8qQG7Ii8gK7AwmALGMClgDIoYgyKG56yIURQzVsUqprs3668Kl2V3gwgAAAAASUVORK5CYII%3D)](https://kata-team.github.io)
 [![Build Status](https://travis-ci.org/kata-team/technology-radar.svg?branch=production)](https://travis-ci.org/kata-team/technology-radar)
@@ -11,8 +10,8 @@ Keep track of your technologies according to your previous successes and failure
 
 This project is freely based on technology-radar by [ThoughtWorks](https://www.thoughtworks.com/radar).
 
-In short
---------
+
+## In short
 
 - ES6 and [React](https://facebook.github.io/react/)
 - Hosted publicly by [GitHub Pages](https://pages.github.com/)
@@ -21,16 +20,14 @@ In short
 - Google Spreadsheets as database
 
 
-Live demo
----------
+## Live demo
 
 Here you can find our live demo so you can explore all features.
 
 [https://kata-team.github.io/technology-radar](https://kata-team.github.io/technology-radar)
 
 
-To-Do List
-----------
+## To-Do List
 
 - [x] Responsive Web Design
 - [x] Search items
@@ -41,15 +38,12 @@ To-Do List
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
 - [x] [Live demo with GitHub Pages](#github-pages)
 - [x] [Continuous Delivery with Travis CI](#travis-ci)
-- [x] [Deploy your private site with Heroku](#heroku---bonus-track)
+- [x] [Deploy your private site with Heroku](#heroku)
 
 
-Getting Started
----------------
+## Play locally
 
-To get started, fork the project and clone your new repository.
-
-[![GitHub forks](https://img.shields.io/github/forks/kata-team/technology-radar.svg?style=social&label=Fork)](https://github.com/kata-team/technology-radar/fork)
+To get started, clone the repository.
 
 ```sh
 cd technology-radar/
@@ -71,8 +65,7 @@ npm start
 * `npm run deploy`    Alias for "build". After that, will push changes of the **build** folder to **master** branch.
 
 
-Google Spreadsheets integration
--------------------------------
+## Google Spreadsheets integration
 
 Technology Radar provides a Google Spreadsheets integration, so you can use spreadsheets to storage your data.
 
@@ -91,8 +84,7 @@ Here you can find the example used for our [live demo](#live-demo). Feel free to
 1. Save the file e compile the project with `npm run build`.
 
 
-GitHub Pages
-------------
+## GitHub Pages
 
 The project is a set of html, css and javascript so it can be executed using [GitHub Pages](https://pages.github.com/).
 
@@ -132,13 +124,12 @@ For this project we preferred to use `master` branch to publish our site instead
 1. That's it! Now your site is published.
 
 
-Travis CI
----------
+## Travis CI
 
 We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continuous Delivery.
 
 - When you push your code to remote, Travis will automatically test you code and warn you if something goes wrong.
-- If you push to `production` branch, Travis will compile and push your code to `master` branch (if all tests pass).
+- If you push to `production` branch, Travis will test, build and push your code to `master` branch (using the `deploy` script).
 
 #### Setup Travis CI
 
@@ -165,13 +156,14 @@ We use [Travis CI](https://travis-ci.org/kata-team/technology-radar) for Continu
 1. Click on `Add` button.
 
 
-Heroku - bonus track
---------------------
+## Heroku
 
 Even if the repository is private, the published site with **GitHub Pages is always public**.
 
+If you want a **protected** Technology Radar, you can use Heroku. In this way you can restrict the access to your GitHub organization.
 
-### Step 1 - Add `Jekyll Auth` to your site
+
+#### Step 0 - Add `Jekyll Auth` to your site
 
 > this caption is just a memo; we did this already for this project.
 
@@ -190,39 +182,46 @@ Even if the repository is private, the published site with **GitHub Pages is alw
 3. Run `bundle exec jekyll-auth new` which will copy the necessary files to set up the server.
 
 
-### Step 2 - Create a GitHub Application
+#### Step 1 - Prerequisites
+
+- Choose a name for you application.
+- This name should only contain lowercase letters, numbers, and dashes.
+- This name will be used for the Heroku `App name` field and will determine the application url.
+- The `App name` is unique on Heroku, so you cannot use an already taken name.
+- In our example we use `technology-radar` (that is now an already taken name :laughing:)
+
+
+#### Step 2 - Create a GitHub Application
 
 1. Navigate to the [GitHub app registration page](https://github.com/settings/applications/new).
-1. Give your app a name.
-1. Tell GitHub the URL you want the app to eventually live at. If using a free Heroku account, this will be something like: https://technology-radar.herokuapp.com
-1. Specify the callback URL; should be like this: https://technology-radar.herokuapp.com/auth/github/callback; note that this is https, not http.
+1. Give your app a name, a description and a logo.
+1. Tell GitHub the URL you want the app to eventually live at. Use the name you decided previously. If using a free Heroku account, this will be something like: [https://technology-radar.herokuapp.com]()
+1. Specify the callback URL; should be like this: [https://technology-radar.herokuapp.com/auth/github/callback](); note that this is https, not http.
 
 
-### Step 3 - Setting up hosting with Heroku
+#### Step 3 - Setting up hosting with Heroku
 
-1. Login to [Heroku](https://dashboard.heroku.com/apps).
-1. Click on `create new app` from dashboard.
-    * Select an `App name` ( e.g. technology-radar ).
-    * Select a `Region`.
-1. Click on `Settings` tab.
-    * Add new buildpack, selecting `heroku/ruby`.
-    * Click on `Reveal Config Vars`.
-        ![Config Vars](images/heroku-05--config-vars.png)
-1. Click on `Deploy` tab and configure Heroku with your GitHub repository. Choose an organization, select a repository and click on `Connect`.
-
-![Deploy tab](images/heroku-06--deploy.png)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kata-team/technology-radar)
 
 
-### That's it!
+#### Step 4 - Upgrading
 
-Just run `npm run deploy` from you local.
+If you want to upgrade your Heroku hosted application you have to fork our repository.
 
-This task will build the project and will push the generated site to the `master` branch.
+[![GitHub forks](https://img.shields.io/github/forks/kata-team/technology-radar.svg?style=social&label=Fork)](https://github.com/kata-team/technology-radar/fork)
 
-Now you can go back to your Heroku App and configure it to `enable automatic deploys from GitHub` from `Deploy` tab.
+Now you can open you application on Heroku and configure the Deploy.
 
-![Enable automatic deploys from GitHub](images/heroku-08--automatic-deploy.png)
+1. Click on `Deploy` tab and configure Heroku with your GitHub repository. Choose your user/organization, select the repository and click on `Connect`.
 
-or just run a deploy :smile:
+    ![Deploy tab](images/heroku-06--deploy.png)
 
-![Trigger](images/heroku-09--trigger-deploy.png)
+1. If you want, you can also `enable automatic deploys from GitHub`.
+
+    ![Enable automatic deploys from GitHub](images/heroku-08--automatic-deploy.png)
+
+1. or just run the deploy :smile:
+
+    ![Trigger](images/heroku-09--trigger-deploy.png)
+
+1. You can `watch` our repository for changes. When we push a new version on production, you can [sync your fork](https://help.github.com/articles/syncing-a-fork/) manually or use [external tools](https://backstroke.co/).

@@ -81,6 +81,10 @@ npm-debug.log
 yarn-error.log
 .env
 
+# ruby libs
+/vendor
+/.bundle
+
 # public folder
 /build
 /public/javascripts

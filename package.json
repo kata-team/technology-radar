@@ -42,7 +42,8 @@
     "start-js": "react-scripts start",
     "start": "npm-run-all -p start-css start-js",
     "predeploy": "npm run build",
-    "deploy": "node ./scripts/publish.js master"
+    "deploy": "node ./scripts/publish.js master",
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": "6.x || 7.x || 8.x"
