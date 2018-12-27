@@ -53,14 +53,13 @@ export default class ItemComponent extends Component {
 
     renderComments() {
         const comments = _.map(this.props.item.comments, (comment, key) => {
-            const changedStatus = _.isEmpty(comment.prevstatus) && _.isEmpty(comment.nextstatus) ? '' : (<div>{this.renderLabel(comment.prevstatus)} <i className="fa fa-arrow-right" aria-hidden="true"></i> {this.renderLabel(comment.nextstatus)}</div>);
             return (
                 <li key={key}>
                     <article className="uk-comment">
                         <div className="uk-comment-body">
                             <div><small>{comment.date}</small></div>
                             <div className="uk-text-bold uk-text-primary">{comment.author}</div>
-                            {changedStatus}
+                            {this.renderLabel(comment.status)}
                             <div className="uk-margin-small-top">{comment.message}</div>
                         </div>
                     </article>

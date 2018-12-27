@@ -1,10 +1,9 @@
 export default class Comment {
-    constructor({ date = '', name = '', author = '', message = '', prevstatus = '', nextstatus = '' }) {
+    constructor({ date = '', name = '', author = '', message = '', status = '' }) {
         this.date = date;
         this.name = name;
         this.author = author;
         this.message = message;
-        this.prevstatus = prevstatus;
-        this.nextstatus = nextstatus;
+        this.status = status;
     }
 }
