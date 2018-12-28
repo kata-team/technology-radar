@@ -8,7 +8,7 @@ import Comment from './class/Comment';
 
 class Api {
     constructor() {
-        this.spreadsheetId = process.env.REACT_APP_SPREADSHEET_ID;
+        this.spreadsheetId = (new URL(window.location.href)).searchParams.get('id') || process.env.REACT_APP_SPREADSHEET_ID;
         this.urls = {
             // items: 'mock/items.json',
             // categories: 'mock/categories.json',
@@ -53,7 +53,11 @@ class Api {
             }).then((items) => {
                 SearchActions.changeItems(items);
                 window.items = items;
+            }).catch(() => {
+                SearchActions.changeItems([]);
             });
+        }).catch(() => {
+            SearchActions.changeItems([]);
         });
     }
 }

@@ -26,7 +26,7 @@ function json(url, Obj, decorator) {
                 items.push(new Obj(item));
             });
             resolve(items);
-        });
+        }).catch(e => reject(e));
     });
 }
 
@@ -40,6 +40,7 @@ function googleSpreadsheets(url, Obj, decorator) {
         const script = document.createElement('script');
         script.id = `spreadsheets_${random()}_${random()}_${random()}`;
         script.src = url.replace('{1}', script.id);
+        script.onerror = e => reject(e);
 
         if (document.getElementById(script.id) === null) {
             window[script.id] = ((jsonData) => {
