@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import Cookie from 'js-cookie';
+
 import ItemsLoader from './class/ItemsLoader';
 import SearchActions from './actions/SearchActions';
 
@@ -7,8 +9,8 @@ import Category from './class/Category';
 import Comment from './class/Comment';
 
 class Api {
-    constructor() {
-        this.spreadsheetId = (new URL(window.location.href)).searchParams.get('id') || process.env.REACT_APP_SPREADSHEET_ID;
+    setup() {
+        this.spreadsheetId = Cookie.get('document_id') || process.env.REACT_APP_SPREADSHEET_ID;
         this.urls = {
             // items: 'mock/items.json',
             // categories: 'mock/categories.json',
@@ -20,6 +22,8 @@ class Api {
     }
 
     load() {
+        this.setup();
+
         SearchActions.startSearching();
 
         if (this.spreadsheetId === undefined) {
