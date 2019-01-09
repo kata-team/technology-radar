@@ -18,13 +18,28 @@ button {
     cursor: default;
 }
 
+a:link, .uk-button-link {
+    transition: border .3s, color .3s;
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+    margin-bottom: -1px;
+
+    &:hover {
+        text-decoration: none;
+        border-bottom: 1px solid @global-link-hover-color;
+    }
+}
+
 footer {
     text-align: center;
     padding-top: 15px;
     padding-bottom: 15px;
-    line-height: 30px;
 
     .footer-links {
+        .links {
+            height: 28px;
+        }
+
         .links a, .links span {
             margin-left: 10px;
         }
@@ -44,19 +59,6 @@ footer {
         .links, .badges {
             a:first-child {
                 margin-left: 0px;
-            }
-        }
-
-        .links {
-            a {
-                transition: all .2s;
-                border: 0px solid transparent;
-
-                &:hover {
-                    text-decoration: none;
-                    border-bottom: 1px solid @global-link-hover-color;
-                    padding-bottom: 2px;
-                }
             }
         }
     }

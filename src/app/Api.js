@@ -1,28 +1,31 @@
 import _ from 'lodash';
-import Cookie from 'js-cookie';
 
 import ItemsLoader from './class/ItemsLoader';
 import SearchActions from './actions/SearchActions';
+import AppActions from './actions/AppActions';
 
 import Item from './class/Item';
 import Category from './class/Category';
 import Comment from './class/Comment';
+import Settings from './class/Settings';
 
 class Api {
-    setup() {
-        this.spreadsheetId = Cookie.get('document_id') || process.env.REACT_APP_SPREADSHEET_ID;
+    setup(spreadsheetId) {
+        this.spreadsheetId = spreadsheetId || process.env.REACT_APP_SPREADSHEET_ID;
         this.urls = {
             // items: 'mock/items.json',
             // categories: 'mock/categories.json',
             // comments: 'mock/comments.json',
+            // settings: 'mock/settings.json',
             items: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/1/public/values?alt=json-in-script&callback={1}`,
             categories: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/2/public/values?alt=json-in-script&callback={1}`,
             comments: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/3/public/values?alt=json-in-script&callback={1}`,
+            settings: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/4/public/values?alt=json-in-script&callback={1}`,
         };
     }
 
-    load() {
-        this.setup();
+    load(spreadsheetId) {
+        this.setup(spreadsheetId);
 
         SearchActions.startSearching();
 
@@ -33,8 +36,11 @@ class Api {
 
         Promise.all([
             ItemsLoader.load(this.urls.categories, Category),
-            ItemsLoader.load(this.urls.comments, Comment)
-        ]).then(([categories, comments]) => {
+            ItemsLoader.load(this.urls.comments, Comment),
+            ItemsLoader.load(this.urls.settings, Settings),
+        ]).then(([categories, comments, settings]) => {
+
+            AppActions.updateSettings(settings[0]);
 
             const filterByName = (list, name) => {
                 return _.filter(list, (o) => { return o.name === name });

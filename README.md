@@ -18,6 +18,7 @@ This project is freely based on technology-radar by [ThoughtWorks](https://www.t
 - Hosted privately by [Heroku](https://www.heroku.com/)
 - Automatic deploy with `git push origin production`
 - Google Spreadsheets as database
+- Cloud version - no setup required
 
 
 ## Live demo
@@ -67,11 +68,11 @@ npm start
 
 ## Google Spreadsheets integration
 
-Technology Radar provides a Google Spreadsheets integration, so you can use spreadsheets to storage your data.
+Technology Radar provides a Google Spreadsheets integration, so you can use spreadsheets as database to storage your data.
 
 Here you can find the example used for our [live demo](#live-demo). Feel free to duplicate the document and make your own.
 
-[https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo](https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo)
+https://docs.google.com/spreadsheets/d/112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo
 
 #### Create your own
 
@@ -82,6 +83,15 @@ Here you can find the example used for our [live demo](#live-demo). Feel free to
 1. Now you just need to copy the `worksheetId` from the url (e.g. `112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo`)
 1. Open the file `.env` and paste to `REACT_APP_SPREADSHEET_ID`.
 1. Save the file e compile the project with `npm run build`.
+
+
+## Cloud
+
+Now that you have a "database", the easiest and fastest way to create your own Technology Radar is to use the cloud based version.
+
+`https://kata-team.github.io/technology-radar/?id=`**_`SPREADSHEET_ID`_**
+
+https://kata-team.github.io/technology-radar/?id=112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo
 
 
 ## GitHub Pages
@@ -195,8 +205,8 @@ If you want a **protected** Technology Radar, you can use Heroku. In this way yo
 
 1. Navigate to the [GitHub app registration page](https://github.com/settings/applications/new).
 1. Give your app a name, a description and a logo.
-1. Tell GitHub the URL you want the app to eventually live at. Use the name you decided previously. If using a free Heroku account, this will be something like: [https://technology-radar.herokuapp.com]()
-1. Specify the callback URL; should be like this: [https://technology-radar.herokuapp.com/auth/github/callback](); note that this is https, not http.
+1. Tell GitHub the URL you want the app to eventually live at. Use the name you decided previously. If using a free Heroku account, this will be something like: https://technology-radar.herokuapp.com
+1. Specify the callback URL; should be like this: https://technology-radar.herokuapp.com/auth/github/callback note that this is https, not http.
 
 
 #### Step 3 - Setting up hosting with Heroku

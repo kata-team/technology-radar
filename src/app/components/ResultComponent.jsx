@@ -4,14 +4,14 @@ import _ from 'lodash';
 import classnames from 'classnames';
 import ItemComponent from './ItemComponent';
 import SpinnerComponent from './SpinnerComponent';
-import ViewConstants from '../constants/ViewConstants';
+import AppConstants from '../constants/AppConstants';
 
 export default class ResultComponent extends Component {
 
     static get propTypes() {
         return {
             itemsStore: PropTypes.object.isRequired,
-            viewStore: PropTypes.object.isRequired,
+            appStore: PropTypes.object.isRequired,
         };
     }
 
@@ -28,8 +28,8 @@ export default class ResultComponent extends Component {
             background: obj.category.color,
         };
         const itemsContainer = classnames({
-            'uk-child-width-1-2@m uk-child-width-1-3@l': this.props.viewStore.view === ViewConstants.VIEW_GRID,
-            'uk-child-width-1-1': this.props.viewStore.view === ViewConstants.VIEW_LIST,
+            'uk-child-width-1-2@m uk-child-width-1-3@l': this.props.appStore.view === AppConstants.VIEW_GRID,
+            'uk-child-width-1-1': this.props.appStore.view === AppConstants.VIEW_LIST,
             'uk-grid uk-grid-match': true,
         });
 
@@ -74,7 +74,7 @@ export default class ResultComponent extends Component {
 
     render() {
         return (
-            <div className={`app--result ${this.props.viewStore.view}`}>
+            <div className={`app--result ${this.props.appStore.view}`}>
                 { this.renderCategories() }
             </div>
         );

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Container } from 'flux/utils';
-import ViewComponent from './ViewComponent';
+import NavbarComponent from './NavbarComponent';
 import AppStore from '../stores/AppStore';
 
-class ViewContainer extends Component {
+class NavbarContainer extends Component {
 
     static getStores() {
         return [AppStore];
@@ -16,9 +16,9 @@ class ViewContainer extends Component {
     }
 
     render() {
-        return <ViewComponent {...this.state} />;
+        return <NavbarComponent {...this.state} />;
     }
 
 }
 
-export default Container.create(ViewContainer);
+export default Container.create(NavbarContainer);
