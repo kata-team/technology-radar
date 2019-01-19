@@ -201,7 +201,7 @@ If you want a **protected** Technology Radar, you can use Heroku. In this way yo
 
 #### Step 3 - Setting up hosting with Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kata-team/technology-radar/tree/production)
 
 
 #### Step 4 - Upgrading
