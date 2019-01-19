@@ -1,0 +1,35 @@
+{
+    "name": "Technology Radar",
+    "description": "Technology Radar is a tool that helps organizations to monitor their own discoveries. Keep track of your technologies according to your previous successes and failures.",
+    "repository": "https://github.com/kata-team/technology-radar",
+    "logo": "https://kata-team.github.io/technology-radar/images/logo.png",
+    "keywords": [
+        "react",
+        "google spreadsheet",
+        "static"
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        },
+        {
+            "url": "heroku/ruby"
+        }
+    ],
+    "env": {
+        "GITHUB_CLIENT_ID": {
+            "description": "It's the 'Client ID' field of your GitHub application."
+        },
+        "GITHUB_CLIENT_SECRET": {
+            "description": "It's the 'Client Secret' field of your GitHub application."
+        },
+        "GITHUB_ORG_NAME": {
+            "description": "It's the name of your organization on GitHub."
+        },
+        "REACT_APP_SPREADSHEET_ID": {
+            "description": "It's the Google Spreadsheet ID.",
+            "value": "112MlfyXSlIQ8nae85Te_xWDBP136GRaYeHlDdKgYyPo",
+            "required": false
+        }
+    }
+}
