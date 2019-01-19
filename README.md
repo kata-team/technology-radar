@@ -38,6 +38,7 @@ To-Do List
     - [x] filter by `category`
     - [x] filter by `status`
     - [x] filter by `tags`
+    - [x] filter by `comments`
 - [x] [Google Spreadsheets integration](#google-spreadsheets-integration)
 - [x] [Live demo with GitHub Pages](#github-pages)
 - [x] [Continuous Delivery with Travis CI](#travis-ci)
