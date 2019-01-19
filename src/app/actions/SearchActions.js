@@ -1,11 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import SearchConstants from '../constants/SearchConstants';
-import Api from '../Api';
 
 export default {
-    load() {
-        Api.load();
-    },
     startSearching() {
         AppDispatcher.dispatch({
             type: SearchConstants.START_SEARCHING,

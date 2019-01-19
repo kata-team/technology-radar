@@ -78,7 +78,7 @@ export default class ItemComponent extends Component {
         return (
             <div className="uk-card uk-card-default uk-card-hover" onClick={this.onClickModal}>
                 <div className="uk-card-body">
-                    <div className="uk-card-badge uk-label" style={this.labelStyle}>{this.props.item.status}</div>
+                    {this.props.item.status ? (<div className="uk-card-badge uk-label" style={this.labelStyle}>{this.props.item.status}</div>) : ''}
                     <h3 className="uk-card-title">{this.props.item.name}</h3>
                     <p className="uk-card-description">{this.props.item.description}</p>
                 </div>
@@ -100,7 +100,7 @@ export default class ItemComponent extends Component {
                         <h3 className="uk-modal-title">{this.props.item.name}</h3>
                     </div>
                     <div className="uk-modal-body">
-                        <div className="uk-modal-badge uk-label" style={this.labelStyle}>{this.props.item.status}</div>
+                        {this.props.item.status ? (<div className="uk-modal-badge uk-label" style={this.labelStyle}>{this.props.item.status}</div>) : ''}
                         <p className="uk-modal-description">{this.props.item.description}</p>
                         <a target="_blank" rel="noopener noreferrer" {...this.props.item.url ? { href: this.props.item.url } : {}}><i className="fa fa-globe"></i>website</a>
                     </div>
