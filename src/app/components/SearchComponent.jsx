@@ -45,28 +45,22 @@ export default class SearchComponent extends Component {
         document.body.classList.toggle('uk-offcanvas-flip');
     }
 
-    categories() {
-        return _.map(this.state.itemsStore.categories, (category, key) => (
-            <div key={key}>
-                <label htmlFor={category}><input id={category} className="uk-checkbox" type="checkbox" value={category} onChange={(event) => { SearchActions.changeCategory(event.target) }} /> {category}</label>
+    renderFilter(label, items, onChange) {
+        return (
+            <div className="uk-margin uk-grid-small uk-child-width-auto">
+                <div className="uk-margin-small"><b>{label}</b></div>
+                {
+                    _.map(items, (itemName) => {
+                        const id = `${label.toLowerCase()}-${itemName}`.replace(/[^0-9a-zA-Z]+/g, '-');
+                        return (
+                            <div key={id}>
+                                <label htmlFor={id}><input id={id} className="uk-checkbox" type="checkbox" value={itemName} onChange={(event) => { onChange(event.target) }} /> {itemName}</label>
+                            </div>
+                        );
+                    })
+                }
             </div>
-        ));
-    }
-
-    statuses() {
-        return _.map(this.state.itemsStore.statuses, (status, key) => (
-            <div key={key}>
-                <label htmlFor={status}><input id={status} className="uk-checkbox" type="checkbox" value={status} onChange={(event) => { SearchActions.changeStatus(event.target) }} /> {status}</label>
-            </div>
-        ));
-    }
-
-    tags() {
-        return _.map(this.state.itemsStore.tags, (tag, key) => (
-            <div key={key}>
-                <label htmlFor={tag}><input id={tag} className="uk-checkbox" type="checkbox" value={tag} onChange={(event) => { SearchActions.changeTag(event.target) }} /> {tag}</label>
-            </div>
-        ));
+        );
     }
 
     render() {
@@ -81,20 +75,9 @@ export default class SearchComponent extends Component {
                 <OffcanvasComponent open={this.state.offcanvas} onClick={this.onClickOffcanvasHandler}>
                     <h3>Filter</h3>
 
-                    <div className="uk-margin uk-grid-small uk-child-width-auto">
-                        <div className="uk-margin-small"><b>Category</b></div>
-                        { this.categories() }
-                    </div>
-
-                    <div className="uk-margin uk-grid-small uk-child-width-auto">
-                        <div className="uk-margin-small"><b>Status</b></div>
-                        { this.statuses() }
-                    </div>
-
-                    <div className="uk-margin uk-grid-small uk-child-width-auto">
-                        <div className="uk-margin-small"><b>Tags</b></div>
-                        { this.tags() }
-                    </div>
+                    {this.renderFilter('Category', this.state.itemsStore.categories, SearchActions.changeCategory)}
+                    {this.renderFilter('Status', this.state.itemsStore.statuses, SearchActions.changeStatus)}
+                    {this.renderFilter('Tags', this.state.itemsStore.tags, SearchActions.changeTag)}
 
                     <button className="uk-button uk-button-default uk-width-1-1 uk-margin" onClick={this.onClickOffcanvasHandler} type="button">Close</button>
                 </OffcanvasComponent>
