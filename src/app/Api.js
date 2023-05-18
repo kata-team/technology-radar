@@ -17,10 +17,10 @@ class Api {
             // categories: 'mock/categories.json',
             // comments: 'mock/comments.json',
             // settings: 'mock/settings.json',
-            items: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/1/public/values?alt=json-in-script&callback={1}`,
-            categories: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/2/public/values?alt=json-in-script&callback={1}`,
-            comments: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/3/public/values?alt=json-in-script&callback={1}`,
-            settings: `https://spreadsheets.google.com/feeds/list/${this.spreadsheetId}/4/public/values?alt=json-in-script&callback={1}`,
+            items: `https://docs.google.com/spreadsheets/d/${this.spreadsheetId}/gviz/tq?tqx=out:json&tq&gid=35309925`,
+            categories: `https://docs.google.com/spreadsheets/d/${this.spreadsheetId}/gviz/tq?tqx=out:json&tq&gid=894256758`,
+            comments: `https://docs.google.com/spreadsheets/d/${this.spreadsheetId}/gviz/tq?tqx=out:json&tq&gid=1315180169`,
+            settings: `https://docs.google.com/spreadsheets/d/${this.spreadsheetId}/gviz/tq?tqx=out:json&tq&gid=434185216`,
         };
     }
 
@@ -39,7 +39,9 @@ class Api {
             ItemsLoader.load(this.urls.comments, Comment),
             ItemsLoader.load(this.urls.settings, Settings),
         ]).then(([categories, comments, settings]) => {
-
+            console.log(categories)
+            console.log(comments)
+            console.log(settings)
             AppActions.updateSettings(settings[0]);
 
             const filterByName = (list, name) => {

@@ -7,7 +7,7 @@ const client = rest.wrap(mime);
 export default {
     load: (url, Obj, decorator) => {
         switch (true) {
-            case (url.indexOf('https://spreadsheets.google.com/feeds/list/') === 0):
+            case (url.indexOf('https://docs.google.com/spreadsheets/') === 0):
                 return googleSpreadsheets(url, Obj, decorator);
             default:
                 return json(url, Obj, decorator);
@@ -34,41 +34,31 @@ function googleSpreadsheets(url, Obj, decorator) {
     return new Promise((resolve, reject) => {
         let items = [];
         const decorate = decorator || ((item) => { return item });
-        const random = () => {
-            return Math.round(Math.random() * 100);
-        };
-        const script = document.createElement('script');
-        script.id = `spreadsheets_${random()}_${random()}_${random()}`;
-        script.src = url.replace('{1}', script.id);
-        script.onerror = e => reject(e);
+        client(url).then((response) => {
 
-        if (document.getElementById(script.id) === null) {
-            window[script.id] = ((jsonData) => {
-                delete window[script.id];
+            const entityExtracted = response.entity.substring(47).slice(0, -2);
+            const jsonData = JSON.parse(entityExtracted);
 
-                const convertEntryToItem = (entry) => {
-                    let item = {};
-                    const rx = /^gsx\$(.*)$/;
-                    _.map(entry, (value, key) => {
-                        if (rx.test(key)) {
-                            item[rx.exec(key)[1]] = value.$t;
-                        }
-                    });
+            const convertEntryToItem = (entry, columnsKeys) => {
+                let item = {};
 
-                    item = decorate(item);
+                console.log(entry)
 
-                    return new Obj(item);
-                };
-
-                _.map(jsonData.feed.entry, (entry) => {
-                    const item = convertEntryToItem(entry);
-                    items.push(item);
+                _.map(entry.c, (value, key) => {
+                    item[columnsKeys[key]['v']] = value != null ? value['v'] : null;
                 });
 
-                resolve(items);
-            });
+                item = decorate(item);
+                return new Obj(item);
+            };
 
-            document.head.appendChild(script);
-        }
+            _.map(jsonData.table.rows.slice(1), (entry) => {
+                const columnsKeys = jsonData.table.rows[0].c
+                const item = convertEntryToItem(entry, columnsKeys);
+                items.push(item)
+            });
+            resolve(items);
+        });
+
     });
 }

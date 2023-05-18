@@ -6,7 +6,7 @@ export default class Item {
         this.description = description;
         this.category = category;
         this.status = status;
-        this.tags = tags.trim() !== '' ? _.map(tags.split(','), (tag) => {
+        this.tags = tags && tags.trim() !== '' ? _.map(tags.split(','), (tag) => {
             return tag.trim();
         }) : [];
         this.url = url;
