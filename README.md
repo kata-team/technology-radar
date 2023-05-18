@@ -1,7 +1,7 @@
 # Technology Radar
 
 [![Kata Team](https://img.shields.io/badge/-kata--team-lightgrey.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QcbDCklIqzcwQAAADNQTFRFAAAA%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2Ft5XiggAAABB0Uk5TABAgMEBQYHCAj5%2Bvv8%2Ff7yMagooAAAABYktHRBCVsg0sAAAAkklEQVQYGZXBQRKDIBBFwa%2BOCAiZd%2F%2FThhjL0tRs0q1%2FFRRaG12BzSFP%2BpF8qUDSwfKij7U0qBVI%2BoKutTUHeupA1QnIHNrG0Ceddr58Kww%2B67JxqJ3BF910Lq9Zd41L0UPjkvSQ%2BHCGWU8FqA1w%2FbI8qQG7Ii8gK7AwmALGMClgDIoYgyKG56yIURQzVsUqprs3668Kl2V3gwgAAAAASUVORK5CYII%3D)](https://kata-team.github.io)
-[![Build Status](https://travis-ci.org/kata-team/technology-radar.svg?branch=production)](https://travis-ci.org/kata-team/technology-radar)
+[![Build Status](https://app.travis-ci.com/kata-team/technology-radar.svg?branch=production)](https://app.travis-ci.com/kata-team/technology-radar)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/be009f01309a41878091ce9aba2a89a0)](https://app.codacy.com/gh/kata-team/technology-radar/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 Technology Radar is a tool that helps organizations to monitor their own discoveries.
