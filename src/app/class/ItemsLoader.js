@@ -42,8 +42,6 @@ function googleSpreadsheets(url, Obj, decorator) {
             const convertEntryToItem = (entry, columnsKeys) => {
                 let item = {};
 
-                console.log(entry)
-
                 _.map(entry.c, (value, key) => {
                     item[columnsKeys[key]['v']] = value != null ? value['v'] : null;
                 });
